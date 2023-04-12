@@ -22,7 +22,7 @@ class DataIO {
         static void SaveUser(UserNode* head);
         static void ReadAdmin(Admin* head);
         static void ReadFeedback(Feedback* head);
-        static void ReadFavorite(Favourite* head);
+        static void ReadFavourite(Favourite* head);
 };
 
 

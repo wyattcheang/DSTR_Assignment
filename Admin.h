@@ -29,7 +29,7 @@ class Admin {
         void appendAdminNode(string data[]);
         AdminNode* searchAdminUser(string username);
         //Required Functions
-}
+};
 
 
 #endif //ASSIGNMENT_ADMIN_H

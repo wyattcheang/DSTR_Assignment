@@ -139,8 +139,7 @@ void DataIO::ReadAdmin(Admin *head) {
                 if(column[i].back() == '\r')  //remove '\r' at the last of the string
                     (column[i]).erase(column[i].end() - 1);
             }
-            AdminNode* add = head->createAdminNode(column);
-            head->appendAdminNode(add);
+            head->appendAdminNode(column);
         }
     }else{
         cout<<"Could not open the file\n";
@@ -152,7 +151,7 @@ void DataIO::ReadFeedback(Feedback *head) {
 
 }
 
-void DataIO::ReadFavorite(Favorite *head) {
+void DataIO::ReadFavourite(Favourite *head) {
 
 }
 

@@ -20,7 +20,6 @@ class Favourite {
         int favSize = 0;
     public:
         //Required Functions
-        create
 };
 
 
