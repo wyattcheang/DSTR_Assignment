@@ -1,0 +1,12 @@
+Rank,Institution,LocationCode,Location,ArScore,ArRank,ErScore,ErRank,FsrScore,FsrRank,CpfScore,CpfRank,IfrScore,IfrRank,IsrScore,IsrRank,IrnScore,IrnRank,GerScore,GerRank,ScoreScaled
+1,Massachusetts Institute of Technology (MIT) ,US,United States,100,5,100,4,100,14,100,5,100,54,90,109,96.1,58,100,3,100
+2,University of Cambridge,UK,United Kingdom,100,2,100,2,100,11,92.3,55,100,60,96.3,70,99.5,6,100,9,98.8
+3,Stanford University,US,United States,100,4,100,5,100,6,99.9,9,99.8,74,60.3,235,96.3,55,100,2,98.5
+4,University of Oxford,UK,United Kingdom,100,3,100,3,100,8,90,64,98.8,101,98.4,54,99.9,3,100,7,98.4
+5,Harvard University,US,United States,100,1,100,1,99.4,35,100,2,76.9,228,66.9,212,100,1,100,1,97.6
+6,California Institute of Technology (Caltech),US,United States,96.5,28,87.1,58,100,3,100,4,99.8,75,85.1,134,73,425,98.8,24,97
+7,Imperial College London,UK,United Kingdom,98.3,24,99.7,10,99.5,34,86.5,84,100,55,100,13,98.1,20,88.8,76,97
+8,UCL,UK,United Kingdom,99.4,14,98.6,16,97.6,51,77,119,99.2,87,100,14,100,2,90.3,71,95
+9,ETH Zurich - Swiss Federal Institute of Technology,CH,Switzerland,98.6,18,91.3,51,74.2,164,99.2,18,100,24,98,59,96.2,56,91.1,64,93.6
+10,University of Chicago,US,United States,99.2,16,92.2,46,92.9,71,86.8,79,81.6,214,76,176,89.6,170,98.2,30,93.2
+11,National University of Singapore (NUS),SG,Singapore,99.5,13,94.1,36,79.8,136,91.8,58,100,33,73.5,187,89.9,165,99.6,16,92.7
