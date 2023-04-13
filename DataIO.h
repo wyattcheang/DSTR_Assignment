@@ -23,7 +23,6 @@ class DataIO {
         static void ReadAdmin(Admin* head);
         static void ReadFeedback(Feedback* head);
         static void ReadFavourite(Favourite* head);
-        void hihihihi();
 };
 
 
