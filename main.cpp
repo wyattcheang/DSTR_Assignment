@@ -29,9 +29,6 @@ int main() {
 
 
 
-
-
-
 //    auto start = chrono::high_resolution_clock::now();
 //    University uniClass;
 //    auto end = chrono::high_resolution_clock ::now();

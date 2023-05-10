@@ -4,6 +4,10 @@
 
 #include "Feedback.h"
 
+#ifdef _WIN32
+// Windows-specific code
+    #include "date.h"
+#endif
 
 FeedbackNode *Feedback::createFeedbackNode(string data[], User userClass, Admin adminClass, University uniClass) {
     FeedbackNode* newFeedbackNode = new FeedbackNode;

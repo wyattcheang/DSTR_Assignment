@@ -134,13 +134,23 @@ UniversityNode* University::createNewUniversityNode(string data[]) {
     return newNode;
 }
 
+static void toUpper(std::string& str) {
+    for (char& c : str) {
+        c = toupper(c);
+    }
+}
+
+
 bool University::compareNode(UniversityNode *left, UniversityNode *right) {
     int nameCompare, scoreCompare, rankCompare;
-    string leftName = left->institutionName, rightName = right->institutionName;
+    string leftName = left->institutionName;
+    string rightName = right->institutionName;
     double leftValue = 0, rightValue = 0;
 
-    transform(leftName.begin(), leftName.end(), leftName.begin(), ::toupper);
-    transform(rightName.begin(), rightName.end(), rightName.begin(), ::toupper);
+    toUpper(leftName);
+    toUpper(rightName);
+//    transform(leftName.begin(), leftName.end(), leftName.begin(), ::toupper);
+//    transform(rightName.begin(), rightName.end(), rightName.begin(), ::toupper);
 
     rankCompare = left->rank < right->rank;
     nameCompare = leftName.compare(rightName);
@@ -318,10 +328,11 @@ UniversityNode* University::searchUniversity(string data){
     UniversityNode* current = this->universityHead;
     while(current != nullptr){
         if (current->rank == stoi(data)){
-            return current;
+            break;
         }
         current = current->nextUni;
     }
+    return current;
 }
 
 
