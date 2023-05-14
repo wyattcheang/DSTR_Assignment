@@ -23,7 +23,7 @@ class DataIO {
         static void ReadAdmin(Admin* head);
         static void ReadFeedback(Feedback* head);
         static void ReadFavourite(Favourite* head);
+        static tm* StringToTime(string dateString);
 };
-
 
 #endif //ASSIGNMENT_DATAIO_H

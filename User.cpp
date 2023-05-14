@@ -34,13 +34,13 @@ UserNode *User::createUserNode(string data[]){
     newUserNode->lastTimeLogin = new tm;
     newUserNode->lastTimeLogout = new tm;
 
-
-
     newUserNode->userID = data[0];
     newUserNode->username = data[1];
     newUserNode->password = data[2];
-    strptime(data[3].c_str(), "%Y-%m-%d %H:%M:%S", newUserNode->lastTimeLogin);
-    strptime(data[4].c_str(), "%Y-%m-%d %H:%M:%S", newUserNode->lastTimeLogout);
+    newUserNode->lastTimeLogin = DataIO::StringToTime(data[3]);
+    newUserNode->lastTimeLogout = DataIO::StringToTime(data[4]);
+//    strptime(data[3].c_str(), "%Y-%m-%d %H:%M:%S", newUserNode->lastTimeLogin);
+//    strptime(data[4].c_str(), "%Y-%m-%d %H:%M:%S", newUserNode->lastTimeLogout);
     newUserNode->nextUser = nullptr;
     return newUserNode;
 }
@@ -135,8 +135,6 @@ void User::userRegister() {
         break;
     }
 
-
-
     if (cin.fail()){
         cout << "Error input!" << endl;
         userRegister();
@@ -146,11 +144,9 @@ void User::userRegister() {
         cout << "Passwords not same!" << endl;
         userRegister();
     }
-
     else{
 
     }
-
 
     // Generator UserID according to size of user
     stringstream ss;

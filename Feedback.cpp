@@ -3,11 +3,7 @@
 //
 
 #include "Feedback.h"
-
-#ifdef _WIN32
-// Windows-specific code
-    #include "date.h"
-#endif
+#include "DataIO.h"
 
 FeedbackNode *Feedback::createFeedbackNode(string data[], User userClass, Admin adminClass, University uniClass) {
     FeedbackNode* newFeedbackNode = new FeedbackNode;
@@ -19,7 +15,9 @@ FeedbackNode *Feedback::createFeedbackNode(string data[], User userClass, Admin 
     newFeedbackNode->feedbackUniversity = uniClass.searchUniversity(data[3]);
     newFeedbackNode->feedback = data[4];
     newFeedbackNode->reply = data[5];
-    strptime(data[6].c_str(), "%Y-%m-%d %H:%M:%S", newFeedbackNode->feedbackDatetime);
-    strptime(data[7].c_str(), "%Y-%m-%d %H:%M:%S", newFeedbackNode->replyDatetime);
+    newFeedbackNode->feedbackDatetime = DataIO::StringToTime(data[6]);
+    newFeedbackNode->replyDatetime = DataIO::StringToTime(data[7]);
+//    strptime(data[6].c_str(), "%Y-%m-%d %H:%M:%S", newFeedbackNode->feedbackDatetime);
+//    strptime(data[7].c_str(), "%Y-%m-%d %H:%M:%S", newFeedbackNode->replyDatetime);
     return newFeedbackNode;
 }

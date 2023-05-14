@@ -10,6 +10,8 @@
 
 using namespace std;
 
+namespace fs = std::filesystem;
+
 void DataIO::ReadUniversity(University* head) {
     fstream file;
     file.open("csvFiles/data.csv", ios::in);
@@ -182,4 +184,18 @@ void DataIO::SaveUser(UserNode* head) {
     file.close();
 }
 
+
+tm* DataIO::StringToTime(string dateString) {
+    tm* timeStruct = new tm();
+
+    std::istringstream ss(dateString);
+    ss >> std::get_time(timeStruct, "%Y-%m-%d %H:%M:%S");
+
+    if (ss.fail()) {
+        delete timeStruct; // Free the allocated memory
+        throw std::runtime_error("Invalid date format");
+    }
+
+    return timeStruct;
+}
 
