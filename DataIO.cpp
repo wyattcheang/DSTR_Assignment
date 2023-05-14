@@ -14,7 +14,7 @@ using namespace std;
 #define _FILE_PATH_H
 
 #ifdef _WIN32
-const string filePath = "csvFiles\\";
+const string filePath = "csvFiles\";
 #else
 const string filePath = "csvFiles/";
 #endif
