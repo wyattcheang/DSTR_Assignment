@@ -15,6 +15,7 @@ FeedbackNode *Feedback::createFeedbackNode(string data[], User userClass, Admin 
     newFeedbackNode->feedbackUniversity = uniClass.searchUniversity(data[3]);
     newFeedbackNode->feedback = data[4];
     newFeedbackNode->reply = data[5];
+
     newFeedbackNode->feedbackDatetime = DataIO::StringToTime(data[6]);
     newFeedbackNode->replyDatetime = DataIO::StringToTime(data[7]);
 //    strptime(data[6].c_str(), "%Y-%m-%d %H:%M:%S", newFeedbackNode->feedbackDatetime);

@@ -10,11 +10,22 @@
 
 using namespace std;
 
-namespace fs = std::filesystem;
+#ifndef _FILE_PATH_H
+#define _FILE_PATH_H
+
+#ifdef _WIN32
+const string filePath = "csvFiles\\";
+#else
+const string filePath = "csvFiles/";
+#endif
+
+#endif // _FILE_PATH_H
+
 
 void DataIO::ReadUniversity(University* head) {
+
     fstream file;
-    file.open("csvFiles/data.csv", ios::in);
+    file.open(filePath + "data.csv", ios::in);
     string data[21];
     size_t repPosition;
 
@@ -80,7 +91,7 @@ void DataIO::ReadUniversity(University* head) {
 void DataIO::ReadUser(User *head) {
     string column[5];
     fstream file;
-    file.open("csvFiles/user.csv", ios::in);
+    file.open(filePath + "user.csv", ios::in);
 
     if(file.is_open()){
         for (int i = 0; i < 5; i++) {
@@ -118,7 +129,7 @@ void DataIO::ReadUser(User *head) {
 void DataIO::ReadAdmin(Admin *head) {
     string column[3];
     fstream file;
-    file.open("csvFiles/admin.csv", ios::in);
+    file.open(filePath + "admin.csv", ios::in);
 
     if(file.is_open()){
         for (int i = 0; i < 3; i++) {
@@ -159,7 +170,7 @@ void DataIO::ReadFavourite(Favourite *head) {
 }
 
 void DataIO::SaveUser(UserNode* head) {
-    ofstream file("csvFiles/user.csv");
+    ofstream file(filePath + "user.csv");
     if (!file.is_open()){
         cout << "Could not open file." << endl;
         return;
@@ -185,17 +196,10 @@ void DataIO::SaveUser(UserNode* head) {
 }
 
 
-tm* DataIO::StringToTime(string dateString) {
-    tm* timeStruct = new tm();
-
+tm* DataIO::StringToTime(const string& dateString) {
+    tm *tm = new struct tm;
     std::istringstream ss(dateString);
-    ss >> std::get_time(timeStruct, "%Y-%m-%d %H:%M:%S");
-
-    if (ss.fail()) {
-        delete timeStruct; // Free the allocated memory
-        throw std::runtime_error("Invalid date format");
-    }
-
-    return timeStruct;
+    ss >> std::get_time(tm, "%Y-%m-%d %H:%M:%S"); // or just %T in this case
+    return tm;
 }
 

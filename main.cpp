@@ -10,12 +10,12 @@ using namespace std;
 
 int main() {
     User user;
+    user.displayUser();
     University uniClass;
     Admin admin;
-
     Guest guest(uniClass);
-    uniClass.DisplayData();
     user.userLogin();
+    uniClass.DisplayData();
 
 
 

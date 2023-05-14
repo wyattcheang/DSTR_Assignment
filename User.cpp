@@ -33,7 +33,6 @@ UserNode *User::createUserNode(string data[]){
     UserNode *newUserNode = new UserNode;
     newUserNode->lastTimeLogin = new tm;
     newUserNode->lastTimeLogout = new tm;
-
     newUserNode->userID = data[0];
     newUserNode->username = data[1];
     newUserNode->password = data[2];
@@ -199,7 +198,6 @@ void User::userLogin() {
         cout << "Enter username: ";
         cin >> name;
         UserNode *theUser = searchUser(name);
-        cout << theUser << endl;
         if (theUser == nullptr) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
