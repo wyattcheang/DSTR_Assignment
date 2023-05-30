@@ -118,16 +118,7 @@ void StartPage::DisplayStartPage(UserPage* userPage, AdminPage* adminPage) {
                             break;
                         }
                     }
-                    switch (searchSelection) {
-                        case 1:
-                            university->LinearSearch(searchKeyword, uniName);
-                            break;
-                        case 2:
-                            university->JumpSearch(searchKeyword, uniName);
-                            break;
-                        default:
-                            break;
-                    }
+                    university->PerformSearch(searchSelection, 2, searchKeyword);
                     break;
                 case 4:
                     user->userRegister();
@@ -153,6 +144,8 @@ void StartPage::DisplayStartPage(UserPage* userPage, AdminPage* adminPage) {
 
 void UserPage::DisplayUserPage() {
     bool userPageLoop = true;
+    int searchAttributeSelection, searchSelection;
+    string searchKeyword;
     while (userPageLoop) {
         cout << string(100, '=') << endl;
         DataIO::printStringCentered("User Page | Welcome back, " + user->getLoginUser()->username);
@@ -290,23 +283,20 @@ void UserPage::DisplayUserPage() {
                     }
                     uni.DisplayData();
                     // Print the execution time
-                    if (sortSelection == 1){
+                    if (sortSelection == 1) {
                         cout << "Time taken by Merge Sort Algorithm: ";
-                    } else if (sortSelection == 2){
+                    } else if (sortSelection == 2) {
                         cout << "Time taken by Quick Sort Algorithm: ";
                     }
                     cout << uni.timeTaken.count() << " microseconds." << endl;
                     cout << endl;
                     break;
                 }
-                case 2: {
-                    int searchAttributeSelection, searchSelection;
-                    string searchKeyword;
-
+                case 2:
                     while (true) {
                         DataIO::printSelectUniversityAttributeMenu();
                         cin >> searchAttributeSelection;
-                        if (cin.fail() || searchAttributeSelection < 1 || searchAttributeSelection > 12) {
+                        if (cin.fail() || searchAttributeSelection < 1 || searchAttributeSelection > 21) {
                             cout << "Error Input!" << endl << endl;
                             cin.clear();
                             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -337,11 +327,12 @@ void UserPage::DisplayUserPage() {
                             cin.ignore(numeric_limits<streamsize>::max(), '\n');
                             continue;
                         }
-                    } else if (searchAttributeSelection == 5 || searchAttributeSelection == 6 ||
-                               searchAttributeSelection == 7 ||
-                               searchAttributeSelection == 8 || searchAttributeSelection == 9 ||
-                               searchAttributeSelection == 10 ||
-                               searchAttributeSelection == 11 || searchAttributeSelection == 12) {
+                    } else if (searchAttributeSelection == 5 || searchAttributeSelection == 6 || searchAttributeSelection == 7 ||
+                               searchAttributeSelection == 8 || searchAttributeSelection == 9 || searchAttributeSelection == 10 ||
+                               searchAttributeSelection == 11 || searchAttributeSelection == 12 || searchAttributeSelection == 13 ||
+                               searchAttributeSelection == 14 || searchAttributeSelection == 15 || searchAttributeSelection == 16 ||
+                               searchAttributeSelection == 17 || searchAttributeSelection == 18 || searchAttributeSelection == 19 ||
+                               searchAttributeSelection == 20 || searchAttributeSelection == 21) {
                         try {
                             double a = stod(searchKeyword);
                         } catch (std::invalid_argument const &e) {
@@ -363,90 +354,7 @@ void UserPage::DisplayUserPage() {
                             break;
                         }
                     }
-                    if (searchSelection == 1) {
-                        switch (searchAttributeSelection) {
-                            case 1:
-                                university->LinearSearch(searchKeyword, uniRank);
-                                break;
-                            case 2:
-                                university->LinearSearch(searchKeyword, uniName);
-                                break;
-                            case 3:
-                                university->LinearSearch(searchKeyword, uniLocation);
-                                break;
-                            case 4:
-                                university->LinearSearch(searchKeyword, uniLocationCode);
-                                break;
-                            case 5:
-                                university->LinearSearch(searchKeyword, arScore);
-                                break;
-                            case 6:
-                                university->LinearSearch(searchKeyword, erScore);
-                                break;
-                            case 7:
-                                university->LinearSearch(searchKeyword, fsrScore);
-                                break;
-                            case 8:
-                                university->LinearSearch(searchKeyword, cpfScore);
-                                break;
-                            case 9:
-                                university->LinearSearch(searchKeyword, ifrScore);
-                                break;
-                            case 10:
-                                university->LinearSearch(searchKeyword, isrScore);
-                                break;
-                            case 11:
-                                university->LinearSearch(searchKeyword, irnScore);
-                                break;
-                            case 12:
-                                university->LinearSearch(searchKeyword, gerScore);
-                                break;
-                            default:
-                                break;
-                        }
-                    } else if (searchSelection == 2) {
-                        switch (searchAttributeSelection) {
-                            case 1:
-                                university->JumpSearch(searchKeyword, uniRank);
-                                break;
-                            case 2:
-                                university->JumpSearch(searchKeyword, uniName);
-                                break;
-                            case 3:
-                                university->JumpSearch(searchKeyword, uniLocation);
-                                break;
-                            case 4:
-                                university->JumpSearch(searchKeyword, uniLocationCode);
-                                break;
-                            case 5:
-                                university->JumpSearch(searchKeyword, arScore);
-                                break;
-                            case 6:
-                                university->JumpSearch(searchKeyword, erScore);
-                                break;
-                            case 7:
-                                university->JumpSearch(searchKeyword, fsrScore);
-                                break;
-                            case 8:
-                                university->JumpSearch(searchKeyword, cpfScore);
-                                break;
-                            case 9:
-                                university->JumpSearch(searchKeyword, ifrScore);
-                                break;
-                            case 10:
-                                university->JumpSearch(searchKeyword, isrScore);
-                                break;
-                            case 11:
-                                university->JumpSearch(searchKeyword, irnScore);
-                                break;
-                            case 12:
-                                university->JumpSearch(searchKeyword, gerScore);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
+                    university->PerformSearch(searchSelection, searchAttributeSelection, searchKeyword);
                     int saveSelection;
                     while (true) {
                         cout << "Would you like to save this university as your favourite university?" << endl;
@@ -465,6 +373,7 @@ void UserPage::DisplayUserPage() {
                     if (saveSelection == 1) {
                         // save favour function!
                     }
+                    break;
                 case 3:
                     cout << "Save" << endl;
                     break;
@@ -543,6 +452,7 @@ void AdminPage::DisplayAdminPage() {
                         }
                     }
                 }
+                break;
                 case 3: {
                     cout << "Delete" << endl;
                     user->deleteInactiveUsers();

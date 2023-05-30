@@ -95,6 +95,7 @@ bool University::compareNode(UniversityNode* left, UniversityNode* right) {
     string leftName, rightName, leftLocation, rightLocation, leftLocationCode, rightLocationCode;
     int nameCompare, locationCompare, locationCodeCompare, scoreCompare, rankCompare, otherRankCompare;
     double leftValue = 0, rightValue = 0;
+    rankCompare = left->rank < right->rank;
 
     switch (this->option) {
         case uniRank:
@@ -111,7 +112,6 @@ bool University::compareNode(UniversityNode* left, UniversityNode* right) {
             else return nameCompare > 0;
             break;
         case uniLocation:
-            cout << ("testing");
             leftLocation = left->location;
             rightLocation = right->location;
             toUpper(leftLocation);
@@ -165,50 +165,77 @@ bool University::compareNode(UniversityNode* left, UniversityNode* right) {
             rightValue = right->scoreScaled;
             break;
         case arRank:
-            rightValue = stoi(left->arRank);
-            leftValue = stoi(right->arRank);
+            leftValue = stoi(left->arRank);
+            rightValue = stoi(right->arRank);
             break;
         case fsrRank:
-            rightValue = stoi(left->fsrRank);
-            leftValue = stoi(right->fsrRank);
+            leftValue = stoi(left->fsrRank);
+            rightValue = stoi(right->fsrRank);
             break;
         case erRank:
-            rightValue = stoi(left->erRank);
-            leftValue = stoi(right->erRank);
+            leftValue = stoi(left->erRank);
+            rightValue = stoi(right->erRank);
             break;
         case cpfRank:
-            rightValue = stoi(left->cpfRank);
-            leftValue = stoi(right->cpfRank);
+            leftValue = stoi(left->cpfRank);
+            rightValue = stoi(right->cpfRank);
             break;
         case ifrRank:
-            rightValue = stoi(left->ifrRank);
-            leftValue = stoi(right->ifrRank);
+            leftValue = stoi(left->ifrRank);
+            rightValue = stoi(right->ifrRank);
             break;
         case isrRank:
-            rightValue = stoi(left->isrRank);
-            leftValue = stoi(right->isrRank);
+            leftValue = stoi(left->isrRank);
+            rightValue = stoi(right->isrRank);
             break;
         case irnRank:
-            rightValue = RemovePlusSymbol(left->irnRank);
-            leftValue = RemovePlusSymbol(right->irnRank);
+            leftValue = stoi(left->irnRank);
+            rightValue = stoi(right->irnRank);
             break;
         case gerRank:
-            rightValue = RemovePlusSymbol(left->gerRank);
-            leftValue = RemovePlusSymbol(right->gerRank);
+            leftValue = stoi(left->gerRank);
+            rightValue = stoi(right->gerRank);
             break;
         default:
             break;
     }
 
     // scoreCompare : 0 to take left node, 1 to take right node
-    scoreCompare = (leftValue < rightValue) || (leftValue == rightValue && rankCompare == 0);
+    if (this->option == arRank || this->option == fsrRank || this->option == erRank || this->option == cpfRank ||
+        this->option == ifrRank || this->option == isrRank || this->option == irnRank || this->option == gerRank) {
+        if (leftValue == 0)
+            return 1;
+        else if (rightValue == 0)
+            return 0;
+        else
+            rankCompare = (leftValue > rightValue) || (leftValue == rightValue && rankCompare == 0);
 
-    if ((this->option == ::uniRank && rankCompare == 1) ||
-        (this->option == ::uniName && nameCompare < 0) ||
-        (this->option != ::uniRank && this->option != ::uniName && scoreCompare == 0))
-        return 0;
-    else return 1;
+        if (this->option != ::uniRank && this->option != ::uniName && rankCompare == 0)
+            return 0;
+        else return 1;
+
+    }
+    if (this->option == arScore || this->option == fsrScore || this->option == erScore || this->option == cpfScore ||
+        this->option == ifrScore || this->option == isrScore || this->option == irnScore || this->option == gerScore ||
+        this->option == scoreScaled) {
+        if (leftValue == 0)
+            return 1;
+        else if (rightValue == 0)
+            return 0;
+        else
+            scoreCompare = (leftValue < rightValue) || (leftValue == rightValue && rankCompare == 0);
+        if (this->option != ::uniRank && this->option != ::uniName && scoreCompare == 0)
+            return 0;
+        else return 1;
+    }
+    return 0;
 }
+
+//    if ((this->option == ::uniRank && rankCompare == 1) ||
+//        (this->option == ::uniName && nameCompare < 0) ||
+//        (this->option != ::uniRank && this->option != ::uniName && scoreCompare == 0))
+//        return 0;
+//    else return 1;
 
 // merge sort
 
@@ -428,6 +455,33 @@ void University::LinearSearch(string search, sortOption option)
             case gerScore:
                 displayUniversity = (current->gerScore == stod(search));
                 break;
+            case scoreScaled:
+                displayUniversity = (current->scoreScaled == stod(search));
+                break;
+            case arRank:
+                displayUniversity = (stoi(current->arRank) == stoi(search));
+                break;
+            case erRank:
+                displayUniversity = (stoi(current->erRank) == stoi(search));
+                break;
+            case fsrRank:
+                displayUniversity = (stoi(current->fsrRank) == stoi(search));
+                break;
+            case cpfRank:
+                displayUniversity = (stoi(current->cpfRank) == stoi(search));
+                break;
+            case ifrRank:
+                displayUniversity = (stoi(current->ifrRank) == stoi(search));
+                break;
+            case isrRank:
+                displayUniversity = (stoi(current->isrRank) == stoi(search));
+                break;
+            case irnRank:
+                displayUniversity = (stoi(current->irnRank) == stoi(search));
+                break;
+            case gerRank:
+                displayUniversity = (stoi(current->gerRank) == stoi(search));
+                break;
             default:
                 break;
         }
@@ -460,7 +514,6 @@ void University::LinearSearch(string search, sortOption option)
 void University::JumpSearch(string search, sortOption option) {
     // Sort the linked list by institution name
     callMergeSort(option);
-
     // Start measuring the execution time
     auto startTime = std::chrono::high_resolution_clock::now();
 
@@ -583,31 +636,66 @@ void University::PrintTableHeader() {
 }
 
 void University::DisplayTheUniversity(UniversityNode *current) {
+    string width = {4, 90, 12, 35, 7, 6, 7, 6, 8, 7, 8, 7, 8, 7, 8, 7, 8, 7, 8, 7, 11 };
     int checkTwoByte = 0;
     int checkThreeByte = 0;
     University::UniversityNameAlignment(current, checkTwoByte, checkThreeByte);
     cout << " | ";
-    cout << right << setw(4) << current->rank << " | ";
-    cout << left << setw(90 + checkTwoByte + checkThreeByte) << current->institutionName << " | ";
-    cout << left << setw(12) << current->locationCode << " | ";
-    cout << left << setw(35) << current->location << " | ";
-    cout << right << setw(7) << current->arScore << " | ";
-    cout << right << setw(6) << current->arRank << " | ";
-    cout << right << setw(7) << current->erScore << " | ";
-    cout << right << setw(6) << current->erRank << " | ";
-    cout << right << setw(8) << current->fsrScore << " | ";
-    cout << right << setw(7) << current->fsrRank << " | ";
-    cout << right << setw(8) << current->cpfScore << " | ";
-    cout << right << setw(7) << current->cpfRank << " | ";
-    cout << right << setw(8) << current->ifrScore << " | ";
-    cout << right << setw(7) << current->ifrRank << " | ";
-    cout << right << setw(8) << current->isrScore << " | ";
-    cout << right << setw(7) << current->isrRank << " | ";
-    cout << right << setw(8) << current->irnScore << " | ";
-    cout << right << setw(7) << current->irnRank << " | ";
-    cout << right << setw(8) << current->gerScore << " | ";
-    cout << right << setw(7) << current->gerRank << " | ";
-    cout << right << setw(11) << current->scoreScaled << " |  ";
+    cout << right << setw(width[0]) << current->rank << " | ";
+    cout << left << setw(width[1] + checkTwoByte + checkThreeByte) << current->institutionName << " | ";
+    cout << left << setw(width[2]) << current->locationCode << " | ";
+    cout << left << setw(width[3]) << current->location << " | ";
+
+    if (current->arScore == 0) cout << right << setw(width[4]) << "N/A" << " | ";
+    else cout << right << setw(width[4]) << current->arScore << " | ";
+
+    if (current->arRank == "0") cout << right << setw(width[4]) << "N/A" << " | ";
+    else cout << right << setw(width[5]) << current->arRank << " | ";
+
+    if (current->erScore == 0) cout << right << setw(width[6]) << "N/A" << " | ";
+    else cout << right << setw(width[6]) << current->erScore << " | ";
+
+    if (current->erRank == "0") cout << right << setw(width[7]) << "N/A" << " | ";
+    else cout << right << setw(width[7]) << current->erRank << " | ";
+
+    if (current->fsrScore == 0) cout << right << setw(width[8]) << "N/A" << " | ";
+    else cout << right << setw(width[8]) << current->fsrScore << " | ";
+
+    if (current->fsrRank == "0") cout << right << setw(width[9]) << "N/A" << " | ";
+    else cout << right << setw(width[9]) << current->fsrRank << " | ";
+
+    if (current->cpfScore == 0) cout << right << setw(width[10]) << "N/A" << " | ";
+    else cout << right << setw(width[10]) << current->cpfScore << " | ";
+
+    if (current->cpfRank == "0") cout << right << setw(width[11]) << "N/A" << " | ";
+    else cout << right << setw(width[11]) << current->cpfRank << " | ";
+
+    if (current->ifrScore == 0) cout << right << setw(width[12]) << "N/A" << " | ";
+    else cout << right << setw(width[12]) << current->ifrScore << " | ";
+
+    if (current->ifrRank == "0") cout << right << setw(width[13]) << "N/A" << " | ";
+    else cout << right << setw(width[13]) << current->ifrRank << " | ";
+
+    if (current->isrScore == 0) cout << right << setw(width[14]) << "N/A" << " | ";
+    else  cout << right << setw(width[14]) << current->isrScore << " | ";
+
+    if (current->isrRank == "0") cout << right << setw(width[15]) << "N/A" << " | ";
+    else cout << right << setw(width[15]) << current->isrRank << " | ";
+
+    if (current->irnScore == 0) cout << right << setw(width[16]) << "N/A" << " | ";
+    else cout << right << setw(width[16]) << current->irnScore << " | ";
+
+    if (current->irnRank == "0") cout << right << setw(width[17]) << "N/A" << " | ";
+    else cout << right << setw(width[17]) << current->irnRank << " | ";
+
+    if (current->gerScore == 0) cout << right << setw(width[18]) << "N/A" << " | ";
+    else cout << right << setw(width[18]) << current->gerScore << " | ";
+
+    if (current->gerRank == "0") cout << right << setw(width[19]) << "N/A" << " | ";
+    else cout << right << setw(width[19]) << current->gerRank << " | ";
+
+    if (current->scoreScaled == -1) cout << right << setw(width[20]) << "N/A" << " |  ";
+    else cout << right << setw(width[20]) << current->scoreScaled << " |  ";
     cout << endl;
 }
 
@@ -632,6 +720,146 @@ void University::UniversityNameAlignment(UniversityNode *current, int &checkTwoB
                 checkTwoByte++;
                 i = i + 1;
             }
+        }
+    }
+}
+
+void University::PerformSearch(int searchMethod, int searchAttributeSelection, const string &searchKeyword) {
+    if (searchMethod == 1) {
+        switch (searchAttributeSelection) {
+            case 1:
+                LinearSearch(searchKeyword, uniRank);
+                break;
+            case 2:
+                LinearSearch(searchKeyword, uniName);
+                break;
+            case 3:
+                LinearSearch(searchKeyword, uniLocation);
+                break;
+            case 4:
+                LinearSearch(searchKeyword, uniLocationCode);
+                break;
+            case 5:
+                LinearSearch(searchKeyword, arScore);
+                break;
+            case 6:
+                LinearSearch(searchKeyword, arRank);
+                break;
+            case 7:
+                LinearSearch(searchKeyword, erScore);
+                break;
+            case 8:
+                LinearSearch(searchKeyword, erRank);
+                break;
+            case 9:
+                LinearSearch(searchKeyword, fsrScore);
+                break;
+            case 10:
+                LinearSearch(searchKeyword, fsrRank);
+                break;
+            case 11:
+                LinearSearch(searchKeyword, cpfScore);
+                break;
+            case 12:
+                LinearSearch(searchKeyword, cpfRank);
+                break;
+            case 13:
+                LinearSearch(searchKeyword, ifrScore);
+                break;
+            case 14:
+                LinearSearch(searchKeyword, ifrRank);
+                break;
+            case 15:
+                LinearSearch(searchKeyword, isrScore);
+                break;
+            case 16:
+                LinearSearch(searchKeyword, isrRank);
+                break;
+            case 17:
+                LinearSearch(searchKeyword, irnScore);
+                break;
+            case 18:
+                LinearSearch(searchKeyword, irnRank);
+                break;
+            case 19:
+                LinearSearch(searchKeyword, gerScore);
+                break;
+            case 20:
+                LinearSearch(searchKeyword, gerRank);
+                break;
+            case 21:
+                LinearSearch(searchKeyword, scoreScaled);
+                break;
+            default:
+                break;
+        }
+    } else if (searchMethod == 2) {
+        switch (searchAttributeSelection) {
+            case 1:
+                JumpSearch(searchKeyword, uniRank);
+                break;
+            case 2:
+                JumpSearch(searchKeyword, uniName);
+                break;
+            case 3:
+                JumpSearch(searchKeyword, uniLocation);
+                break;
+            case 4:
+                JumpSearch(searchKeyword, uniLocationCode);
+                break;
+            case 5:
+                JumpSearch(searchKeyword, arScore);
+                break;
+            case 6:
+                JumpSearch(searchKeyword, arRank);
+                break;
+            case 7:
+                JumpSearch(searchKeyword, erScore);
+                break;
+            case 8:
+                JumpSearch(searchKeyword, erRank);
+                break;
+            case 9:
+                JumpSearch(searchKeyword, fsrScore);
+                break;
+            case 10:
+                JumpSearch(searchKeyword, fsrRank);
+                break;
+            case 11:
+                JumpSearch(searchKeyword, cpfScore);
+                break;
+            case 12:
+                JumpSearch(searchKeyword, cpfRank);
+                break;
+            case 13:
+                JumpSearch(searchKeyword, ifrScore);
+                break;
+            case 14:
+                JumpSearch(searchKeyword, ifrRank);
+                break;
+            case 15:
+                JumpSearch(searchKeyword, isrScore);
+                break;
+            case 16:
+                JumpSearch(searchKeyword, isrRank);
+                break;
+            case 17:
+                JumpSearch(searchKeyword, irnScore);
+                break;
+            case 18:
+                JumpSearch(searchKeyword, irnRank);
+                break;
+            case 19:
+                JumpSearch(searchKeyword, gerScore);
+                break;
+            case 20:
+                JumpSearch(searchKeyword, gerRank);
+                break;
+            case 21:
+                JumpSearch(searchKeyword, scoreScaled);
+                break;
+            default:
+                break;
         }
     }
 }

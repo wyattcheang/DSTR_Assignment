@@ -74,8 +74,7 @@ public:
 
     void LinearSearch(string search, sortOption option);
     void JumpSearch(string search, sortOption option);
-    void DisplaySearchResult(UniversityNode* head, string search);
-    void DisplaySearchResult1(UniversityNode* head, string search);
+    void PerformSearch(int searchMethod, int searchAttributeSelection, const string& searchKeyword);
 
     static int RemovePlusSymbol(string otherRank);
     static bool isSubstring(const std::string& a, const std::string& b);

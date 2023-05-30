@@ -1,0 +1,3 @@
+C:/Users/joeyk/source/repos/DSTR_Assignment/out/build/x64-Debug/CMakeFiles/Assignment.dir
+C:/Users/joeyk/source/repos/DSTR_Assignment/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/joeyk/source/repos/DSTR_Assignment/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir

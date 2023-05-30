@@ -139,7 +139,9 @@ void Admin::adminLogin() {
     data.ReadAdmin(this);
     string name, pass;
     while (true) {
-        cout << "Admin Login" << endl;
+        cout << string(100, '*') << endl;
+        DataIO::printStringCentered("Admin Login!");
+        cout << string(100, '*') << endl << endl;
         cout << "Enter admin username: ";
         cin >> name;
         AdminNode* theAdmin = searchAdminUser(name);
@@ -150,7 +152,7 @@ void Admin::adminLogin() {
         }
         else {
             for (int i = 0; i <= 3; i++) {
-                cout << "Enter your password: " << endl;
+                cout << "Enter your password: ";
                 cin >> pass;
                 if (pass != theAdmin->password) {
                     cin.clear();
@@ -159,6 +161,7 @@ void Admin::adminLogin() {
                     cout << 3 - i << " time attempt left.\n\n" << endl;
                 }
                 else {
+                    cout << endl;
                     loginAdmin = theAdmin;
                     break;
                 }
@@ -175,6 +178,9 @@ void Admin::adminLogin() {
 
 void Admin::adminLogout() {
     loginAdmin = nullptr;
+    cout << string(100, '*') << endl;
+    DataIO::printStringCentered("Logout Successfully!");
+    cout << string(100, '*') << endl << endl;
 }
 
 AdminNode *Admin::getLoginAdmin() const {

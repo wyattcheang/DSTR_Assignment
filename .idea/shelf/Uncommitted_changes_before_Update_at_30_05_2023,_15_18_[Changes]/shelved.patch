@@ -1,0 +1,2972 @@
+Index: University.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by Wyatt Cheang on 16/03/2023.\n\n\n#include <iostream>\nusing namespace std;\n\n#ifndef ASSIGNMENT_UNIVERSITY_H\n#define ASSIGNMENT_UNIVERSITY_H\n\nenum sortOption {uniRank, uniName, arScore, erScore, fsrScore};\n\nstruct UniversityNode{\n    UniversityNode * previousUni;\n    int rank;\n    string institutionName;\n    string locationCode;\n    string location;\n    double arScore;\n    string arRank;\n    double erScore;\n    string erRank;\n    double fsrScore;\n    string fsrRank;\n    double cpfScore;\n    string cpfRank;\n    double ifrScore;\n    string ifrRank;\n    double isrScore;\n    string isrRank;\n    double irnScore;\n    string irnRank;\n    double gerScore;\n    string gerRank;\n    double scoreScaled;\n    UniversityNode * nextUni;\n};\n\nclass University {\n    private:\n        UniversityNode* universityHead = nullptr;\n        UniversityNode* universityTail = nullptr;\n        string *universityHeader = new string[21];\n        sortOption option;\n        int uniListSize = 0;\n    public:\n        University();\n        ~University();\n        void addUniHeader(string data[]);\n        UniversityNode* createNewUniversityNode(string data[]);\n        void appendUniList(UniversityNode *newNode);\n        void DisplayData();\n\n        // for feedback\n        UniversityNode* searchUniversity(string rank);\n\n        // functions of merge sort\n        void splitList(UniversityNode *list, UniversityNode **leftList, UniversityNode **rightList);\n        UniversityNode* mergeList(UniversityNode *left, UniversityNode *right);\n        void mergeSort(UniversityNode **list);\n\n        // functions of quick sort\n        UniversityNode* partition(UniversityNode *head, UniversityNode *end, UniversityNode **newHead, UniversityNode **newEnd);\n        UniversityNode* quickSort(UniversityNode *head, UniversityNode *end);\n\n        bool compareNode(UniversityNode *left, UniversityNode *right);\n        UniversityNode* getTail(UniversityNode *cur);\n\n        void callMergeSort(sortOption option);\n        void callQuickSort(sortOption option);\n};\n\n#endif //ASSIGNMENT_UNIVERSITY_H\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/University.h b/University.h
+--- a/University.h	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/University.h	(date 1685392501327)
+@@ -8,10 +8,12 @@
+ #ifndef ASSIGNMENT_UNIVERSITY_H
+ #define ASSIGNMENT_UNIVERSITY_H
+ 
+-enum sortOption {uniRank, uniName, arScore, erScore, fsrScore};
++enum sortOption {uniRank, uniName, uniLocation, uniLocationCode,
++        arScore, arRank, erScore, erRank, fsrScore, fsrRank, cpfScore, cpfRank,
++        ifrScore, ifrRank, isrScore, isrRank, irnScore, irnRank, gerScore, gerRank, scoreScaled};
+ 
+-struct UniversityNode{
+-    UniversityNode * previousUni;
++struct UniversityNode {
++    UniversityNode* previousUni;
+     int rank;
+     string institutionName;
+     string locationCode;
+@@ -33,41 +35,53 @@
+     double gerScore;
+     string gerRank;
+     double scoreScaled;
+-    UniversityNode * nextUni;
++    UniversityNode* nextUni;
+ };
+ 
+ class University {
+-    private:
+-        UniversityNode* universityHead = nullptr;
+-        UniversityNode* universityTail = nullptr;
+-        string *universityHeader = new string[21];
+-        sortOption option;
+-        int uniListSize = 0;
+-    public:
+-        University();
+-        ~University();
+-        void addUniHeader(string data[]);
+-        UniversityNode* createNewUniversityNode(string data[]);
+-        void appendUniList(UniversityNode *newNode);
+-        void DisplayData();
++private:
++    UniversityNode* universityHead = nullptr;
++    UniversityNode* universityTail = nullptr;
++    string* universityHeader = new string[21];
++    sortOption option;
++    int uniListSize = 0;
++public:
++    chrono::duration<double> timeTaken;
++    University();
++    ~University();
++    void addUniHeader(string data[]);
++    UniversityNode* createNewUniversityNode(string data[]);
++    void appendUniList(UniversityNode* newNode);
++    void DisplayData();
+ 
+-        // for feedback
+-        UniversityNode* searchUniversity(string rank);
++    // for feedback
++    UniversityNode* searchUniversity(string rank);
+ 
+-        // functions of merge sort
+-        void splitList(UniversityNode *list, UniversityNode **leftList, UniversityNode **rightList);
+-        UniversityNode* mergeList(UniversityNode *left, UniversityNode *right);
+-        void mergeSort(UniversityNode **list);
++    // functions of merge sort
++    void splitList(UniversityNode* list, UniversityNode** leftList, UniversityNode** rightList);
++    UniversityNode* mergeList(UniversityNode* left, UniversityNode* right);
++    void mergeSort(UniversityNode** list);
+ 
+-        // functions of quick sort
+-        UniversityNode* partition(UniversityNode *head, UniversityNode *end, UniversityNode **newHead, UniversityNode **newEnd);
+-        UniversityNode* quickSort(UniversityNode *head, UniversityNode *end);
++    // functions of quick sort
++    UniversityNode* partition(UniversityNode* head, UniversityNode* end, UniversityNode** newHead, UniversityNode** newEnd);
++    UniversityNode* quickSort(UniversityNode* head, UniversityNode* end);
+ 
+-        bool compareNode(UniversityNode *left, UniversityNode *right);
+-        UniversityNode* getTail(UniversityNode *cur);
++    bool compareNode(UniversityNode* left, UniversityNode* right);
++    UniversityNode* getTail(UniversityNode* cur);
+ 
+-        void callMergeSort(sortOption option);
+-        void callQuickSort(sortOption option);
++    void callMergeSort(sortOption option);
++    void callQuickSort(sortOption option);
++
++    void LinearSearch(string search, sortOption option);
++    void JumpSearch(string search, sortOption option);
++    void DisplaySearchResult(UniversityNode* head, string search);
++    void DisplaySearchResult1(UniversityNode* head, string search);
++
++    static int RemovePlusSymbol(string otherRank);
++    static bool isSubstring(const std::string& a, const std::string& b);
++    void PrintTableHeader();
++    void DisplayTheUniversity(UniversityNode* current);
++    static void UniversityNameAlignment(UniversityNode *current, int &checkTwoByte, int &checkThreeByte);
+ };
+ 
+-#endif //ASSIGNMENT_UNIVERSITY_H
++#endif //ASSIGNMENT_UNIVERSITY_H
+\ No newline at end of file
+Index: Feedback.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by Wyatt Cheang on 23/03/2023.\n//\n\n#include \"Feedback.h\"\n#include \"DataIO.h\"\n\nFeedbackNode *Feedback::createFeedbackNode(string data[], User userClass, Admin adminClass, University uniClass) {\n    FeedbackNode* newFeedbackNode = new FeedbackNode;\n    newFeedbackNode->feedbackDatetime = new tm;\n    newFeedbackNode->replyDatetime = new tm;\n    newFeedbackNode->feedbackID = data[0];\n    newFeedbackNode->feedbackUser = userClass.searchUser(data[1]);\n    newFeedbackNode->replyAdmin = adminClass.searchAdminUser(data[2]);\n    newFeedbackNode->feedbackUniversity = uniClass.searchUniversity(data[3]);\n    newFeedbackNode->feedback = data[4];\n    newFeedbackNode->reply = data[5];\n\n    newFeedbackNode->feedbackDatetime = DataIO::StringToTime(data[6]);\n    newFeedbackNode->replyDatetime = DataIO::StringToTime(data[7]);\n//    strptime(data[6].c_str(), \"%Y-%m-%d %H:%M:%S\", newFeedbackNode->feedbackDatetime);\n//    strptime(data[7].c_str(), \"%Y-%m-%d %H:%M:%S\", newFeedbackNode->replyDatetime);\n    return newFeedbackNode;\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Feedback.cpp b/Feedback.cpp
+--- a/Feedback.cpp	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/Feedback.cpp	(date 1685349002917)
+@@ -5,6 +5,17 @@
+ #include "Feedback.h"
+ #include "DataIO.h"
+ 
++Feedback::Feedback() {
++    feedbackHead = nullptr;
++    feedbackTail = nullptr;
++    feedbackSize = 0;
++    DataIO::ReadFeedback(this);
++}
++
++Feedback::~Feedback() {
++    DataIO::SaveFeedback(this->feedbackHead);
++}
++
+ FeedbackNode *Feedback::createFeedbackNode(string data[], User userClass, Admin adminClass, University uniClass) {
+     FeedbackNode* newFeedbackNode = new FeedbackNode;
+     newFeedbackNode->feedbackDatetime = new tm;
+Index: User.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by Wyatt Cheang on 23/03/2023.\n//\n\n#include \"User.h\"\n#include \"DataIO.h\"\n#include <iostream>\n#include <iomanip>\n#include <ctime>\n#include <utility>\n#include <sstream>\n#include <regex>\nusing namespace std;\n\nUser::User() {\n    DataIO::ReadUser(this);\n}\n\nUserNode* User::searchUser(string username) {\n    UserNode* temp = this->userHead;\n    if (temp == nullptr) return nullptr;\n    while (temp != nullptr){\n        if (temp->username == username){\n            return temp;\n        }else{\n            temp = temp->nextUser;\n        }\n    }\n    return nullptr;\n}\n\nUserNode *User::createUserNode(string data[]){\n    UserNode *newUserNode = new UserNode;\n    newUserNode->lastTimeLogin = new tm;\n    newUserNode->lastTimeLogout = new tm;\n    newUserNode->userID = data[0];\n    newUserNode->username = data[1];\n    newUserNode->password = data[2];\n    newUserNode->lastTimeLogin = DataIO::StringToTime(data[3]);\n    newUserNode->lastTimeLogout = DataIO::StringToTime(data[4]);\n//    strptime(data[3].c_str(), \"%Y-%m-%d %H:%M:%S\", newUserNode->lastTimeLogin);\n//    strptime(data[4].c_str(), \"%Y-%m-%d %H:%M:%S\", newUserNode->lastTimeLogout);\n    newUserNode->nextUser = nullptr;\n    return newUserNode;\n}\n\nvoid User::appendUserNode(UserNode* newNode) {\n    if (this->userTail == nullptr){\n        this->userHead = this->userTail = newNode;\n        userSize++;\n        return;\n    }\n    this->userTail->nextUser = newNode;\n    this->userTail = newNode;\n    userSize++;\n}\n\nvoid User::displayUser() {\n    UserNode* current = userHead;\n    int width[4] = {9, 20, 19, 19};\n\n    cout << string(83, '-') << endl;\n    cout << \" | \";\n    cout << left << setw(9) << *userHeader << \" | \";\n    cout << left << setw(20) << *(userHeader + 1) << \" | \";\n    cout << left << setw(19)  << *(userHeader + 3) << \" | \";\n    cout << left << setw(20) << *(userHeader + 4) << \" | \";\n    cout << endl;\n    cout << string(83, '-') << endl;\n\n    while (current != nullptr){\n        // Convert std::tm to string\n        char login[20];\n        char logout[20];\n//        time_t t1 = mktime(current->lastTimeLogout);\n//        auto end = std::chrono::system_clock::now();\n//        time_t t2 = chrono::system_clock::to_time_t(end);\n//        double second = ::difftime(t2, t1);\n\n        strftime(login, 20, \"%Y-%m-%d %H:%M:%S\", current->lastTimeLogin);\n        strftime(logout, 20, \"%Y-%m-%d %H:%M:%S\", current->lastTimeLogout);\n        string date1(login);\n        string date2(logout);\n\n        cout << \" | \";\n        cout << left << setw(9) << current->userID << \" | \";\n        cout << left << setw(20) << current->username << \" | \";\n        cout << right << setw(19)  << date1 << \" | \";\n        cout << right << setw(20) << date2 << \" | \";\n//        cout << right << setw(20) << int(second)/86400 << \" | \";\n        current = current->nextUser;\n        cout << endl;\n    }\n    cout << string(83, '-') << endl;\n    cout << \"Number of user shown: \" << userSize << endl;\n}\n\nvoid User::addUserHeader(string header[]) {\n    for (int i = 0; i < 5; i++){\n        *(userHeader + i) = header[i];\n    }\n}\n\nvoid User::userRegister() {\n    string name, pass, pass2;\n    while(true){\n        cout << \"Enter the username: \";\n        cin >> name;\n        if (!usernameValidation(name)){\n            cin.clear();\n            cin.ignore(numeric_limits<streamsize>::max(), '\\n');\n            continue;\n        }\n        while (true) {\n            cout << \"Enter your password: \";\n            cin >> pass;\n            if (!checkPasswordFormat(pass)) {\n                cin.clear();\n                cin.ignore(numeric_limits<streamsize>::max(), '\\n');\n                cout << \"Check your password format!\" << endl;\n                continue;\n            } else {\n                cout << \"Re-enter your password: \";\n                cin >> pass2;\n                if (pass != pass2) {\n                    cin.clear();\n                    cin.ignore(numeric_limits<streamsize>::max(), '\\n');\n                    cout << \"Passwords not same!\" << endl;\n                    continue;\n                }\n            }\n            break;\n        }\n        break;\n    }\n\n    if (cin.fail()){\n        cout << \"Error input!\" << endl;\n        userRegister();\n    }\n\n    if (pass != pass2){\n        cout << \"Passwords not same!\" << endl;\n        userRegister();\n    }\n    else{\n\n    }\n\n    // Generator UserID according to size of user\n    stringstream ss;\n    ss << \"U\" << setw(8) << setfill('0') << (userSize + 1);\n    string userid = ss.str();\n    string data[5] = {userid, name, pass, \"\", \"\"};\n\n    UserNode* newUserNode = createUserNode(data);\n    appendUserNode(newUserNode);\n}\n\nbool User::usernameValidation(string username) {\n    regex pattern(\"^[a-zA-Z0-9_]{4,20}$\");\n    if (!regex_match(username, pattern)) {\n        cout << \"Username cannot contain special characters!\" << endl;\n        return false;\n    }\n    else {\n        if (userHead == nullptr)\n            return true;\n        else{\n            UserNode* temp = userHead;\n            while (temp->nextUser != nullptr){\n                if (temp->username == username){\n                    cout << \"Username existed! Please try another username.\" << endl;\n                    return false;\n                }\n                temp = temp->nextUser;\n            }\n        }\n    }\n    return true;\n}\n\nbool User::checkPasswordFormat(string password) {\n    regex pattern(\"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$\");\n    if (!regex_match(password, pattern)){\n        return false;\n    }\n    return true;\n}\n\nUser::~User() {\n    DataIO::SaveUser(userHead);\n}\n\nvoid User::userLogin() {\n    string name, pass;\n    while (true) {\n        cout << \"Enter username: \";\n        cin >> name;\n        UserNode *theUser = searchUser(name);\n        if (theUser == nullptr) {\n            cin.clear();\n            cin.ignore(numeric_limits<streamsize>::max(), '\\n');\n            cout << \"Account doesn't exist!\" << endl;\n        }else{\n            for (int i = 0; i <= 3; i++){\n                cout << \"Enter your password: \";\n                cin >> pass;\n                if (pass != theUser->password){\n                    cin.clear();\n                    cin.ignore(numeric_limits<streamsize>::max(), '\\n');\n                    cout << \"Error password!\";\n                    cout << 3 - i << \" time attempt left.\\n\\n\" << endl;\n                }else{\n                    loginUser = theUser;\n                    break;\n                }\n            }\n            if (loginUser != nullptr){\n                break;\n            }else{\n                cout << \"Too many attempt! Please try again!\\n\\n\";\n            }\n        }\n    }\n    cout << \"Welcome back, \" << loginUser->username << endl;\n}\n\n\n//    while (true) {\n//\n//        cout << \"Enter username: \";\n//        cin >> name;\n//        UserNode *temp = userHead;\n//        if (temp == nullptr) return;\n//\n//        while (temp != nullptr) {\n//            if (name == temp->username) {\n//                loginUser = temp;\n//                break;\n//            }\n//            temp = temp->nextUser;\n//        }\n//        if (loginUser == nullptr) {\n//            cout << \"Account doesn't exist.\" << endl;\n//            return;\n//        }\n//        int i = 0;\n//        for (; i < 3; i++) {\n//            cout << \"Enter your password: \";\n//            cin >> pass;\n//            if (pass != loginUser->password) {\n//                cout << \"Error password!\" << endl;\n//            } else {\n//                break;\n//            }\n//        }\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/User.cpp b/User.cpp
+--- a/User.cpp	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/User.cpp	(date 1685387464686)
+@@ -16,21 +16,40 @@
+     DataIO::ReadUser(this);
+ }
+ 
++User::~User() {
++    DataIO::SaveUser(this->userHead);
++}
++
+ UserNode* User::searchUser(string username) {
+     UserNode* temp = this->userHead;
+     if (temp == nullptr) return nullptr;
+-    while (temp != nullptr){
+-        if (temp->username == username){
++    while (temp != nullptr) {
++        if (temp->username == username) {
+             return temp;
+-        }else{
++        }
++        else {
++            temp = temp->nextUser;
++        }
++    }
++    return nullptr;
++}
++
++UserNode* User::searchUserPass(string password) {
++    UserNode* temp = this->userHead;
++    if (temp == nullptr) return nullptr;
++    while (temp != nullptr) {
++        if (temp->password == password) {
++            return temp;
++        }
++        else {
+             temp = temp->nextUser;
+         }
+     }
+     return nullptr;
+ }
+ 
+-UserNode *User::createUserNode(string data[]){
+-    UserNode *newUserNode = new UserNode;
++UserNode* User::createUserNode(string data[]) {
++    UserNode* newUserNode = new UserNode;
+     newUserNode->lastTimeLogin = new tm;
+     newUserNode->lastTimeLogout = new tm;
+     newUserNode->userID = data[0];
+@@ -38,14 +57,14 @@
+     newUserNode->password = data[2];
+     newUserNode->lastTimeLogin = DataIO::StringToTime(data[3]);
+     newUserNode->lastTimeLogout = DataIO::StringToTime(data[4]);
+-//    strptime(data[3].c_str(), "%Y-%m-%d %H:%M:%S", newUserNode->lastTimeLogin);
+-//    strptime(data[4].c_str(), "%Y-%m-%d %H:%M:%S", newUserNode->lastTimeLogout);
++    //    strptime(data[3].c_str(), "%Y-%m-%d %H:%M:%S", newUserNode->lastTimeLogin);
++    //    strptime(data[4].c_str(), "%Y-%m-%d %H:%M:%S", newUserNode->lastTimeLogout);
+     newUserNode->nextUser = nullptr;
+     return newUserNode;
+ }
+ 
+ void User::appendUserNode(UserNode* newNode) {
+-    if (this->userTail == nullptr){
++    if (this->userTail == nullptr) {
+         this->userHead = this->userTail = newNode;
+         userSize++;
+         return;
+@@ -57,25 +76,21 @@
+ 
+ void User::displayUser() {
+     UserNode* current = userHead;
+-    int width[4] = {9, 20, 19, 19};
++    int width[4] = { 9, 20, 19, 19 };
+ 
+     cout << string(83, '-') << endl;
+     cout << " | ";
+     cout << left << setw(9) << *userHeader << " | ";
+     cout << left << setw(20) << *(userHeader + 1) << " | ";
+-    cout << left << setw(19)  << *(userHeader + 3) << " | ";
++    cout << left << setw(19) << *(userHeader + 3) << " | ";
+     cout << left << setw(20) << *(userHeader + 4) << " | ";
+     cout << endl;
+     cout << string(83, '-') << endl;
+ 
+-    while (current != nullptr){
++    while (current != nullptr) {
+         // Convert std::tm to string
+         char login[20];
+         char logout[20];
+-//        time_t t1 = mktime(current->lastTimeLogout);
+-//        auto end = std::chrono::system_clock::now();
+-//        time_t t2 = chrono::system_clock::to_time_t(end);
+-//        double second = ::difftime(t2, t1);
+ 
+         strftime(login, 20, "%Y-%m-%d %H:%M:%S", current->lastTimeLogin);
+         strftime(logout, 20, "%Y-%m-%d %H:%M:%S", current->lastTimeLogout);
+@@ -85,9 +100,9 @@
+         cout << " | ";
+         cout << left << setw(9) << current->userID << " | ";
+         cout << left << setw(20) << current->username << " | ";
+-        cout << right << setw(19)  << date1 << " | ";
++        cout << right << setw(19) << date1 << " | ";
+         cout << right << setw(20) << date2 << " | ";
+-//        cout << right << setw(20) << int(second)/86400 << " | ";
++        //        cout << right << setw(20) << int(second)/86400 << " | ";
+         current = current->nextUser;
+         cout << endl;
+     }
+@@ -96,17 +111,17 @@
+ }
+ 
+ void User::addUserHeader(string header[]) {
+-    for (int i = 0; i < 5; i++){
++    for (int i = 0; i < 5; i++) {
+         *(userHeader + i) = header[i];
+     }
+ }
+ 
+ void User::userRegister() {
+     string name, pass, pass2;
+-    while(true){
++    while (true) {
+         cout << "Enter the username: ";
+         cin >> name;
+-        if (!usernameValidation(name)){
++        if (!usernameValidation(name)) {
+             cin.clear();
+             cin.ignore(numeric_limits<streamsize>::max(), '\n');
+             continue;
+@@ -119,7 +134,8 @@
+                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                 cout << "Check your password format!" << endl;
+                 continue;
+-            } else {
++            }
++            else {
+                 cout << "Re-enter your password: ";
+                 cin >> pass2;
+                 if (pass != pass2) {
+@@ -134,16 +150,16 @@
+         break;
+     }
+ 
+-    if (cin.fail()){
++    if (cin.fail()) {
+         cout << "Error input!" << endl;
+         userRegister();
+     }
+ 
+-    if (pass != pass2){
++    if (pass != pass2) {
+         cout << "Passwords not same!" << endl;
+         userRegister();
+     }
+-    else{
++    else {
+ 
+     }
+ 
+@@ -151,7 +167,7 @@
+     stringstream ss;
+     ss << "U" << setw(8) << setfill('0') << (userSize + 1);
+     string userid = ss.str();
+-    string data[5] = {userid, name, pass, "", ""};
++    string data[5] = { userid, name, pass, "", "" };
+ 
+     UserNode* newUserNode = createUserNode(data);
+     appendUserNode(newUserNode);
+@@ -166,10 +182,10 @@
+     else {
+         if (userHead == nullptr)
+             return true;
+-        else{
++        else {
+             UserNode* temp = userHead;
+-            while (temp->nextUser != nullptr){
+-                if (temp->username == username){
++            while (temp->nextUser != nullptr) {
++                if (temp->username == username) {
+                     cout << "Username existed! Please try another username." << endl;
+                     return false;
+                 }
+@@ -181,77 +197,123 @@
+ }
+ 
+ bool User::checkPasswordFormat(string password) {
+-    regex pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$");
+-    if (!regex_match(password, pattern)){
++    regex pattern("^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$%^&*-]).{8,20}$");
++    if (!regex_match(password, pattern)) {
+         return false;
+     }
+     return true;
+ }
+ 
+-User::~User() {
++void User::deleteInactiveUsers() {
++    // Get the current date in %Y-%m-%d format
++    time_t currentTime = time(nullptr);
++    tm* currentDate = localtime(&currentTime);
++    ostringstream oss;
++    oss << put_time(currentDate, "%Y-%m-%d");
++    string currentDateString = oss.str();
++
++    // Traverse the linked list to delete inactive users
++    UserNode* current = userHead;
++    UserNode* previous = nullptr;
++
++    while (current != nullptr) {
++        // Extract the date from the last logout date and time saved in user.csv in %Y-%m-%d format
++        tm* lastLogoutDate = current->lastTimeLogout;
++        ostringstream logoutDateStream;
++        logoutDateStream << std::put_time(lastLogoutDate, "%Y-%m-%d");
++        string lastLogoutDateString = logoutDateStream.str();
++
++        // Get the difference between the extracted last logout date and the current date
++        tm lastLogout = {};
++        istringstream(lastLogoutDateString) >> get_time(&lastLogout, "%Y-%m-%d");
++        time_t lastLogoutTime = mktime(&lastLogout);
++        double daysSinceLogout = difftime(currentTime, lastLogoutTime) / (24 * 60 * 60);
++
++        // Check if the days since logout equals or exceeds 1 year (365 days)
++        if (daysSinceLogout >= 365) {
++            // Delete the inactive user
++            if (previous == nullptr) {
++                // User is at the head of the list
++                userHead = current->nextUser;
++            }
++            else {
++                // User is in the middle or at the tail of the list
++                previous->nextUser = current->nextUser;
++                if (current == userTail) {
++                    userTail = previous;
++                }
++            }
++            UserNode* nextNode = current->nextUser;
++            delete current;
++            current = nextNode;
++
++            userSize--;
++        }
++        else {
++            previous = current;
++            current = current->nextUser;
++        }
++    }
++    cout << "Users who have been inactive for 1 year and above have been deleted." << endl;
+     DataIO::SaveUser(userHead);
+ }
+ 
+ void User::userLogin() {
+     string name, pass;
+     while (true) {
++        cout << "User Login" << endl;
+         cout << "Enter username: ";
+         cin >> name;
+-        UserNode *theUser = searchUser(name);
++        UserNode* theUser = searchUser(name);
+         if (theUser == nullptr) {
+             cin.clear();
+             cin.ignore(numeric_limits<streamsize>::max(), '\n');
+             cout << "Account doesn't exist!" << endl;
+-        }else{
+-            for (int i = 0; i <= 3; i++){
++        }
++        else {
++            for (int i = 0; i <= 3; i++) {
+                 cout << "Enter your password: ";
+                 cin >> pass;
+-                if (pass != theUser->password){
++                if (pass != theUser->password) {
+                     cin.clear();
+                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                     cout << "Error password!";
+                     cout << 3 - i << " time attempt left.\n\n" << endl;
+-                }else{
+-                    loginUser = theUser;
++                }
++                else {
++                    this->loginUser = theUser;
++                    string loginTime = DataIO::getCurrentTime();
++                    loginUser->lastTimeLogin = DataIO::StringToTime(loginTime);
++                    cout << "Login Time: " << DataIO::TimeToString(loginUser->lastTimeLogin) << endl;
+                     break;
+                 }
+             }
+-            if (loginUser != nullptr){
++            if (loginUser != nullptr) {
+                 break;
+-            }else{
++            }
++            else {
+                 cout << "Too many attempt! Please try again!\n\n";
+             }
+         }
+     }
+-    cout << "Welcome back, " << loginUser->username << endl;
++}
++
++void User::userLogout() {
++    string logoutTime = DataIO::getCurrentTime();
++    loginUser->lastTimeLogout = DataIO::StringToTime(logoutTime);
++    cout << "Successfully Logout!" << endl;
++    cout << "Logout Time: " << DataIO::TimeToString(loginUser->lastTimeLogout) << endl;
++    loginUser = nullptr;
++}
++
++UserNode *User::getLoginUser() const {
++    return loginUser;
++}
++
++void User::setLoginUser(UserNode *loginUser) {
++    User::loginUser = loginUser;
+ }
+ 
+ 
+-//    while (true) {
+-//
+-//        cout << "Enter username: ";
+-//        cin >> name;
+-//        UserNode *temp = userHead;
+-//        if (temp == nullptr) return;
+-//
+-//        while (temp != nullptr) {
+-//            if (name == temp->username) {
+-//                loginUser = temp;
+-//                break;
+-//            }
+-//            temp = temp->nextUser;
+-//        }
+-//        if (loginUser == nullptr) {
+-//            cout << "Account doesn't exist." << endl;
+-//            return;
+-//        }
+-//        int i = 0;
+-//        for (; i < 3; i++) {
+-//            cout << "Enter your password: ";
+-//            cin >> pass;
+-//            if (pass != loginUser->password) {
+-//                cout << "Error password!" << endl;
+-//            } else {
+-//                break;
+-//            }
+-//        }
++
++
+Index: Admin.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by Wyatt Cheang on 23/03/2023.\n//\n\n#include \"Admin.h\"\n\n\nvoid Admin::adminLogin() {\n\n}\n\nAdminNode *Admin::createAdminNode(string *data) {\n    AdminNode * newAdminNode = new AdminNode;\n    newAdminNode->adminID = data[0];\n    newAdminNode->username = data[1];\n    newAdminNode->password = data[2];\n    newAdminNode->nextAdmin = nullptr;\n    return newAdminNode;\n}\n\nvoid Admin::appendAdminNode(string *data) {\n    AdminNode * newAdminNode = createAdminNode(data);\n    if (this->adminTail == nullptr){\n        this->adminHead = this->adminTail = newAdminNode;\n        adminSize++;\n        return;\n    }\n    this->adminTail->nextAdmin = newAdminNode;\n    this->adminTail = newAdminNode;\n    adminSize++;\n}\n\nAdminNode* Admin::searchAdminUser(string username) {\n    AdminNode* temp = this->adminHead;\n    if (temp == nullptr) return nullptr;\n    while (temp != nullptr){\n        if (temp->username == username){\n            return temp;\n        }\n        temp = temp->nextAdmin;\n    }\n    return nullptr;\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Admin.cpp b/Admin.cpp
+--- a/Admin.cpp	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/Admin.cpp	(date 1685387583829)
+@@ -3,14 +3,20 @@
+ //
+ 
+ #include "Admin.h"
+-
++#include "DataIO.h"
++#include "User.h"
++#include <iostream>
++#include <iomanip>
++#include <ctime>
++#include <chrono>
++#include <utility>
++#include <sstream>
++#include <regex>
++using namespace std;
+ 
+-void Admin::adminLogin() {
+ 
+-}
+-
+-AdminNode *Admin::createAdminNode(string *data) {
+-    AdminNode * newAdminNode = new AdminNode;
++AdminNode* Admin::createAdminNode(string data[]) {
++    AdminNode* newAdminNode = new AdminNode;
+     newAdminNode->adminID = data[0];
+     newAdminNode->username = data[1];
+     newAdminNode->password = data[2];
+@@ -18,9 +24,9 @@
+     return newAdminNode;
+ }
+ 
+-void Admin::appendAdminNode(string *data) {
+-    AdminNode * newAdminNode = createAdminNode(data);
+-    if (this->adminTail == nullptr){
++void Admin::appendAdminNode(string data[]) {
++    AdminNode* newAdminNode = createAdminNode(data);
++    if (this->adminTail == nullptr) {
+         this->adminHead = this->adminTail = newAdminNode;
+         adminSize++;
+         return;
+@@ -30,11 +36,15 @@
+     adminSize++;
+ }
+ 
++//Admin::Admin() {
++//    DataIO::ReadAdmin(this);
++//}
++
+ AdminNode* Admin::searchAdminUser(string username) {
+     AdminNode* temp = this->adminHead;
+     if (temp == nullptr) return nullptr;
+-    while (temp != nullptr){
+-        if (temp->username == username){
++    while (temp != nullptr) {
++        if (temp->username == username) {
+             return temp;
+         }
+         temp = temp->nextAdmin;
+@@ -42,3 +52,133 @@
+     return nullptr;
+ }
+ 
++void Admin::modifyUsername() {
++    string username, newUsername, password, newPass, newPass2;
++    User user;
++    //UserNode* theUser;
++    cout << "Enter current username: " << endl;
++    cin >> username;
++    UserNode* foundUser = user.searchUser(username);
++    if (foundUser == nullptr) {
++        cin.clear();
++        cin.ignore(numeric_limits<streamsize>::max(), '\n');
++        cout << "Account doesn't exist!" << endl;
++    }
++    else {
++        while (foundUser != nullptr) {
++            if (foundUser->username == username) {
++                cout << "Enter new username: " << endl;
++                cin >> newUsername;
++                if (!user.usernameValidation(newUsername)) {
++                    cin.clear();
++                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                }
++                break;
++            }
++        }
++        foundUser->username = newUsername;
++        cout << "Username modified successfully!" << endl;
++    }
++}
++
++void Admin::modifyUserPassword() {
++    string username, newUsername, password, newPass, newPass2;
++    User user;
++    //UserNode* theUser;
++    cout << "Enter current username: " << endl;
++    cin >> username;
++    UserNode* foundUser = user.searchUser(username);
++    if (foundUser == nullptr) {
++        cin.clear();
++        cin.ignore(numeric_limits<streamsize>::max(), '\n');
++        cout << "Account doesn't exist!" << endl;
++    }
++    else {
++        while (foundUser != nullptr) {
++            if (foundUser->username == username) {
++                cout << "Enter current password: " << endl;
++                cin >> password;
++                UserNode* foundUser2 = user.searchUserPass(password);
++                if (foundUser2 != nullptr && foundUser2->password == password) {
++                    cout << "Enter new password: " << endl;
++                    cin >> newPass;
++                    if (!user.checkPasswordFormat(newPass)) {
++                        cin.clear();
++                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                        cout << "Check your password format!" << endl;
++                        continue;
++                    }
++                    else {
++                        cout << "Re-enter your new password: ";
++                        cin >> newPass2;
++                        if (newPass != newPass2) {
++                            cin.clear();
++                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                            cout << "Password not matched!" << endl;
++                            continue;
++                        }
++                    }
++                    foundUser2->password = newPass;
++                    cout << "Password modified successfully! " << endl;
++                }
++                else {
++                    cin.clear();
++                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                    cout << "Invalid current password!" << endl;
++                }
++                break;
++            }
++        }
++    }
++}
++
++
++void Admin::adminLogin() {
++    DataIO data;
++    User user;
++    data.ReadAdmin(this);
++    string name, pass;
++    while (true) {
++        cout << "Admin Login" << endl;
++        cout << "Enter admin username: ";
++        cin >> name;
++        AdminNode* theAdmin = searchAdminUser(name);
++        if (theAdmin == nullptr) {
++            cin.clear();
++            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++            cout << "Account doesn't exist!" << endl;
++        }
++        else {
++            for (int i = 0; i <= 3; i++) {
++                cout << "Enter your password: " << endl;
++                cin >> pass;
++                if (pass != theAdmin->password) {
++                    cin.clear();
++                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                    cout << "Error password!";
++                    cout << 3 - i << " time attempt left.\n\n" << endl;
++                }
++                else {
++                    loginAdmin = theAdmin;
++                    break;
++                }
++            }
++            if (loginAdmin != nullptr) {
++                break;
++            }
++            else {
++                cout << "Too many attempt! Please try again!\n\n";
++            }
++        }
++    }
++}
++
++void Admin::adminLogout() {
++    loginAdmin = nullptr;
++}
++
++AdminNode *Admin::getLoginAdmin() const {
++    return loginAdmin;
++}
++
++
+Index: Admin.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by Wyatt Cheang on 23/03/2023.\n//\n\n#ifndef ASSIGNMENT_ADMIN_H\n#define ASSIGNMENT_ADMIN_H\n\n#include <string>\n\nusing namespace std;\n\nstruct AdminNode{\n    string adminID;\n    string username;\n    string password;\n    AdminNode* nextAdmin;\n};\n\nclass Admin {\n    private:\n        AdminNode* adminHead = nullptr;\n        AdminNode* adminTail = nullptr;\n        AdminNode* loginAdmin = nullptr;\n        int adminSize = 0;\n    public:\n\n    void adminLogin();\n        AdminNode* createAdminNode(string data[]);\n        void appendAdminNode(string data[]);\n        AdminNode* searchAdminUser(string username);\n        //Required Functions\n};\n\n\n#endif //ASSIGNMENT_ADMIN_H\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Admin.h b/Admin.h
+--- a/Admin.h	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/Admin.h	(date 1685387464677)
+@@ -9,7 +9,7 @@
+ 
+ using namespace std;
+ 
+-struct AdminNode{
++struct AdminNode {
+     string adminID;
+     string username;
+     string password;
+@@ -17,18 +17,23 @@
+ };
+ 
+ class Admin {
+-    private:
+-        AdminNode* adminHead = nullptr;
+-        AdminNode* adminTail = nullptr;
+-        AdminNode* loginAdmin = nullptr;
+-        int adminSize = 0;
+-    public:
++private:
++    AdminNode* adminHead = nullptr;
++    AdminNode* adminTail = nullptr;
++    AdminNode* loginAdmin = nullptr;
++    int adminSize = 0;
++public:
+ 
+     void adminLogin();
+-        AdminNode* createAdminNode(string data[]);
+-        void appendAdminNode(string data[]);
+-        AdminNode* searchAdminUser(string username);
+-        //Required Functions
++    void adminLogout();
++    AdminNode* createAdminNode(string data[]);
++    void appendAdminNode(string data[]);
++    AdminNode* searchAdminUser(string username);
++    void modifyUsername();
++    void modifyUserPassword();
++
++    AdminNode *getLoginAdmin() const;
++    //Required Functions
+ };
+ 
+ 
+Index: Guest.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Guest.h b/Page.h
+rename from Guest.h
+rename to Page.h
+--- a/Guest.h	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/Page.h	(date 1685379696446)
+@@ -2,15 +2,45 @@
+ // Created by Wyatt Cheang on 27/03/2023.
+ //
+ 
+-#ifndef ASSIGNMENT_GUEST_H
+-#define ASSIGNMENT_GUEST_H
++#ifndef ASSIGNMENT_PAGE_H
++#define ASSIGNMENT_PAGE_H
+ 
+ #include "University.h"
++#include "User.h"
++#include "Admin.h"
++#include "Feedback.h"
++#include "Favourite.h"
++
+ 
+-class Guest {
++class BasePage {
++protected:
++    University* university;
++    User* user;
++    Admin* admin;
++    Feedback* feedback;
++    Favourite* favourite;
++
+ public:
+-    Guest(University);
++    BasePage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite);
++};
++
++class UserPage : public BasePage {
++    public:
++        UserPage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite);
++        void DisplayUserPage();
++};
++
++class AdminPage : public BasePage {
++    public:
++        AdminPage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite);
++        void DisplayAdminPage();
+ };
+ 
+ 
+-#endif //ASSIGNMENT_GUEST_H
++class StartPage : public BasePage {
++public:
++    StartPage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite);
++    void DisplayStartPage(UserPage* userPage, AdminPage* adminPage);
++};
++
++#endif //ASSIGNMENT_PAGE_H
+\ No newline at end of file
+Index: main.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include <iostream>\n#include \"University.h\"\n#include \"DataIO.h\"\n#include \"Guest.h\"\n#include \"User.h\"\n\nusing namespace std;\n\n\n\nint main() {\n    User user;\n    user.displayUser();\n    University uniClass;\n    Admin admin;\n    Guest guest(uniClass);\n    user.userLogin();\n    uniClass.DisplayData();\n\n\n\n\n\n\n\n\n\n\n\n\n\n//    auto start = chrono::high_resolution_clock::now();\n//    University uniClass;\n//    auto end = chrono::high_resolution_clock ::now();\n//    auto duration = chrono::duration_cast<chrono::microseconds>(end - start);\n//    cout << \"Time used for read file\\t\\t\\t: \" << duration.count() << endl;\n//\n//\n//    start = chrono::high_resolution_clock::now();\n//    uniClass.callMergeSort(uniName);\n//    end = chrono::high_resolution_clock ::now();\n//    duration = chrono::duration_cast<chrono::microseconds>(end - start);\n//    cout << \"Time used for merge sort file\\t: \" << duration.count() << endl;\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.cpp b/main.cpp
+--- a/main.cpp	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/main.cpp	(date 1685384830060)
+@@ -1,7 +1,7 @@
+ #include <iostream>
+ #include "University.h"
+ #include "DataIO.h"
+-#include "Guest.h"
++#include "Page.h"
+ #include "User.h"
+ 
+ using namespace std;
+@@ -9,37 +9,20 @@
+ 
+ 
+ int main() {
+-    User user;
+-    user.displayUser();
+-    University uniClass;
+-    Admin admin;
+-    Guest guest(uniClass);
+-    user.userLogin();
+-    uniClass.DisplayData();
+-
+-
+-
++    University* university = new University();
++    User* user = new User();
++    Admin* admin = new Admin();
++    Feedback* feedback = new Feedback();
++    Favourite* favourite = new Favourite();
+ 
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-//    auto start = chrono::high_resolution_clock::now();
+-//    University uniClass;
+-//    auto end = chrono::high_resolution_clock ::now();
+-//    auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+-//    cout << "Time used for read file\t\t\t: " << duration.count() << endl;
+-//
+-//
+-//    start = chrono::high_resolution_clock::now();
+-//    uniClass.callMergeSort(uniName);
+-//    end = chrono::high_resolution_clock ::now();
+-//    duration = chrono::duration_cast<chrono::microseconds>(end - start);
+-//    cout << "Time used for merge sort file\t: " << duration.count() << endl;
+-
+-}
++    StartPage* startPage = new StartPage(university, user, admin, feedback, favourite);
++    UserPage* userPage = new UserPage(university, user, admin, feedback, favourite);
++    AdminPage* adminPage = new AdminPage(university, user, admin, feedback, favourite);
++    startPage->DisplayStartPage(userPage, adminPage);
++    delete user;
++    delete admin;
++    delete university;
++    delete feedback;
++    delete favourite;
++    return 0;
++}
+\ No newline at end of file
+Index: DataIO.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by Wyatt Cheang on 16/03/2023.\n//\n\n#include <sstream>\n#include <iostream>\n#include <filesystem>\n#include \"DataIO.h\"\n#include \"University.h\"\n\nusing namespace std;\n\n#ifndef _FILE_PATH_H\n#define _FILE_PATH_H\n\n#ifdef _WIN32\nconst string filePath = \"csvFiles\\\";\n#else\nconst string filePath = \"csvFiles/\";\n#endif\n\n#endif // _FILE_PATH_H\n\n\nvoid DataIO::ReadUniversity(University* head) {\n\n    fstream file;\n    file.open(filePath + \"data.csv\", ios::in);\n    string data[21];\n    size_t repPosition;\n\n    if(file.is_open()){\n        // ReadUniversity header\n        for (int i = 0; i < 21; i++) {\n            if (i == 20) {\n                getline(file, data[i]);\n                if (data[20].back() == '\\r')  //remove '\\r' at the last of the string\n                    (data[20]).erase(data[20].end() - 1);\n            }else\n                getline(file, data[i], ',');\n        }\n        head->addUniHeader(data);\n\n        while(file.good() && !file.eof()){\n            // get the 1st data data, if the data is empty, it will break the loop\n            getline(file, data[0], ',');\n            if (data[0].empty()) break;\n\n            for(int i = 1; i < 21; i++){\n                // get each cells\n                if (i != 20) getline(file, data[i], ',');\n                else {\n                    getline(file, data[i]);\n                    data[20].erase(data[i].end() - 1);\n                }\n\n                // Data Manipulation\n\n                if(data[i] == \"\") data[i] = \"0\";\n                if(data[i] == \"-\") data[i] = \"-1\";\n                if(data[i].front() == ' ') data[i].erase(data[i].begin());\n\n                // continue read the university name if it is contain ',' character\n                string temp;\n                if (data[i][0] == '\"' && data[i].back() != '\"') {\n                    do {\n                        getline(file, temp, ',');\n                        data[i] = data[i] + \",\" + temp;\n                    } while(temp.back() != '\"');\n                }\n\n                // remove extra '\"' symbol for the institutionName's name\n                if(data[i].front() == '\"' && data[i].back() == '\"') {\n                    data[i].erase(data[i].begin());\n                    data[i].erase(data[i].end() - 1);\n                    while ((repPosition = data[i].find(\"\\\"\\\"\")) != string::npos)\n                        data[i].replace(repPosition, 2, \"\\\"\");\n                }\n            }\n            // get a new node returned by passing the string array\n            UniversityNode *add = head->createNewUniversityNode(data);\n\n            // append the new node to the end of the list\n            head->appendUniList(add);\n        }\n    }\n    else\n        cout<<\"Could not open the file\\n\";\n}\n\nvoid DataIO::ReadUser(User *head) {\n    string column[5];\n    fstream file;\n    file.open(filePath + \"user.csv\", ios::in);\n\n    if(file.is_open()){\n        for (int i = 0; i < 5; i++) {\n            if (i == 4) {\n                getline(file, *(column + i));\n                if (column[4].back() == '\\r')  //remove '\\r' at the last of the string\n                    (column[4]).erase(column[4].end() - 1);\n            } else\n                getline(file, column[i], ',');\n        }\n\n        head->addUserHeader(column);\n\n        while(file.good()){\n\n            getline(file, *(column + 0), ',');\n            if ((column + 0)->empty()) break;\n\n            for (int i = 1; i < 5; i++){\n                if (i != 4) getline(file, column[i], ',');\n                else\n                    getline(file, column[i]);\n                    if(column[i].back() == '\\r')  //remove '\\r' at the last of the string\n                    (column[i]).erase(column[i].end() - 1);\n            }\n            UserNode* add = head->createUserNode(column);\n            head->appendUserNode(add);\n        }\n    }else{\n        cout<<\"Could not open the file\\n\";\n    }\n    file.close();\n}\n\nvoid DataIO::ReadAdmin(Admin *head) {\n    string column[3];\n    fstream file;\n    file.open(filePath + \"admin.csv\", ios::in);\n\n    if(file.is_open()){\n        for (int i = 0; i < 3; i++) {\n            if (i == 4) {\n                getline(file, *(column + i));\n                if (column[4].back() == '\\r')  //remove '\\r' at the last of the string\n                    (column[4]).erase(column[4].end() - 1);\n            } else\n                getline(file, column[i], ',');\n        }\n\n        while(file.good()){\n\n            getline(file, *(column + 0), ',');\n            if ((column + 0)->empty()) break;\n\n            for (int i = 1; i < 5; i++){\n                if (i != 4) getline(file, column[i], ',');\n                else\n                    getline(file, column[i]);\n                if(column[i].back() == '\\r')  //remove '\\r' at the last of the string\n                    (column[i]).erase(column[i].end() - 1);\n            }\n            head->appendAdminNode(column);\n        }\n    }else{\n        cout<<\"Could not open the file\\n\";\n    }\n    file.close();\n}\n\nvoid DataIO::ReadFeedback(Feedback *head) {\n\n}\n\nvoid DataIO::ReadFavourite(Favourite *head) {\n\n}\n\nvoid DataIO::SaveUser(UserNode* head) {\n    ofstream file(filePath + \"user.csv\");\n    if (!file.is_open()){\n        cout << \"Could not open file.\" << endl;\n        return;\n    }\n    UserNode *temp = head;\n    file << \"User ID,Username,Password,Last Login Datetime, LastLogout Datetime\\n\";\n    while (temp != nullptr){\n        char login[20];\n        char logout[20];\n        strftime(login, 20, \"%Y-%m-%d %H:%M:%S\", temp->lastTimeLogin);\n        strftime(logout, 20, \"%Y-%m-%d %H:%M:%S\", temp->lastTimeLogout);\n        string date1(login);\n        string date2(logout);\n\n        file << temp->userID << ',';\n        file << temp->username << ',';\n        file << temp->password << ',';\n        file << login << ',';\n        file << logout << '\\n';\n        temp = temp->nextUser;\n    }\n    file.close();\n}\n\n\ntm* DataIO::StringToTime(const string& dateString) {\n    tm *tm = new struct tm;\n    std::istringstream ss(dateString);\n    ss >> std::get_time(tm, \"%Y-%m-%d %H:%M:%S\"); // or just %T in this case\n    return tm;\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/DataIO.cpp b/DataIO.cpp
+--- a/DataIO.cpp	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/DataIO.cpp	(date 1685421844205)
+@@ -14,7 +14,7 @@
+ #define _FILE_PATH_H
+ 
+ #ifdef _WIN32
+-const string filePath = "csvFiles\";
++const string filePath = "C:\\Users\\joeyk\\Source\\Repos\\DSTR_Assignment\\csvFiles\\";
+ #else
+ const string filePath = "csvFiles/";
+ #endif
+@@ -29,24 +29,25 @@
+     string data[21];
+     size_t repPosition;
+ 
+-    if(file.is_open()){
++    if (file.is_open()) {
+         // ReadUniversity header
+         for (int i = 0; i < 21; i++) {
+             if (i == 20) {
+                 getline(file, data[i]);
+                 if (data[20].back() == '\r')  //remove '\r' at the last of the string
+                     (data[20]).erase(data[20].end() - 1);
+-            }else
++            }
++            else
+                 getline(file, data[i], ',');
+         }
+         head->addUniHeader(data);
+ 
+-        while(file.good() && !file.eof()){
++        while (file.good() && !file.eof()) {
+             // get the 1st data data, if the data is empty, it will break the loop
+             getline(file, data[0], ',');
+             if (data[0].empty()) break;
+ 
+-            for(int i = 1; i < 21; i++){
++            for (int i = 1; i < 21; i++) {
+                 // get each cells
+                 if (i != 20) getline(file, data[i], ',');
+                 else {
+@@ -56,9 +57,9 @@
+ 
+                 // Data Manipulation
+ 
+-                if(data[i] == "") data[i] = "0";
+-                if(data[i] == "-") data[i] = "-1";
+-                if(data[i].front() == ' ') data[i].erase(data[i].begin());
++                if (data[i] == "") data[i] = "0";
++                if (data[i] == "-") data[i] = "-1";
++                if (data[i].front() == ' ') data[i].erase(data[i].begin());
+ 
+                 // continue read the university name if it is contain ',' character
+                 string temp;
+@@ -66,11 +67,11 @@
+                     do {
+                         getline(file, temp, ',');
+                         data[i] = data[i] + "," + temp;
+-                    } while(temp.back() != '"');
++                    } while (temp.back() != '"');
+                 }
+ 
+                 // remove extra '"' symbol for the institutionName's name
+-                if(data[i].front() == '"' && data[i].back() == '"') {
++                if (data[i].front() == '"' && data[i].back() == '"') {
+                     data[i].erase(data[i].begin());
+                     data[i].erase(data[i].end() - 1);
+                     while ((repPosition = data[i].find("\"\"")) != string::npos)
+@@ -78,106 +79,146 @@
+                 }
+             }
+             // get a new node returned by passing the string array
+-            UniversityNode *add = head->createNewUniversityNode(data);
++            UniversityNode* add = head->createNewUniversityNode(data);
+ 
+             // append the new node to the end of the list
+             head->appendUniList(add);
+         }
+     }
+     else
+-        cout<<"Could not open the file\n";
++        cout << "Could not open the file\n";
+ }
+ 
+-void DataIO::ReadUser(User *head) {
++void DataIO::ReadUser(User* head) {
+     string column[5];
+     fstream file;
+     file.open(filePath + "user.csv", ios::in);
+ 
+-    if(file.is_open()){
++    if (file.is_open()) {
+         for (int i = 0; i < 5; i++) {
+             if (i == 4) {
+                 getline(file, *(column + i));
+                 if (column[4].back() == '\r')  //remove '\r' at the last of the string
+                     (column[4]).erase(column[4].end() - 1);
+-            } else
++            }
++            else
+                 getline(file, column[i], ',');
+         }
+ 
+         head->addUserHeader(column);
+ 
+-        while(file.good()){
++        while (file.good()) {
+ 
+             getline(file, *(column + 0), ',');
+             if ((column + 0)->empty()) break;
+ 
+-            for (int i = 1; i < 5; i++){
++            for (int i = 1; i < 5; i++) {
+                 if (i != 4) getline(file, column[i], ',');
+                 else
+                     getline(file, column[i]);
+-                    if(column[i].back() == '\r')  //remove '\r' at the last of the string
++                if (column[i].back() == '\r')  //remove '\r' at the last of the string
+                     (column[i]).erase(column[i].end() - 1);
+             }
+             UserNode* add = head->createUserNode(column);
+             head->appendUserNode(add);
+         }
+-    }else{
+-        cout<<"Could not open the file\n";
++    }
++    else {
++        cout << "Could not open the file\n";
+     }
+     file.close();
+ }
+ 
+-void DataIO::ReadAdmin(Admin *head) {
++void DataIO::ReadAdmin(Admin* head) {
+     string column[3];
+     fstream file;
+     file.open(filePath + "admin.csv", ios::in);
+ 
+-    if(file.is_open()){
++    if (file.is_open()) {
+         for (int i = 0; i < 3; i++) {
+-            if (i == 4) {
++            if (i == 2) {
+                 getline(file, *(column + i));
+-                if (column[4].back() == '\r')  //remove '\r' at the last of the string
+-                    (column[4]).erase(column[4].end() - 1);
+-            } else
++                if (column[2].back() == '\r')  //remove '\r' at the last of the string
++                    (column[2]).erase(column[2].end() - 1);
++            }
++            else
+                 getline(file, column[i], ',');
+         }
+ 
+-        while(file.good()){
++        while (file.good()) {
+ 
+             getline(file, *(column + 0), ',');
+             if ((column + 0)->empty()) break;
+ 
+-            for (int i = 1; i < 5; i++){
+-                if (i != 4) getline(file, column[i], ',');
++            for (int i = 1; i < 3; i++) {
++                if (i != 2) getline(file, column[i], ',');
+                 else
+                     getline(file, column[i]);
+-                if(column[i].back() == '\r')  //remove '\r' at the last of the string
++                if (column[i].back() == '\r')  //remove '\r' at the last of the string
+                     (column[i]).erase(column[i].end() - 1);
+             }
++
+             head->appendAdminNode(column);
+         }
+-    }else{
+-        cout<<"Could not open the file\n";
++    }
++    else {
++        cout << "Could not open the file\n";
+     }
+     file.close();
+ }
+ 
+-void DataIO::ReadFeedback(Feedback *head) {
++void DataIO::ReadFeedback(Feedback* head) {
+ 
+ }
+ 
+-void DataIO::ReadFavourite(Favourite *head) {
++void DataIO::ReadFavourite(Favourite* head) {
++    string column[2];
++    fstream file;
++    file.open(filePath + "favourite.csv", ios::in);
++
++    if (file.is_open()) {
++        for (int i = 0; i < 2; i++) {
++            if (i == 1) {
++                getline(file, *(column + i));
++                if (column[1].back() == '\r')  //remove '\r' at the last of the string
++                    (column[1]).erase(column[1].end() - 1);
++            }
++            else
++                getline(file, column[i], ',');
++        }
++
++        while (file.good()) {
++
++            getline(file, *(column + 0), ',');
++            if ((column + 0)->empty()) break;
+ 
++            for (int i = 1; i < 2; i++) {
++                if (i != 1) getline(file, column[i], ',');
++                else
++                    getline(file, column[i]);
++                if (column[i].back() == '\r')  //remove '\r' at the last of the string
++                    (column[i]).erase(column[i].end() - 1);
++            }
++
++            FavouriteNode* add = head->createFavouriteNode(column);
++            head->appendFavouriteNode(add);
++        }
++    }
++    else {
++        cout << "Could not open the file\n";
++    }
++    file.close();
+ }
+ 
+ void DataIO::SaveUser(UserNode* head) {
+     ofstream file(filePath + "user.csv");
+-    if (!file.is_open()){
++    if (!file.is_open()) {
+         cout << "Could not open file." << endl;
+         return;
+     }
+-    UserNode *temp = head;
++    UserNode* temp = head;
+     file << "User ID,Username,Password,Last Login Datetime, LastLogout Datetime\n";
+-    while (temp != nullptr){
++    while (temp != nullptr) {
+         char login[20];
+         char logout[20];
+         strftime(login, 20, "%Y-%m-%d %H:%M:%S", temp->lastTimeLogin);
+@@ -195,11 +236,103 @@
+     file.close();
+ }
+ 
++void DataIO::SaveFavourite(FavouriteNode* head) {
++    ofstream file(filePath + "favourite.csv", ios::app);
++    if (!file.is_open()) {
++        cout << "Could not open file." << endl;
++        return;
++    }
++    FavouriteNode* temp = head;
++    while (temp != nullptr) {
++        file << temp->favUniversity << ',';
++        file << temp->favUser << '\n';
++        temp = temp->nextFav;
++    }
++    file.close();
++}
++
++void DataIO::SaveFeedback(FeedbackNode* head) {
++    ofstream file(filePath + "feedback.csv", ios::app);
++    if (!file.is_open()) {
++        cout << "Could not open file." << endl;
++        return;
++    }
++    FeedbackNode* temp = head;
++    while (temp != nullptr) {
++        file << temp->feedbackID << ',';
++        file << temp->feedbackUser << ',';
++        file << temp->replyAdmin << ',';
++        file << temp->feedbackUniversity << ',';
++        file << temp->feedback << ',';
++        file << temp->reply << ',';
++        file << temp->feedbackDatetime << ',';
++        file << temp->replyDatetime << '\n';
++    }
++    file.close();
++}
+ 
+ tm* DataIO::StringToTime(const string& dateString) {
+-    tm *tm = new struct tm;
++    tm* tm = new struct tm;
+     std::istringstream ss(dateString);
+     ss >> std::get_time(tm, "%Y-%m-%d %H:%M:%S"); // or just %T in this case
+     return tm;
+ }
+ 
++string DataIO::getCurrentTime() {
++    std::time_t currentTime = std::time(nullptr);
++    std::tm* localTime = std::localtime(&currentTime);
++    return DataIO::TimeToString(localTime);
++}
++
++string DataIO::TimeToString(tm *time) {
++    char buffer[20];
++    strftime(buffer, 20, "%Y-%m-%d %H:%M:%S", time);
++    string date(buffer);
++    return date;
++}
++
++void DataIO::printStringCentered(const string& text) {
++    int lineLength = 100;
++    int textLength = text.length();
++    int leftPadding = (lineLength - textLength) / 2;
++    cout << setw(leftPadding) << "" << text  << endl;
++}
++
++void DataIO::printSelectUniversityAttributeMenu(){
++    cout << "(1) Rank" << endl;
++    cout << "(2) Name" << endl;
++    cout << "(3) Country" << endl;
++    cout << "(4) Country Code" << endl;
++    cout << "(5) AR (Academic Reputation) Score" << endl;
++    cout << "(6) AR (Employer Reputation) Rank" << endl;
++    cout << "(7) ER (Employer Reputation) Score" << endl;
++    cout << "(8) ER (Employer Reputation) Rank" << endl;
++    cout << "(9) FSR (Faculty/Student Ratio) Score" << endl;
++    cout << "(10) FSR (Faculty/Student Ratio) Rank" << endl;
++    cout << "(11) CPF (Citations per Faculty) Score" << endl;
++    cout << "(12) CPF (Citations per Faculty) Rank" << endl;
++    cout << "(13) IFR (International Faculty Ratio) Score" << endl;
++    cout << "(14) IFR (International Faculty Ratio) Rank" << endl;
++    cout << "(15) ISR (International Student Ratio) Score" << endl;
++    cout << "(16) ISR (International Student Ratio) Rank" << endl;
++    cout << "(17) IRN (International Research Network) Score" << endl;
++    cout << "(18) IRN (International Research Network) Rank" << endl;
++    cout << "(19) GER (Employment Outcome) Score" << endl;
++    cout << "(20) GER (Employment Outcome) Rank" << endl;
++    cout << "(21) Score Scaled" << endl;
++    cout << endl << "Enter you selection: ";
++}
++
++void DataIO::selectSortMethodMenu(){
++    cout << "Select sort method: " << endl;
++    cout << "(1) Merge Sort" << endl;
++    cout << "(2) Quick Sort" << endl;
++    cout << endl << "Enter you selection: ";
++}
++
++void DataIO::selectSearchMethodMenu(){
++    cout << "Select search method: " << endl;
++    cout << "(1) Linear Search" << endl;
++    cout << "(2) Binary Search" << endl;
++    cout << endl << "Enter you selection: ";
++}
+\ No newline at end of file
+Index: University.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by Wyatt Cheang on 16/03/2023.\n//\n\n#include <iomanip>\n#include <iostream>\n#include \"University.h\"\n#include \"DataIO.h\"\n\nusing namespace std;\n\nUniversity::University(){\n    DataIO::ReadUniversity(this);\n};\n\nUniversity::~University(){\n}\n\nvoid University::appendUniList(UniversityNode* newNode) {\n    UniversityNode* current = this->universityHead;\n    if(current == nullptr){\n        newNode->previousUni = nullptr;\n        this->universityHead = newNode;\n        this->universityTail = newNode;\n        uniListSize++;\n        return;\n    }\n    universityTail->nextUni = newNode;\n    newNode->previousUni = universityTail;\n    universityTail = newNode;\n    uniListSize++;\n}\n\n//void University::reverseDisplay() {\n//    reverseDisplay(this->universityHead);\n//}\n//\n//void University::reverseDisplay(UniversityNode* cur){\n//    if (cur == nullptr) return;\n//    reverseDisplay(cur->nextUni);\n//    cout << cur->rank << endl;\n//}\n\nvoid University::DisplayData() {\n    int checkTwoByte, checkThreeByte;\n    string width = {6, 90, 12, 35, 7, 6, 7, 6, 8, 7, 8, 7, 8, 7, 8, 7, 8, 7, 8, 7, 11};\n    UniversityNode* current = universityHead;\n\n    // print header;\n    cout << endl << string(334, '-') << endl;\n    cout << \" | \";\n    for (int i = 0; i < 20; i++){\n        if (i >= 1 && i <= 3){\n            cout << left << setw(width[i]);\n        }else {\n            cout << right << setw(width[i]);\n        }\n        cout << *(universityHeader + i) << \" | \";\n    }\n    cout << *(universityHeader + 20) << \" | \";\n    cout << endl << string(334, '-') << endl;\n\n    while(current != nullptr){\n        // count 2bytes and 3bytes special character to determine the width size;\n        checkTwoByte = 0;\n        checkThreeByte = 0;\n\n        for (int i = 0; i < current->institutionName.length() - 1; i++){\n            if ((unsigned int)(current->institutionName[i]) > 127 &&\n                (unsigned int)(current->institutionName[i + 1]) > 127) {\n                if ((unsigned int)(current->institutionName[i + 2]) > 127) {\n                    checkThreeByte = checkThreeByte + 2;\n                    i = i + 2;\n                }else{\n                    checkTwoByte ++;\n                    i = i + 1;\n                }\n            }\n        }\n        cout << \" | \";\n        cout << right << setw(4) << current->rank << \" | \";\n        cout << left << setw(90  + checkTwoByte + checkThreeByte) << current->institutionName << \" | \";\n        cout << left << setw(12) << current->locationCode << \" | \";\n        cout << left << setw(35) << current->location << \" | \";\n        cout << right << setw(7) << current->arScore << \" | \";\n        cout << right << setw(6) << current->arRank << \" | \";\n        cout << right << setw(7) << current->erScore << \" | \";\n        cout << right << setw(6) << current->erRank << \" | \";\n        cout << right << setw(8) << current->fsrScore << \" | \";\n        cout << right << setw(7) << current->fsrRank << \" | \";\n        cout << right << setw(8) << current->cpfScore << \" | \";\n        cout << right << setw(7) << current->cpfRank << \" | \";\n        cout << right << setw(8) << current->ifrScore << \" | \";\n        cout << right << setw(7) << current->ifrRank << \" | \";\n        cout << right << setw(8) << current->isrScore << \" | \";\n        cout << right << setw(7) << current->isrRank << \" | \";\n        cout << right << setw(8) << current->irnScore << \" | \";\n        cout << right << setw(7) << current->irnRank << \" | \";\n        cout << right << setw(8) << current->gerScore << \" | \";\n        cout << right << setw(7) << current->gerRank << \" | \";\n        cout << right << setw(11) << current->scoreScaled << \" |  \";\n        cout << endl;\n        current = current->nextUni;\n    }\n    cout << string(334, '-') << endl;\n    cout << \"Number of university shown: \" << uniListSize << endl << endl;\n}\n\nUniversityNode* University::createNewUniversityNode(string data[]) {\n    UniversityNode *newNode = new UniversityNode();\n    newNode->rank = stoi(data[0]);\n    newNode->institutionName = data[1];\n    newNode->locationCode = data[2];\n    newNode->location = data[3];\n    newNode->arScore = stod(data[4]);\n    newNode->arRank = (data[5]);\n    newNode->erScore = stod(data[6]);\n    newNode->erRank = (data[7]);\n    newNode->fsrScore = stod(data[8]);\n    newNode->fsrRank = (data[9]);\n    newNode->cpfScore = stod(data[10]);\n    newNode->cpfRank = (data[11]);\n    newNode->ifrScore = stod(data[12]);\n    newNode->ifrRank = (data[13]);\n    newNode->isrScore = stod(data[14]);\n    newNode->isrRank = (data[15]);\n    newNode->irnScore = stod(data[16]);\n    newNode->irnRank = (data[17]);\n    newNode->gerScore = stod(data[18]);\n    newNode->gerRank = (data[19]);\n    newNode->scoreScaled = stod(data[20]);\n    newNode->nextUni = nullptr;\n\n    return newNode;\n}\n\nstatic void toUpper(std::string& str) {\n    for (char& c : str) {\n        c = toupper(c);\n    }\n}\n\n\nbool University::compareNode(UniversityNode *left, UniversityNode *right) {\n    int nameCompare, scoreCompare, rankCompare;\n    string leftName = left->institutionName;\n    string rightName = right->institutionName;\n    double leftValue = 0, rightValue = 0;\n\n    toUpper(leftName);\n    toUpper(rightName);\n//    transform(leftName.begin(), leftName.end(), leftName.begin(), ::toupper);\n//    transform(rightName.begin(), rightName.end(), rightName.begin(), ::toupper);\n\n    rankCompare = left->rank < right->rank;\n    nameCompare = leftName.compare(rightName);\n\n    switch(this->option) {\n        case arScore:\n            leftValue = left->arScore;\n            rightValue = right->arScore;\n            break;\n        case fsrScore:\n            leftValue = left->fsrScore;\n            rightValue = right->fsrScore;\n            break;\n        case erScore:\n            leftValue = left->erScore;\n            rightValue = right->erScore;\n            break;\n        default:\n            break;\n    }\n\n    // scoreCompare : 0 to take left node, 1 to take right node\n    scoreCompare = (leftValue < rightValue) || (leftValue == rightValue && rankCompare == 0);\n\n    if((this->option == ::uniRank && rankCompare == 1) ||\n       (this->option == ::uniName && nameCompare < 0) ||\n       (this->option != ::uniRank && this->option != ::uniName && scoreCompare == 0)) return 0;\n    else return 1;\n}\n\n// merge sort\n\nvoid University::splitList(UniversityNode *list, UniversityNode **leftList, UniversityNode **rightList) {\n    UniversityNode *slow = list, *fast = list->nextUni;\n\n    // get the middle note in the list\n    while(fast != nullptr) {\n        fast = fast->nextUni;\n        if (fast != nullptr) {\n            slow = slow->nextUni;\n            fast = fast->nextUni;\n        }\n    }\n    // split the list into two parts and break the connection between them\n    *leftList = list;\n    *rightList = slow->nextUni;\n    slow->nextUni = nullptr;\n}\n\nUniversityNode* University::mergeList(UniversityNode *leftList, UniversityNode *rightList) {\n    // 'result' is the new head of merged list\n    UniversityNode *result = nullptr;\n\n    // if the list has been divided to base level (size = 1), directly return\n    if(leftList == nullptr) return rightList;\n    else if(rightList == nullptr) return leftList;\n\n    // comparing first node in 'leftList' and 'rightList' to decide which node should be adopted\n    if(!compareNode(leftList, rightList)) {\n        result = leftList;\n        result->nextUni = mergeList(leftList->nextUni, rightList);\n    }else {\n        result = rightList;\n        result->nextUni = mergeList(leftList, rightList->nextUni);\n    }\n\n    return result;\n}\n\nvoid University::mergeSort(UniversityNode **list) {\n    UniversityNode *head = *list;\n    UniversityNode *leftList, *rightList;\n\n    // nothing to be sorted if the linked list has no node or only one\n    if(head == nullptr || head->nextUni == nullptr) return;\n\n    splitList(head, &leftList, &rightList);\n\n    mergeSort(&leftList);\n    mergeSort(&rightList);\n\n    *list = mergeList(leftList, rightList);\n\n}\n\nvoid University::callMergeSort(sortOption option) {\n    this->option = option;\n    mergeSort(&(this->universityHead));\n}\n\n// quick sort\n\nUniversityNode* University::getTail(UniversityNode *cur) {\n    while(cur->nextUni != nullptr) cur = cur->nextUni;\n    return cur;\n}\n\nUniversityNode* University::partition(UniversityNode *head, UniversityNode *end, UniversityNode **newHead, UniversityNode **newEnd) {\n    // 'head' and 'end' is the original first and last node inside of this list\n    // 'newHead' and 'newEnd' is the new first and last node for this list\n    UniversityNode *pivot = end, *tail = pivot;\n    UniversityNode *cur = head, *prev = nullptr; // prev is the last node which lies in left category\n\n    while(cur != pivot) {\n        if(!compareNode(cur, pivot)) {\n            // because the order inside of a category (smaller than or larger than pivot) is not important\n            // first node that suit the condition will be the 'newHead'\n            if((*newHead) == nullptr) (*newHead) = cur;\n            // expanding left category\n            prev = cur;\n            cur = cur->nextUni;\n        }else {\n            // 'cur' will be moved to right category if it does not meet the above if case\n            // if there is node(s) in left category, connect the 'prev' and the node after 'cur'\n            if(prev != nullptr) prev->nextUni = cur->nextUni;\n            // creating a 'temp' pointer to record the next 'cur' ('prev' might not exist)\n            UniversityNode *temp = cur->nextUni;\n            // setting 'cur' as the tail node\n            cur->nextUni = nullptr;\n            tail->nextUni = cur;\n            tail = tail->nextUni;\n            // go back on the track\n            cur = temp;\n        }\n    }\n    // if no 'newHead' is set (all data has been moved to right category)\n    // means that the pivot is the 'newHead'\n    if((*newHead) == nullptr) (*newHead) = pivot;\n    (*newEnd) = tail;\n\n    return pivot;\n}\n\nUniversityNode* University::quickSort(UniversityNode *head, UniversityNode *end) {\n    // head can be null if pivot is the last node in the previous categorized linked list\n    // head can be end if there's only one node after pivot\n    if(head == end || head == nullptr) return head;\n\n    // 'newHead' and 'newEnd' is the new 'head' and 'end' of categorized linked list\n    UniversityNode *newHead = nullptr, *newEnd = nullptr;\n    UniversityNode *pivot = partition(head, end, &newHead, &newEnd);\n\n    // as it is a singly linked list, better to simply skip the \n    // recursion of left category if there is no node in it\n    if(newHead != pivot) {\n        // break the connection between left category and pivot to recurse\n        UniversityNode *tail = newHead;\n        while(tail->nextUni != pivot) tail = tail->nextUni;\n        tail->nextUni = nullptr;\n\n        // sort the left category to get 'newHead' and 'newEnd' of it\n        newHead = quickSort(newHead, tail);\n        // rebuild the connection between left category and the pivot\n        tail = getTail(newHead);\n        tail->nextUni = pivot;\n    }\n    // sort the right category of the list\n    pivot->nextUni = quickSort(pivot->nextUni, newEnd);\n\n    return newHead;\n}\n\nvoid University::callQuickSort(sortOption option) {\n    this->option = option;\n    this->universityHead = quickSort(this->universityHead, getTail(this->universityHead));\n}\n\nvoid University::addUniHeader(string data[]) {\n    for (int i = 0; i < 21; i++){\n        *(this->universityHeader + i) = data[i];\n    }\n}\n\nUniversityNode* University::searchUniversity(string data){\n    UniversityNode* current = this->universityHead;\n    while(current != nullptr){\n        if (current->rank == stoi(data)){\n            break;\n        }\n        current = current->nextUni;\n    }\n    return current;\n}\n\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/University.cpp b/University.cpp
+--- a/University.cpp	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/University.cpp	(date 1685430956424)
+@@ -6,19 +6,21 @@
+ #include <iostream>
+ #include "University.h"
+ #include "DataIO.h"
++#include <chrono>
++
+ 
+ using namespace std;
+ 
+-University::University(){
++University::University() {
+     DataIO::ReadUniversity(this);
+ };
+ 
+-University::~University(){
++University::~University() {
+ }
+ 
+ void University::appendUniList(UniversityNode* newNode) {
+     UniversityNode* current = this->universityHead;
+-    if(current == nullptr){
++    if (current == nullptr) {
+         newNode->previousUni = nullptr;
+         this->universityHead = newNode;
+         this->universityTail = newNode;
+@@ -42,64 +44,12 @@
+ //}
+ 
+ void University::DisplayData() {
+-    int checkTwoByte, checkThreeByte;
+-    string width = {6, 90, 12, 35, 7, 6, 7, 6, 8, 7, 8, 7, 8, 7, 8, 7, 8, 7, 8, 7, 11};
+     UniversityNode* current = universityHead;
+ 
+-    // print header;
+-    cout << endl << string(334, '-') << endl;
+-    cout << " | ";
+-    for (int i = 0; i < 20; i++){
+-        if (i >= 1 && i <= 3){
+-            cout << left << setw(width[i]);
+-        }else {
+-            cout << right << setw(width[i]);
+-        }
+-        cout << *(universityHeader + i) << " | ";
+-    }
+-    cout << *(universityHeader + 20) << " | ";
+-    cout << endl << string(334, '-') << endl;
++    this->PrintTableHeader();
+ 
+-    while(current != nullptr){
+-        // count 2bytes and 3bytes special character to determine the width size;
+-        checkTwoByte = 0;
+-        checkThreeByte = 0;
+-
+-        for (int i = 0; i < current->institutionName.length() - 1; i++){
+-            if ((unsigned int)(current->institutionName[i]) > 127 &&
+-                (unsigned int)(current->institutionName[i + 1]) > 127) {
+-                if ((unsigned int)(current->institutionName[i + 2]) > 127) {
+-                    checkThreeByte = checkThreeByte + 2;
+-                    i = i + 2;
+-                }else{
+-                    checkTwoByte ++;
+-                    i = i + 1;
+-                }
+-            }
+-        }
+-        cout << " | ";
+-        cout << right << setw(4) << current->rank << " | ";
+-        cout << left << setw(90  + checkTwoByte + checkThreeByte) << current->institutionName << " | ";
+-        cout << left << setw(12) << current->locationCode << " | ";
+-        cout << left << setw(35) << current->location << " | ";
+-        cout << right << setw(7) << current->arScore << " | ";
+-        cout << right << setw(6) << current->arRank << " | ";
+-        cout << right << setw(7) << current->erScore << " | ";
+-        cout << right << setw(6) << current->erRank << " | ";
+-        cout << right << setw(8) << current->fsrScore << " | ";
+-        cout << right << setw(7) << current->fsrRank << " | ";
+-        cout << right << setw(8) << current->cpfScore << " | ";
+-        cout << right << setw(7) << current->cpfRank << " | ";
+-        cout << right << setw(8) << current->ifrScore << " | ";
+-        cout << right << setw(7) << current->ifrRank << " | ";
+-        cout << right << setw(8) << current->isrScore << " | ";
+-        cout << right << setw(7) << current->isrRank << " | ";
+-        cout << right << setw(8) << current->irnScore << " | ";
+-        cout << right << setw(7) << current->irnRank << " | ";
+-        cout << right << setw(8) << current->gerScore << " | ";
+-        cout << right << setw(7) << current->gerRank << " | ";
+-        cout << right << setw(11) << current->scoreScaled << " |  ";
+-        cout << endl;
++    while (current != nullptr) {
++        University::DisplayTheUniversity(current);
+         current = current->nextUni;
+     }
+     cout << string(334, '-') << endl;
+@@ -107,7 +57,7 @@
+ }
+ 
+ UniversityNode* University::createNewUniversityNode(string data[]) {
+-    UniversityNode *newNode = new UniversityNode();
++    UniversityNode* newNode = new UniversityNode();
+     newNode->rank = stoi(data[0]);
+     newNode->institutionName = data[1];
+     newNode->locationCode = data[2];
+@@ -141,21 +91,43 @@
+ }
+ 
+ 
+-bool University::compareNode(UniversityNode *left, UniversityNode *right) {
+-    int nameCompare, scoreCompare, rankCompare;
+-    string leftName = left->institutionName;
+-    string rightName = right->institutionName;
++bool University::compareNode(UniversityNode* left, UniversityNode* right) {
++    string leftName, rightName, leftLocation, rightLocation, leftLocationCode, rightLocationCode;
++    int nameCompare, locationCompare, locationCodeCompare, scoreCompare, rankCompare, otherRankCompare;
+     double leftValue = 0, rightValue = 0;
+ 
+-    toUpper(leftName);
+-    toUpper(rightName);
+-//    transform(leftName.begin(), leftName.end(), leftName.begin(), ::toupper);
+-//    transform(rightName.begin(), rightName.end(), rightName.begin(), ::toupper);
+-
+-    rankCompare = left->rank < right->rank;
+-    nameCompare = leftName.compare(rightName);
+-
+-    switch(this->option) {
++    switch (this->option) {
++        case uniRank:
++            rankCompare = left->rank < right->rank;
++            return rankCompare < 0;
++            break;
++        case uniName:
++            leftName = left->institutionName;
++            rightName = right->institutionName;
++            toUpper(leftName);
++            toUpper(rightName);
++            nameCompare = leftName.compare(rightName);
++            if (nameCompare == 0) return rankCompare < 0;
++            else return nameCompare > 0;
++            break;
++        case uniLocation:
++            cout << ("testing");
++            leftLocation = left->location;
++            rightLocation = right->location;
++            toUpper(leftLocation);
++            toUpper(rightLocation);
++            locationCompare = leftLocation.compare(rightLocation);
++            if (locationCompare == 0) return rankCompare < 0;
++            else return locationCompare > 0;
++            break;
++        case uniLocationCode:
++            leftLocationCode = left->locationCode;
++            rightLocationCode = right->locationCode;
++            toUpper(leftLocationCode);
++            toUpper(rightLocationCode);
++            locationCodeCompare = leftLocationCode.compare(rightLocationCode);
++            if (locationCodeCompare == 0) return rankCompare < 0;
++            else return locationCodeCompare > 0;
+         case arScore:
+             leftValue = left->arScore;
+             rightValue = right->arScore;
+@@ -168,6 +140,62 @@
+             leftValue = left->erScore;
+             rightValue = right->erScore;
+             break;
++        case cpfScore:
++            leftValue = left->cpfScore;
++            rightValue = right->cpfScore;
++            break;
++        case ifrScore:
++            leftValue = left->ifrScore;
++            rightValue = right->ifrScore;
++            break;
++        case isrScore:
++            leftValue = left->isrScore;
++            rightValue = right->isrScore;
++            break;
++        case irnScore:
++            leftValue = left->irnScore;
++            rightValue = right->irnScore;
++            break;
++        case gerScore:
++            leftValue = left->gerScore;
++            rightValue = right->gerScore;
++            break;
++        case scoreScaled:
++            leftValue = left->scoreScaled;
++            rightValue = right->scoreScaled;
++            break;
++        case arRank:
++            rightValue = stoi(left->arRank);
++            leftValue = stoi(right->arRank);
++            break;
++        case fsrRank:
++            rightValue = stoi(left->fsrRank);
++            leftValue = stoi(right->fsrRank);
++            break;
++        case erRank:
++            rightValue = stoi(left->erRank);
++            leftValue = stoi(right->erRank);
++            break;
++        case cpfRank:
++            rightValue = stoi(left->cpfRank);
++            leftValue = stoi(right->cpfRank);
++            break;
++        case ifrRank:
++            rightValue = stoi(left->ifrRank);
++            leftValue = stoi(right->ifrRank);
++            break;
++        case isrRank:
++            rightValue = stoi(left->isrRank);
++            leftValue = stoi(right->isrRank);
++            break;
++        case irnRank:
++            rightValue = RemovePlusSymbol(left->irnRank);
++            leftValue = RemovePlusSymbol(right->irnRank);
++            break;
++        case gerRank:
++            rightValue = RemovePlusSymbol(left->gerRank);
++            leftValue = RemovePlusSymbol(right->gerRank);
++            break;
+         default:
+             break;
+     }
+@@ -175,19 +203,20 @@
+     // scoreCompare : 0 to take left node, 1 to take right node
+     scoreCompare = (leftValue < rightValue) || (leftValue == rightValue && rankCompare == 0);
+ 
+-    if((this->option == ::uniRank && rankCompare == 1) ||
+-       (this->option == ::uniName && nameCompare < 0) ||
+-       (this->option != ::uniRank && this->option != ::uniName && scoreCompare == 0)) return 0;
++    if ((this->option == ::uniRank && rankCompare == 1) ||
++        (this->option == ::uniName && nameCompare < 0) ||
++        (this->option != ::uniRank && this->option != ::uniName && scoreCompare == 0))
++        return 0;
+     else return 1;
+ }
+ 
+ // merge sort
+ 
+-void University::splitList(UniversityNode *list, UniversityNode **leftList, UniversityNode **rightList) {
+-    UniversityNode *slow = list, *fast = list->nextUni;
++void University::splitList(UniversityNode* list, UniversityNode** leftList, UniversityNode** rightList) {
++    UniversityNode* slow = list, * fast = list->nextUni;
+ 
+     // get the middle note in the list
+-    while(fast != nullptr) {
++    while (fast != nullptr) {
+         fast = fast->nextUni;
+         if (fast != nullptr) {
+             slow = slow->nextUni;
+@@ -200,19 +229,20 @@
+     slow->nextUni = nullptr;
+ }
+ 
+-UniversityNode* University::mergeList(UniversityNode *leftList, UniversityNode *rightList) {
++UniversityNode* University::mergeList(UniversityNode* leftList, UniversityNode* rightList) {
+     // 'result' is the new head of merged list
+-    UniversityNode *result = nullptr;
++    UniversityNode* result = nullptr;
+ 
+     // if the list has been divided to base level (size = 1), directly return
+-    if(leftList == nullptr) return rightList;
+-    else if(rightList == nullptr) return leftList;
++    if (leftList == nullptr) return rightList;
++    else if (rightList == nullptr) return leftList;
+ 
+     // comparing first node in 'leftList' and 'rightList' to decide which node should be adopted
+-    if(!compareNode(leftList, rightList)) {
++    if (!compareNode(leftList, rightList)) {
+         result = leftList;
+         result->nextUni = mergeList(leftList->nextUni, rightList);
+-    }else {
++    }
++    else {
+         result = rightList;
+         result->nextUni = mergeList(leftList, rightList->nextUni);
+     }
+@@ -220,12 +250,12 @@
+     return result;
+ }
+ 
+-void University::mergeSort(UniversityNode **list) {
+-    UniversityNode *head = *list;
+-    UniversityNode *leftList, *rightList;
++void University::mergeSort(UniversityNode** list) {
++    UniversityNode* head = *list;
++    UniversityNode* leftList, * rightList;
+ 
+     // nothing to be sorted if the linked list has no node or only one
+-    if(head == nullptr || head->nextUni == nullptr) return;
++    if (head == nullptr || head->nextUni == nullptr) return;
+ 
+     splitList(head, &leftList, &rightList);
+ 
+@@ -238,36 +268,42 @@
+ 
+ void University::callMergeSort(sortOption option) {
+     this->option = option;
++    // Start measuring the execution time
++    auto start = std::chrono::high_resolution_clock::now();
+     mergeSort(&(this->universityHead));
++    // Stop measuring the execution time
++    auto stop = std::chrono::high_resolution_clock::now();
++    this->timeTaken = stop - start;
+ }
+ 
+ // quick sort
+ 
+-UniversityNode* University::getTail(UniversityNode *cur) {
+-    while(cur->nextUni != nullptr) cur = cur->nextUni;
++UniversityNode* University::getTail(UniversityNode* cur) {
++    while (cur->nextUni != nullptr) cur = cur->nextUni;
+     return cur;
+ }
+ 
+-UniversityNode* University::partition(UniversityNode *head, UniversityNode *end, UniversityNode **newHead, UniversityNode **newEnd) {
++UniversityNode* University::partition(UniversityNode* head, UniversityNode* end, UniversityNode** newHead, UniversityNode** newEnd) {
+     // 'head' and 'end' is the original first and last node inside of this list
+     // 'newHead' and 'newEnd' is the new first and last node for this list
+-    UniversityNode *pivot = end, *tail = pivot;
+-    UniversityNode *cur = head, *prev = nullptr; // prev is the last node which lies in left category
++    UniversityNode* pivot = end, * tail = pivot;
++    UniversityNode* cur = head, * prev = nullptr; // prev is the last node which lies in left category
+ 
+-    while(cur != pivot) {
+-        if(!compareNode(cur, pivot)) {
++    while (cur != pivot) {
++        if (!compareNode(cur, pivot)) {
+             // because the order inside of a category (smaller than or larger than pivot) is not important
+             // first node that suit the condition will be the 'newHead'
+-            if((*newHead) == nullptr) (*newHead) = cur;
++            if ((*newHead) == nullptr) (*newHead) = cur;
+             // expanding left category
+             prev = cur;
+             cur = cur->nextUni;
+-        }else {
++        }
++        else {
+             // 'cur' will be moved to right category if it does not meet the above if case
+             // if there is node(s) in left category, connect the 'prev' and the node after 'cur'
+-            if(prev != nullptr) prev->nextUni = cur->nextUni;
++            if (prev != nullptr) prev->nextUni = cur->nextUni;
+             // creating a 'temp' pointer to record the next 'cur' ('prev' might not exist)
+-            UniversityNode *temp = cur->nextUni;
++            UniversityNode* temp = cur->nextUni;
+             // setting 'cur' as the tail node
+             cur->nextUni = nullptr;
+             tail->nextUni = cur;
+@@ -278,27 +314,27 @@
+     }
+     // if no 'newHead' is set (all data has been moved to right category)
+     // means that the pivot is the 'newHead'
+-    if((*newHead) == nullptr) (*newHead) = pivot;
++    if ((*newHead) == nullptr) (*newHead) = pivot;
+     (*newEnd) = tail;
+ 
+     return pivot;
+ }
+ 
+-UniversityNode* University::quickSort(UniversityNode *head, UniversityNode *end) {
++UniversityNode* University::quickSort(UniversityNode* head, UniversityNode* end) {
+     // head can be null if pivot is the last node in the previous categorized linked list
+     // head can be end if there's only one node after pivot
+-    if(head == end || head == nullptr) return head;
++    if (head == end || head == nullptr) return head;
+ 
+     // 'newHead' and 'newEnd' is the new 'head' and 'end' of categorized linked list
+-    UniversityNode *newHead = nullptr, *newEnd = nullptr;
+-    UniversityNode *pivot = partition(head, end, &newHead, &newEnd);
++    UniversityNode* newHead = nullptr, * newEnd = nullptr;
++    UniversityNode* pivot = partition(head, end, &newHead, &newEnd);
+ 
+     // as it is a singly linked list, better to simply skip the 
+     // recursion of left category if there is no node in it
+-    if(newHead != pivot) {
++    if (newHead != pivot) {
+         // break the connection between left category and pivot to recurse
+-        UniversityNode *tail = newHead;
+-        while(tail->nextUni != pivot) tail = tail->nextUni;
++        UniversityNode* tail = newHead;
++        while (tail->nextUni != pivot) tail = tail->nextUni;
+         tail->nextUni = nullptr;
+ 
+         // sort the left category to get 'newHead' and 'newEnd' of it
+@@ -315,19 +351,23 @@
+ 
+ void University::callQuickSort(sortOption option) {
+     this->option = option;
++    // Start measuring the execution time
++    auto start = std::chrono::high_resolution_clock::now();
+     this->universityHead = quickSort(this->universityHead, getTail(this->universityHead));
++    auto stop = std::chrono::high_resolution_clock::now();
++    this->timeTaken = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+ }
+ 
+ void University::addUniHeader(string data[]) {
+-    for (int i = 0; i < 21; i++){
++    for (int i = 0; i < 21; i++) {
+         *(this->universityHeader + i) = data[i];
+     }
+ }
+ 
+-UniversityNode* University::searchUniversity(string data){
++UniversityNode* University::searchUniversity(string data) {
+     UniversityNode* current = this->universityHead;
+-    while(current != nullptr){
+-        if (current->rank == stoi(data)){
++    while (current != nullptr) {
++        if (current->rank == stoi(data)) {
+             break;
+         }
+         current = current->nextUni;
+@@ -335,5 +375,263 @@
+     return current;
+ }
+ 
++//Linear search
++void University::LinearSearch(string search, sortOption option)
++{
++    UniversityNode* current = this->universityHead;
++    int searchCounter = 0;
++
++    PrintTableHeader();
++    callMergeSort(option);
++
++    // Start measuring the execution time
++    auto start = std::chrono::high_resolution_clock::now();
++
++    // Iterate the entire linked list and search for the data
++    while (current != nullptr) {
++        bool displayUniversity = false;
++
++        switch (option) {
++            case uniRank:
++                displayUniversity = (current->rank == stoi(search));
++                break;
++            case uniName:
++                displayUniversity = isSubstring(search, current->institutionName);
++                break;
++            case uniLocation:
++                displayUniversity = isSubstring(search, current->location);
++                break;
++            case uniLocationCode:
++                displayUniversity = isSubstring(search, current->locationCode);
++                break;
++            case arScore:
++                displayUniversity = (current->arScore == stod(search));
++                break;
++            case erScore:
++                displayUniversity = (current->erScore == stod(search));
++                break;
++            case fsrScore:
++                displayUniversity = (current->fsrScore == stod(search));
++                break;
++            case cpfScore:
++                displayUniversity = (current->cpfScore == stod(search));
++                break;
++            case ifrScore:
++                displayUniversity = (current->ifrScore == stod(search));
++                break;
++            case isrScore:
++                displayUniversity = (current->isrScore == stod(search));
++                break;
++            case irnScore:
++                displayUniversity = (current->irnScore == stod(search));
++                break;
++            case gerScore:
++                displayUniversity = (current->gerScore == stod(search));
++                break;
++            default:
++                break;
++        }
++        if (displayUniversity){
++            searchCounter++;
++            DisplayTheUniversity(current);
++        }
++        current = current->nextUni;
++    }
++
++
++    // Stop measuring the execution time
++    auto stop = std::chrono::high_resolution_clock::now();
++    this->timeTaken = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
++
++    cout << string(334, '-') << endl;
++    cout << "Number of university shown: " << searchCounter << endl << endl;
++
++    if (searchCounter == 0){
++        cout << "No university found in this QS ranking 2023" << endl << endl;
++    }
++
++    // Print the execution time
++    cout << "Time taken by Linear Search Algorithm: ";
++    cout << timeTaken.count() << " seconds." << endl;
++    cout << endl;
++}
++
++//Jump search
++void University::JumpSearch(string search, sortOption option) {
++    // Sort the linked list by institution name
++    callMergeSort(option);
+ 
++    // Start measuring the execution time
++    auto startTime = std::chrono::high_resolution_clock::now();
+ 
++    int lengthOfLinkedList = 0;
++    UniversityNode* current = universityHead;
++
++    while (current != nullptr) {
++        lengthOfLinkedList++;
++        current = current->nextUni;
++    }
++
++    int jump = sqrt(lengthOfLinkedList);
++
++    UniversityNode* start = universityHead;
++    UniversityNode* end = universityHead;
++
++    if (option == uniName) {
++        while (end != nullptr && end->institutionName < search) {
++            start = end;
++            for (int i = 0; i < jump && end->nextUni != nullptr; i++) {
++                end = end->nextUni;
++            }
++        }
++    }
++    else if (option == arScore) {
++        while (end != nullptr && end->arScore < stod(search)) {
++            start = end;
++            for (int i = 0; i < jump && end->nextUni != nullptr; i++) {
++                end = end->nextUni;
++            }
++        }
++    }
++
++    UniversityNode* match = nullptr;
++    if (option == uniName) {
++        while (start != nullptr && start != end->nextUni) {
++            if (start->institutionName == search) {
++                match = start;
++                break;
++            }
++            start = start->nextUni;
++        }
++    }
++    else if (option == arScore) {
++        while (start != nullptr && start != end->nextUni) {
++            if (start->arScore == stod(search)) {
++                match = start;
++                break;
++            }
++            start = start->nextUni;
++        }
++    }
++
++    if (match == nullptr) 
++        cout << "No university found in this QS ranking 2023" << endl << endl;
++    else {
++        // Traverse the linked list and display all the matching nodes
++        UniversityNode* temp = match;
++        if (option == uniName) {
++            while (temp != nullptr && temp != match->nextUni) {
++                if (temp->institutionName == search) {
++//                    DisplaySearchResult(temp, search); // Updated parameter
++                }
++                temp = temp->nextUni;
++            }
++        }
++        else if (option == arScore) {
++            while (temp != nullptr && temp != match->nextUni) {
++                if (temp->arScore == stod(search)) {
++//                    DisplaySearchResult1(temp, search); // Updated parameter
++                }
++                temp = temp->nextUni;
++            }
++        }
++    }
++
++    // Stop measuring the execution time
++    auto stopTime = std::chrono::high_resolution_clock::now();
++    this->timeTaken = std::chrono::duration_cast<std::chrono::microseconds>(stopTime - startTime);
++
++//    cout << string(334, '-') << endl;
++//    cout << "Number of university shown: " << searchCounter << endl << endl;
++//
++//    if (searchCounter == 0){
++//        cout << "No university found in this QS ranking 2023" << endl << endl;
++//    }
++
++    // Print the execution time
++    cout << "Time taken by Linear Search Algorithm: ";
++    cout << timeTaken.count() << " seconds." << endl;
++    cout << endl;
++}
++
++int University::RemovePlusSymbol(string otherRank) {
++    // Remove the "+" sign from the ranks
++//    otherRank.erase(std::remove(otherRank.begin(), otherRank.end(), '-'), otherRank.end());
++
++    // Convert the rank strings to integers
++    int convertedRank = stoi(otherRank);
++
++    // Perform the comparison
++    return convertedRank;
++}
++
++void University::PrintTableHeader() {
++    string width = { 6, 90, 12, 35, 7, 6, 7, 6, 8, 7, 8, 7, 8, 7, 8, 7, 8, 7, 8, 7, 11 };
++    cout << endl << string(334, '-') << endl;
++    cout << " | ";
++    for (int i = 0; i < 20; i++) {
++        if (i >= 1 && i <= 3) {
++            cout << left << setw(width[i]);
++        }
++        else {
++            cout << right << setw(width[i]);
++        }
++        cout << *(universityHeader + i) << " | ";
++    }
++    cout << *(universityHeader + 20) << " | ";
++    cout << endl << string(334, '-') << endl;
++}
++
++void University::DisplayTheUniversity(UniversityNode *current) {
++    int checkTwoByte = 0;
++    int checkThreeByte = 0;
++    University::UniversityNameAlignment(current, checkTwoByte, checkThreeByte);
++    cout << " | ";
++    cout << right << setw(4) << current->rank << " | ";
++    cout << left << setw(90 + checkTwoByte + checkThreeByte) << current->institutionName << " | ";
++    cout << left << setw(12) << current->locationCode << " | ";
++    cout << left << setw(35) << current->location << " | ";
++    cout << right << setw(7) << current->arScore << " | ";
++    cout << right << setw(6) << current->arRank << " | ";
++    cout << right << setw(7) << current->erScore << " | ";
++    cout << right << setw(6) << current->erRank << " | ";
++    cout << right << setw(8) << current->fsrScore << " | ";
++    cout << right << setw(7) << current->fsrRank << " | ";
++    cout << right << setw(8) << current->cpfScore << " | ";
++    cout << right << setw(7) << current->cpfRank << " | ";
++    cout << right << setw(8) << current->ifrScore << " | ";
++    cout << right << setw(7) << current->ifrRank << " | ";
++    cout << right << setw(8) << current->isrScore << " | ";
++    cout << right << setw(7) << current->isrRank << " | ";
++    cout << right << setw(8) << current->irnScore << " | ";
++    cout << right << setw(7) << current->irnRank << " | ";
++    cout << right << setw(8) << current->gerScore << " | ";
++    cout << right << setw(7) << current->gerRank << " | ";
++    cout << right << setw(11) << current->scoreScaled << " |  ";
++    cout << endl;
++}
++
++bool University::isSubstring(const std::string& a, const std::string& b) {
++    string temp1 = a;
++    string temp2 = b;
++    toUpper(temp1);
++    toUpper(temp2);
++    return (temp2.find(temp1) != std::string::npos);
++}
++
++
++void University::UniversityNameAlignment(UniversityNode *current, int &checkTwoByte, int &checkThreeByte) {
++    for (int i = 0; i < current->institutionName.length() - 1; i++) {
++        if ((unsigned int)(current->institutionName[i]) > 127 &&
++            (unsigned int)(current->institutionName[i + 1]) > 127) {
++            if ((unsigned int)(current->institutionName[i + 2]) > 127) {
++                checkThreeByte = checkThreeByte + 2;
++                i = i + 2;
++            }
++            else {
++                checkTwoByte++;
++                i = i + 1;
++            }
++        }
++    }
++}
+\ No newline at end of file
+Index: Favourite.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by Wyatt Cheang on 23/03/2023.\n//\n\n#include \"Favourite.h\"\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Favourite.cpp b/Favourite.cpp
+--- a/Favourite.cpp	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/Favourite.cpp	(date 1685349002925)
+@@ -3,3 +3,53 @@
+ //
+ 
+ #include "Favourite.h"
++#include "User.h"
++#include "DataIO.h"
++#include <iostream>
++#include <iomanip>
++#include <ctime>
++#include <utility>
++#include <sstream>
++#include <regex>
++#include <fstream>
++using namespace std;
++
++const string filePath = "C:\\Users\\jamie\\Source\\Repos\\DSTR_Assignment\\csvFiles\\";
++
++Favourite::Favourite() {
++    DataIO::ReadFavourite(this);
++}
++
++Favourite::~Favourite() {
++    DataIO::SaveFavourite(this->favouriteHead);
++}
++
++FavouriteNode* Favourite::createFavouriteNode(string data[]) {
++    FavouriteNode* newFavouriteNode = new FavouriteNode;
++    newFavouriteNode->favUniversity = data[0];
++    newFavouriteNode->favUser = data[1];
++    newFavouriteNode->nextFav = nullptr;
++    return newFavouriteNode;
++}
++
++void Favourite::appendFavouriteNode(FavouriteNode* newNode) {
++    if (this->favouriteTail == nullptr) {
++        this->favouriteHead = this->favouriteTail = newNode;
++        favSize++;
++        return;
++    }
++    this->favouriteTail->nextFav = newNode;
++    this->favouriteTail = newNode;
++    favSize++;
++}
++
++void Favourite::addFavourite(string uniName, string username)
++{
++    if (!uniName.empty() && !username.empty()) {
++        string data[2] = { uniName, username };
++        FavouriteNode* newFavouriteNode = createFavouriteNode(data);
++        appendFavouriteNode(newFavouriteNode);
++
++        DataIO::SaveFavourite(favouriteHead);
++    }
++}
+\ No newline at end of file
+Index: DataIO.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by Wyatt Cheang on 16/03/2023.\n//\n\n#ifndef ASSIGNMENT_DATAIO_H\n#define ASSIGNMENT_DATAIO_H\n\n#include <iostream>\n#include <fstream>\n#include \"University.h\"\n#include \"User.h\"\n#include \"Admin.h\"\n#include \"Feedback.h\"\n#include \"Favourite.h\"\n\nusing namespace std;\n\nclass DataIO {\n    public:\n        static void ReadUniversity(University* head);\n        static void ReadUser(User* head);\n        static void SaveUser(UserNode* head);\n        static void ReadAdmin(Admin* head);\n        static void ReadFeedback(Feedback* head);\n        static void ReadFavourite(Favourite* head);\n        static tm* StringToTime(const string& dateString);\n};\n\n#endif //ASSIGNMENT_DATAIO_H\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/DataIO.h b/DataIO.h
+--- a/DataIO.h	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/DataIO.h	(date 1685421844177)
+@@ -16,14 +16,30 @@
+ using namespace std;
+ 
+ class DataIO {
+-    public:
+-        static void ReadUniversity(University* head);
+-        static void ReadUser(User* head);
+-        static void SaveUser(UserNode* head);
+-        static void ReadAdmin(Admin* head);
+-        static void ReadFeedback(Feedback* head);
+-        static void ReadFavourite(Favourite* head);
+-        static tm* StringToTime(const string& dateString);
++public:
++    static void ReadUniversity(University* head);
++
++    static void ReadUser(User* head);
++    static void SaveUser(UserNode* head);
++
++    static void ReadAdmin(Admin* head);
++
++    static void ReadFeedback(Feedback* head);
++    static void SaveFeedback(FeedbackNode* head);
++
++    static void ReadFavourite(Favourite* head);
++    static void SaveFavourite(FavouriteNode* head);
++
++    static void SaveAllFile(UserNode* userHead, FavouriteNode* favHead, FeedbackNode* feedbackHead);
++
++    static string getCurrentTime();
++    static tm* StringToTime(const string& dateString);
++    static string TimeToString(tm* time);
++
++    static void printStringCentered(const string& text);
++    static void printSelectUniversityAttributeMenu();
++    static void selectSortMethodMenu();
++    static void selectSearchMethodMenu();
+ };
+ 
+-#endif //ASSIGNMENT_DATAIO_H
++#endif //ASSIGNMENT_DATAIO_H
+\ No newline at end of file
+Index: User.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by Wyatt Cheang on 23/03/2023.\n//\n\n#ifndef ASSIGNMENT_USER_H\n#define ASSIGNMENT_USER_H\n\n#include <string>\n\nusing namespace std;\n\nstruct UserNode{\n    string userID;\n    string username;\n    string password;\n    tm* lastTimeLogin;\n    tm* lastTimeLogout;\n    UserNode* nextUser;\n};\n\nclass User {\n    private:\n        UserNode *userHead = nullptr;\n        UserNode *userTail = nullptr;\n        UserNode *loginUser = nullptr;\n        string *userHeader = new string[5];\n        int userSize = 0;\n    public:\n        User();\n        ~User();\n        void addUserHeader(string[]);\n        void userRegister();\n        void userLogin();\n        bool usernameValidation(string username);\n        bool checkPasswordFormat(string password);\n        UserNode* createUserNode(string data[]);\n        void appendUserNode(UserNode* newNode);\n        void displayUser();\n        UserNode* searchUser(string username);\n};\n\n\n#endif //ASSIGNMENT_USER_H\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/User.h b/User.h
+--- a/User.h	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/User.h	(date 1685385874622)
+@@ -31,12 +31,18 @@
+         void addUserHeader(string[]);
+         void userRegister();
+         void userLogin();
++        void userLogout();
+         bool usernameValidation(string username);
+         bool checkPasswordFormat(string password);
+         UserNode* createUserNode(string data[]);
+         void appendUserNode(UserNode* newNode);
+         void displayUser();
+         UserNode* searchUser(string username);
++        UserNode* searchUserPass(string password);
++        void deleteInactiveUsers();
++        UserNode *getLoginUser() const;
++        void setLoginUser(UserNode *loginUser);
++
+ };
+ 
+ 
+Index: Feedback.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by Wyatt Cheang on 23/03/2023.\n//\n\n#ifndef ASSIGNMENT_FEEDBACK_H\n#define ASSIGNMENT_FEEDBACK_H\n#include \"User.h\"\n#include \"Admin.h\"\n#include \"University.h\"\n#include <ctime>\n\nusing namespace std;\n\nstruct FeedbackNode{\n    string feedbackID;\n    UserNode* feedbackUser;\n    AdminNode* replyAdmin;\n    UniversityNode* feedbackUniversity;\n    string feedback;\n    string reply;\n    tm* feedbackDatetime;\n    tm* replyDatetime;\n    FeedbackNode * prevFeedback;\n    FeedbackNode * nextFeedback;\n    FeedbackNode * childFeedback;\n};\n\nclass Feedback {\n    private:\n        FeedbackNode* feedbackHead = nullptr;\n        FeedbackNode* feedbackTail = nullptr;\n        int feedbackSize = 0;\n    public:\n        FeedbackNode* createFeedbackNode(string data[], User userClass, Admin adminClass, University uniClass);\n        void appendNewFeedbackNode();\n        void appendChildFeedbackNode();\n};\n\n\n#endif //ASSIGNMENT_FEEDBACK_H\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Feedback.h b/Feedback.h
+--- a/Feedback.h	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/Feedback.h	(date 1685349002950)
+@@ -31,6 +31,8 @@
+         FeedbackNode* feedbackTail = nullptr;
+         int feedbackSize = 0;
+     public:
++        Feedback();
++        ~Feedback();
+         FeedbackNode* createFeedbackNode(string data[], User userClass, Admin adminClass, University uniClass);
+         void appendNewFeedbackNode();
+         void appendChildFeedbackNode();
+Index: .idea/encodings.xml
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+deleted file mode 100644
+--- a/.idea/encodings.xml	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ /dev/null	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="Encoding">
+-    <file url="file://$PROJECT_DIR$/University.cpp" charset="UTF-8" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .vscode/tasks.json
+===================================================================
+diff --git a/.vscode/tasks.json b/.vscode/tasks.json
+deleted file mode 100644
+--- a/.vscode/tasks.json	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ /dev/null	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
+@@ -1,28 +0,0 @@
+-{
+-    "tasks": [
+-        {
+-            "type": "cppbuild",
+-            "label": "C/C++: clang++ build active file",
+-            "command": "/usr/bin/clang++",
+-            "args": [
+-                "-g",
+-                "-std=c++17",
+-                "-fcolor-diagnostics",
+-                "-fansi-escape-codes",
+-                "${workspaceFolder}/*.cpp",
+-                // "${workspaceFolder}/**/*.h",
+-                "-o",
+-                "${workspaceFolder}/${fileBasenameNoExtension}"
+-            ],
+-            "options": {
+-                "cwd": "${workspaceFolder}"
+-            },
+-            "problemMatcher": [
+-                "$gcc"
+-            ],
+-            "group": "build",
+-            "detail": "Task generated by Debugger."
+-        }
+-    ],
+-    "version": "2.0.0"
+-}
+\ No newline at end of file
+Index: Guest.cpp
+===================================================================
+diff --git a/Guest.cpp b/Guest.cpp
+deleted file mode 100644
+--- a/Guest.cpp	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ /dev/null	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
+@@ -1,55 +0,0 @@
+-//
+-// Created by Wyatt Cheang on 27/03/2023.
+-//
+-
+-#include "Guest.h"
+-#include <iostream>
+-
+-using namespace std;
+-
+-
+-Guest::Guest(University uni) {
+-    int option;
+-    bool loop = true;
+-    cout << "Welcome!" << endl;
+-    while (loop) {
+-        cout << "Enter down below option to perform the coordinate execution." << endl;
+-        cout << "(1) Show all the universities' information." << endl;
+-        cout << "(2) Login/Register." << endl;
+-        cout << "(3) Admin Login." << endl;
+-        cout << "(4) Exit." << endl;
+-        cout << endl << "Your option: " << endl;
+-        cin >> option;
+-        if (cin.fail() && option != 1 && option != 2 && option != 3) {
+-            cout << "Error Input!" << endl;
+-            cin.clear();
+-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+-        }else{
+-            switch (option) {
+-                case 1:
+-                    uni.callMergeSort(uniName);
+-                    uni.DisplayData();
+-                    int option2;
+-                    cout << "(1) Continue\n"
+-                            "(2) Exit\n"
+-                            "Enter: ";
+-                    cin >> option2;
+-                    switch (option2) {
+-                        case 1:
+-                            cout << endl << endl;
+-                            continue;
+-                        case 2:
+-                            ::exit(0);
+-                        default:
+-                            ::exit(0);
+-                    }
+-                case 2:
+-                    loop = false;
+-                    break;
+-                case 3:
+-                    cout << "Thanks!";
+-                    break;
+-            }
+-        }
+-    }
+-}
+Index: .idea/Assignment.iml
+===================================================================
+diff --git a/.idea/Assignment.iml b/.idea/Assignment.iml
+deleted file mode 100644
+--- a/.idea/Assignment.iml	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ /dev/null	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
+@@ -1,2 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<module classpath="CMake" type="CPP_MODULE" version="4" />
+\ No newline at end of file
+Index: .vscode/launch.json
+===================================================================
+diff --git a/.vscode/launch.json b/.vscode/launch.json
+deleted file mode 100644
+--- a/.vscode/launch.json	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ /dev/null	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
+@@ -1,22 +0,0 @@
+-{
+-    // Use IntelliSense to learn about possible attributes.
+-    // Hover to view descriptions of existing attributes.
+-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+-    "version": "0.2.0",
+-    "configurations": [
+-        { 
+-            "name": "clang++ - Build and debug active file",
+-            "type": "cppdbg",
+-            "request": "launch",
+-            "program": "${workspaceFolder}/${fileBasenameNoExtension}",
+-            "args": [],
+-            "stopAtEntry": false, 
+-            "cwd": "${workspaceFolder}",
+-            "environment": [],
+-            "externalConsole": false,
+-            "MIMode": "lldb",
+-            "preLaunchTask": "C/C++: clang++ build active file",
+-        }
+-        
+-    ]
+-}
+\ No newline at end of file
+Index: .idea/.gitignore
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+deleted file mode 100644
+--- a/.idea/.gitignore	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ /dev/null	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
+@@ -1,8 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+-# Editor-based HTTP Client requests
+-/httpRequests/
+-# Datasource local storage ignored files
+-/dataSources/
+-/dataSources.local.xml
+Index: .idea/DSTR_Assignment.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/DSTR_Assignment.iml b/.idea/DSTR_Assignment.iml
+new file mode 100644
+--- /dev/null	(date 1685345588124)
++++ b/.idea/DSTR_Assignment.iml	(date 1685345588124)
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module classpath="CMake" type="CPP_MODULE" version="4" />
+\ No newline at end of file
+Index: Favourite.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\n// Created by Wyatt Cheang on 23/03/2023.\n//\n\n#ifndef ASSIGNMENT_FAVOURITE_H\n#define ASSIGNMENT_FAVOURITE_H\n#include \"University.h\"\n#include \"User.h\"\n\nstruct FavouriteNode {\n    UniversityNode* favUniversity;\n    UserNode* favUser;\n    FavouriteNode* nextFav;\n};\n\nclass Favourite {\n    private:\n        FavouriteNode *favouriteHead = nullptr;\n        FavouriteNode *favouriteTail = nullptr;\n        int favSize = 0;\n    public:\n        //Required Functions\n};\n\n\n#endif //ASSIGNMENT_FAVOURITE_H\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Favourite.h b/Favourite.h
+--- a/Favourite.h	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/Favourite.h	(date 1685349002930)
+@@ -8,19 +8,24 @@
+ #include "User.h"
+ 
+ struct FavouriteNode {
+-    UniversityNode* favUniversity;
+-    UserNode* favUser;
++    string favUniversity;
++    string favUser;
+     FavouriteNode* nextFav;
+ };
+ 
+ class Favourite {
+-    private:
+-        FavouriteNode *favouriteHead = nullptr;
+-        FavouriteNode *favouriteTail = nullptr;
+-        int favSize = 0;
+-    public:
+-        //Required Functions
++private:
++    FavouriteNode* favouriteHead = nullptr;
++    FavouriteNode* favouriteTail = nullptr;
++    int favSize = 0;
++public:
++    //Required Functions
++    Favourite();
++    ~Favourite();
++    FavouriteNode* createFavouriteNode(string data[]);
++    void appendFavouriteNode(FavouriteNode* newNode);
++    void addFavourite(string uniName, string username);
+ };
+ 
+ 
+-#endif //ASSIGNMENT_FAVOURITE_H
++#endif //ASSIGNMENT_FAVOURITE_H
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ProjectModuleManager\">\n    <modules>\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/Assignment.iml\" filepath=\"$PROJECT_DIR$/.idea/Assignment.iml\" />\n    </modules>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+--- a/.idea/modules.xml	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/.idea/modules.xml	(date 1685345588150)
+@@ -2,7 +2,7 @@
+ <project version="4">
+   <component name="ProjectModuleManager">
+     <modules>
+-      <module fileurl="file://$PROJECT_DIR$/.idea/Assignment.iml" filepath="$PROJECT_DIR$/.idea/Assignment.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/DSTR_Assignment.iml" filepath="$PROJECT_DIR$/.idea/DSTR_Assignment.iml" />
+     </modules>
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"VcsDirectoryMappings\">\n    <mapping directory=\"$PROJECT_DIR$\" vcs=\"Git\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+--- a/.idea/vcs.xml	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/.idea/vcs.xml	(date 1685345588195)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="VcsDirectoryMappings">
+-    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++    <mapping directory="" vcs="Git" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: CMakeLists.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>cmake_minimum_required(VERSION 3.24)\nproject(Assignment)\n\nset(CMAKE_CXX_STANDARD 17)\n\nadd_executable(Assignment main.cpp University.cpp University.h DataIO.cpp DataIO.h User.cpp User.h Feedback.cpp Feedback.h Favourite.cpp Favourite.h Admin.cpp Admin.h Guest.cpp Guest.h)\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/CMakeLists.txt	(date 1685347956563)
+@@ -3,4 +3,4 @@
+ 
+ set(CMAKE_CXX_STANDARD 17)
+ 
+-add_executable(Assignment main.cpp University.cpp University.h DataIO.cpp DataIO.h User.cpp User.h Feedback.cpp Feedback.h Favourite.cpp Favourite.h Admin.cpp Admin.h Guest.cpp Guest.h)
++add_executable(Assignment main.cpp University.cpp University.h DataIO.cpp DataIO.h User.cpp User.h Feedback.cpp Feedback.h Favourite.cpp Favourite.h Admin.cpp Admin.h Page.cpp Page.h)
+Index: Page.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Page.cpp b/Page.cpp
+new file mode 100644
+--- /dev/null	(date 1685430700863)
++++ b/Page.cpp	(date 1685430700863)
+@@ -0,0 +1,574 @@
++//
++// Created by Wyatt Cheang on 27/03/2023.
++//
++
++#include "Page.h"
++#include "Admin.h"
++#include "User.h"
++#include "University.h"
++#include "Feedback.h"
++#include "Favourite.h"
++#include "DataIO.h"
++#include <string>
++#include <iostream>
++#include <iomanip>
++#include <limits> // Added for numeric_limits
++
++using namespace std;
++
++BasePage::BasePage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite)
++        : university(university), user(user), admin(admin), feedback(feedback), favourite(favourite) {
++}
++
++StartPage::StartPage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite)
++        : BasePage(university, user, admin, feedback, favourite) {
++}
++
++UserPage::UserPage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite)
++        : BasePage(university, user, admin, feedback, favourite) {
++}
++
++AdminPage::AdminPage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite)
++        : BasePage(university, user, admin, feedback, favourite) {
++}
++
++void StartPage::DisplayStartPage(UserPage* userPage, AdminPage* adminPage) {
++    int startMenuOption, sortSelection, searchSelection;
++    string searchKeyword;
++    bool loop = true;
++    cout << string(100, '*') << endl;
++    DataIO::printStringCentered("Welcome to University Finder!");
++    cout << string(100, '*') << endl;
++    while (loop) {
++        cout << string(100, '=') << endl;
++        DataIO::printStringCentered("Guest Page (Login/Register for membership to unlock more features!)");
++        cout << string(100, '=') << endl;
++        cout << "Enter down below option to perform the coordinate execution." << endl;
++        cout << "(1) Show all the universities' information." << endl;
++        cout << "(2) Sort university information in ascending order by university name." << endl;
++        cout << "(3) Search individual university details." << endl;
++        cout << "(4) Register as Customer." << endl;
++        cout << "(5) Customer Login." << endl;
++        cout << "(6) Admin Login." << endl;
++        cout << "(7) Exit." << endl;
++        cout << endl << "Your option: ";
++        cin >> startMenuOption;
++        if (cin.fail() || startMenuOption < 1 || startMenuOption > 7) {
++            cout << "Error Input!" << endl;
++            cin.clear();
++            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++            continue;
++        } else {
++            switch (startMenuOption) {
++                case 1:
++                    university->DisplayData();
++                    break;
++                case 2:
++                    while (true) {
++                        DataIO::selectSortMethodMenu();
++                        cin >> sortSelection;
++                        if (cin.fail() || sortSelection < 1 || sortSelection > 2) {
++                            cout << "Error Input!" << endl;
++                            cin.clear();
++                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                        } else {
++                            break;
++                        }
++                    }
++                    switch (sortSelection) {
++                        case 1:
++                            university->callMergeSort(uniName);
++                            break;
++                        case 2:
++                            university->callQuickSort(uniName);
++                            break;
++                        default:
++                            break;
++                    }
++                    university->DisplayData();
++                    if (sortSelection == 1) {
++                        cout << "Time taken by Merge Sort Algorithm: ";
++                    } else if (sortSelection == 2) {
++                        cout << "Time taken by Quick Sort Algorithm: ";
++                    }
++                    cout << university->timeTaken.count() << " seconds." << endl;
++                    cout << endl;
++                    break;
++                case 3:
++                    while (true) {
++                        cout << "Enter the keyword to search: ";
++                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
++                        getline(cin, searchKeyword);
++                        if (cin.fail()) {
++                            cout << "Error Input!" << endl;
++                            cin.clear();
++                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                        } else {
++                            break;
++                        }
++                    }
++                    while (true) {
++                        DataIO::selectSearchMethodMenu();
++                        cin >> searchSelection;
++                        if (cin.fail() || searchSelection < 1 || searchSelection > 2) {
++                            cout << "Error Input!" << endl;
++                            cin.clear();
++                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                        } else {
++                            break;
++                        }
++                    }
++                    switch (searchSelection) {
++                        case 1:
++                            university->LinearSearch(searchKeyword, uniName);
++                            break;
++                        case 2:
++                            university->JumpSearch(searchKeyword, uniName);
++                            break;
++                        default:
++                            break;
++                    }
++                    break;
++                case 4:
++                    user->userRegister();
++                    break;
++                case 5:
++                    user->userLogin();
++                    userPage->DisplayUserPage();
++                    break;
++                case 6:
++                    admin->adminLogin();
++                    adminPage->DisplayAdminPage();
++                    break;
++                case 7:
++                    cout << "Thank you for using our system!" << endl;
++                    loop = false;
++                    break;
++                default:
++                    break;
++            }
++        }
++    }
++}
++
++void UserPage::DisplayUserPage() {
++    bool userPageLoop = true;
++    while (userPageLoop) {
++        cout << string(100, '=') << endl;
++        DataIO::printStringCentered("User Page | Welcome back, " + user->getLoginUser()->username);
++        cout << string(100, '=') << endl;
++        int option;
++        University uni;
++        Favourite fav;
++        cout << "Enter down below option to perform the coordinate execution." << endl;
++        cout << "(1) Sort University." << endl;
++        cout << "(2) Search University." << endl;
++        cout << "(3) Show all favourite university." << endl;
++        cout << "(4) Send feedback to MoHE for further information about the University." << endl;
++        cout << "(5) Read feedback reply from MoHE Based on latest date." << endl;
++        cout << "(6) Logout" << endl;
++        cout << endl << "Your option: ";
++        cin >> option;
++        if (cin.fail() || option < 1 || option > 7) {
++            cout << "Error Input!" << endl;
++            cin.clear();
++            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++        } else {
++            switch (option) {
++                case 1: {
++                    int sortAttributeSelection, sortSelection;
++                    while (true) {
++                        cout << "Sort university based on: " << endl;
++                        DataIO::printSelectUniversityAttributeMenu();
++                        cin >> sortAttributeSelection;
++                        if (cin.fail() || sortAttributeSelection < 1 || sortAttributeSelection > 21) {
++                            cout << "Error Input!" << endl;
++                            cin.clear();
++                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                        } else {
++                            break;
++                        }
++                    }
++                    while (true) {
++                        DataIO::selectSortMethodMenu();
++                        cin >> sortSelection;
++                        if (cin.fail() || sortSelection < 1 || sortSelection > 2) {
++                            cout << "Error Input!" << endl;
++                            cin.clear();
++                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                        } else {
++                            break;
++                        }
++                    }
++                    switch (sortAttributeSelection) {
++                        case 1:
++                            if (sortSelection == 1) uni.callMergeSort(uniRank);
++                            else if (sortSelection == 2) uni.callQuickSort(uniRank);
++                            break;
++                        case 2:
++                            if (sortSelection == 1) uni.callMergeSort(uniName);
++                            else if (sortSelection == 2) uni.callQuickSort(uniName);
++                            break;
++                        case 3:
++                            if (sortSelection == 1) uni.callMergeSort(uniLocation);
++                            else if (sortSelection == 2) uni.callQuickSort(uniLocation);
++                            break;
++                        case 4:
++                            if (sortSelection == 1) uni.callMergeSort(uniLocationCode);
++                            else if (sortSelection == 2) uni.callQuickSort(uniLocationCode);
++                            break;
++                        case 5:
++                            if (sortSelection == 1) uni.callMergeSort(arScore);
++                            else if (sortSelection == 2) uni.callQuickSort(arScore);
++                            break;
++                        case 6:
++                            if (sortSelection == 1) uni.callMergeSort(arRank);
++                            else if (sortSelection == 2) uni.callQuickSort(arRank);
++                            break;
++                        case 7:
++                            if (sortSelection == 1) uni.callMergeSort(erScore);
++                            else if (sortSelection == 2) uni.callQuickSort(erScore);
++                            break;
++                        case 8:
++                            if (sortSelection == 1) uni.callMergeSort(erRank);
++                            else if (sortSelection == 2) uni.callQuickSort(erRank);
++                            break;
++                        case 9:
++                            if (sortSelection == 1) uni.callMergeSort(fsrScore);
++                            else if (sortSelection == 2) uni.callQuickSort(fsrScore);
++                            break;
++                        case 10:
++                            if (sortSelection == 1) uni.callMergeSort(fsrRank);
++                            else if (sortSelection == 2) uni.callQuickSort(fsrRank);
++                            break;
++                        case 11:
++                            if (sortSelection == 1) uni.callMergeSort(cpfScore);
++                            else if (sortSelection == 2) uni.callQuickSort(cpfScore);
++                            break;
++                        case 12:
++                            if (sortSelection == 1) uni.callMergeSort(cpfRank);
++                            else if (sortSelection == 2) uni.callQuickSort(cpfRank);
++                            break;
++                        case 13:
++                            if (sortSelection == 1) uni.callMergeSort(ifrScore);
++                            else if (sortSelection == 2) uni.callQuickSort(ifrScore);
++                            break;
++                        case 14:
++                            if (sortSelection == 1) uni.callMergeSort(ifrRank);
++                            else if (sortSelection == 2) uni.callQuickSort(ifrRank);
++                            break;
++                        case 15:
++                            if (sortSelection == 1) uni.callMergeSort(isrScore);
++                            else if (sortSelection == 2) uni.callQuickSort(isrScore);
++                            break;
++                        case 16:
++                            if (sortSelection == 1) uni.callMergeSort(isrRank);
++                            else if (sortSelection == 2) uni.callQuickSort(isrRank);
++                            break;
++                        case 17:
++                            if (sortSelection == 1) uni.callMergeSort(irnScore);
++                            else if (sortSelection == 2) uni.callQuickSort(irnScore);
++                            break;
++                        case 18:
++                            if (sortSelection == 1) uni.callMergeSort(irnRank);
++                            else if (sortSelection == 2) uni.callQuickSort(irnRank);
++                            break;
++                        case 19:
++                            if (sortSelection == 1) uni.callMergeSort(gerScore);
++                            else if (sortSelection == 2) uni.callQuickSort(gerScore);
++                            break;
++                        case 20:
++                            if (sortSelection == 1) uni.callMergeSort(gerRank);
++                            else if (sortSelection == 2) uni.callQuickSort(gerRank);
++                            break;
++                        case 21:
++                            if (sortSelection == 1) uni.callMergeSort(scoreScaled);
++                            else if (sortSelection == 2) uni.callQuickSort(scoreScaled);
++                            break;
++                        default:
++                            break;
++                    }
++                    uni.DisplayData();
++                    // Print the execution time
++                    if (sortSelection == 1){
++                        cout << "Time taken by Merge Sort Algorithm: ";
++                    } else if (sortSelection == 2){
++                        cout << "Time taken by Quick Sort Algorithm: ";
++                    }
++                    cout << uni.timeTaken.count() << " microseconds." << endl;
++                    cout << endl;
++                    break;
++                }
++                case 2: {
++                    int searchAttributeSelection, searchSelection;
++                    string searchKeyword;
++
++                    while (true) {
++                        DataIO::printSelectUniversityAttributeMenu();
++                        cin >> searchAttributeSelection;
++                        if (cin.fail() || searchAttributeSelection < 1 || searchAttributeSelection > 12) {
++                            cout << "Error Input!" << endl << endl;
++                            cin.clear();
++                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                            continue;
++                        } else {
++                            break;
++                        }
++                    }
++                    while (true) {
++                        cout << "Enter the keyword to search: ";
++                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
++                        getline(cin, searchKeyword);
++                        if (cin.fail()) {
++                            cout << "Error Input!" << endl;
++                            cin.clear();
++                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                        } else {
++                            break;
++                        }
++                    }
++
++                    if (searchAttributeSelection == 1) {
++                        try {
++                            int a = stoi(searchKeyword);
++                        } catch (std::invalid_argument const &e) {
++                            cout << "Error Input!" << endl << endl;
++                            cin.clear();
++                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                            continue;
++                        }
++                    } else if (searchAttributeSelection == 5 || searchAttributeSelection == 6 ||
++                               searchAttributeSelection == 7 ||
++                               searchAttributeSelection == 8 || searchAttributeSelection == 9 ||
++                               searchAttributeSelection == 10 ||
++                               searchAttributeSelection == 11 || searchAttributeSelection == 12) {
++                        try {
++                            double a = stod(searchKeyword);
++                        } catch (std::invalid_argument const &e) {
++                            cout << "Error Input!" << endl << endl;
++                            cin.clear();
++                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                            continue;
++                        }
++                    }
++                    while (true) {
++                        DataIO::selectSearchMethodMenu();
++                        cin >> searchSelection;
++                        if (cin.fail() || searchSelection < 1 || searchSelection > 2) {
++                            cout << "Error Input!" << endl << endl;
++                            cin.clear();
++                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                            continue;
++                        } else {
++                            break;
++                        }
++                    }
++                    if (searchSelection == 1) {
++                        switch (searchAttributeSelection) {
++                            case 1:
++                                university->LinearSearch(searchKeyword, uniRank);
++                                break;
++                            case 2:
++                                university->LinearSearch(searchKeyword, uniName);
++                                break;
++                            case 3:
++                                university->LinearSearch(searchKeyword, uniLocation);
++                                break;
++                            case 4:
++                                university->LinearSearch(searchKeyword, uniLocationCode);
++                                break;
++                            case 5:
++                                university->LinearSearch(searchKeyword, arScore);
++                                break;
++                            case 6:
++                                university->LinearSearch(searchKeyword, erScore);
++                                break;
++                            case 7:
++                                university->LinearSearch(searchKeyword, fsrScore);
++                                break;
++                            case 8:
++                                university->LinearSearch(searchKeyword, cpfScore);
++                                break;
++                            case 9:
++                                university->LinearSearch(searchKeyword, ifrScore);
++                                break;
++                            case 10:
++                                university->LinearSearch(searchKeyword, isrScore);
++                                break;
++                            case 11:
++                                university->LinearSearch(searchKeyword, irnScore);
++                                break;
++                            case 12:
++                                university->LinearSearch(searchKeyword, gerScore);
++                                break;
++                            default:
++                                break;
++                        }
++                    } else if (searchSelection == 2) {
++                        switch (searchAttributeSelection) {
++                            case 1:
++                                university->JumpSearch(searchKeyword, uniRank);
++                                break;
++                            case 2:
++                                university->JumpSearch(searchKeyword, uniName);
++                                break;
++                            case 3:
++                                university->JumpSearch(searchKeyword, uniLocation);
++                                break;
++                            case 4:
++                                university->JumpSearch(searchKeyword, uniLocationCode);
++                                break;
++                            case 5:
++                                university->JumpSearch(searchKeyword, arScore);
++                                break;
++                            case 6:
++                                university->JumpSearch(searchKeyword, erScore);
++                                break;
++                            case 7:
++                                university->JumpSearch(searchKeyword, fsrScore);
++                                break;
++                            case 8:
++                                university->JumpSearch(searchKeyword, cpfScore);
++                                break;
++                            case 9:
++                                university->JumpSearch(searchKeyword, ifrScore);
++                                break;
++                            case 10:
++                                university->JumpSearch(searchKeyword, isrScore);
++                                break;
++                            case 11:
++                                university->JumpSearch(searchKeyword, irnScore);
++                                break;
++                            case 12:
++                                university->JumpSearch(searchKeyword, gerScore);
++                                break;
++                            default:
++                                break;
++                        }
++                    }
++                }
++                    int saveSelection;
++                    while (true) {
++                        cout << "Would you like to save this university as your favourite university?" << endl;
++                        cout << "(1) Yes" << endl;
++                        cout << "(2) No" << endl;
++                        cin >> saveSelection;
++                        if (cin.fail() || saveSelection < 1 || saveSelection > 2) {
++                            cout << "Error Input!" << endl << endl;
++                            cin.clear();
++                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                            continue;
++                        } else {
++                            break;
++                        }
++                    }
++                    if (saveSelection == 1) {
++                        // save favour function!
++                    }
++                case 3:
++                    cout << "Save" << endl;
++                    break;
++                case 4:
++                    cout << "Send feedback" << endl;
++                    break;
++                case 5:
++                    cout << "Read feedback" << endl;
++                    break;
++                case 6:
++                    user->userLogout();
++                    userPageLoop = false;
++                    break;
++                default:
++                    break;
++            }
++        }
++    }
++}
++
++void AdminPage::DisplayAdminPage() {
++    bool adminPageLoop = true;
++    while (adminPageLoop) {
++        cout << string(100, '=') << endl;
++        DataIO::printStringCentered("Admin Page | Welcome back, " + admin->getLoginAdmin()->username);
++        cout << string(100, '=') << endl;
++        int option;
++        University uni;
++        cout << "Enter down below option to perform the coordinate execution." << endl;
++        cout << "(1) Display all registered users' details." << endl;
++        cout << "(2) Modify user's details." << endl;
++        cout << "(3) Delete user's account based on inactivity status." << endl;
++        cout << "(4) Display registered users' feedback according to latest date." << endl;
++        cout << "(5) Reply to user's feedback." << endl;
++        cout << "(6) Display top 10 universities most preferred by parents in Malaysia." << endl;
++        cout << "(7) Logout." << endl;
++        cout << endl << "Your option: ";
++        cin >> option;
++        if (cin.fail() || option < 1 || option > 7) {
++            cout << "Error Input!" << endl;
++            cin.clear();
++            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++        } else {
++            switch (option) {
++                case 1: {
++                    user->displayUser();
++                    break;
++                }
++                case 2: {
++                    int modifyOption;
++                    while (true) {
++                        cout << "Choose one to modify: " << endl;
++                        cout << "(1) Username" << endl;
++                        cout << "(2) Password" << endl;
++                        cin >> modifyOption;
++                        if (cin.fail() || modifyOption < 1 || modifyOption > 2) {
++                            cout << "Error Input!" << endl << endl;
++                            cin.clear();
++                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
++                            continue;
++                        } else {
++                            break;
++                        }
++                    }
++                    switch (modifyOption) {
++                        case 1: {
++                            admin->modifyUsername();
++                            break;
++                        }
++                        case 2: {
++                            admin->modifyUserPassword();
++                            break;
++                        }
++                        default: {
++                            break;
++                        }
++                    }
++                }
++                case 3: {
++                    cout << "Delete" << endl;
++                    user->deleteInactiveUsers();
++                    break;
++                }
++                case 4: {
++                    cout << "HI" << endl;
++                    break;
++                }
++                case 5: {
++                    cout << "HI" << endl;
++                    break;
++                }
++                case 6: {
++                    cout << "HI" << endl;
++                    break;
++                }
++                case 7: {
++                    admin->adminLogout();
++                    adminPageLoop = false;
++                    cout << "Successfully Logout" << endl;
++                }
++                default: {
++                    break;
++                }
++            }
++        }
++    }
++}
+Index: csvFiles/user.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>User ID,Username,Password,Last Login Datetime, LastLogout Datetime\nU00000001,Alan,Alan@0001,2023-03-18 12:00:58,2023-03-18 12:02:12\nU00000002,Bella,Bella@0002,2023-03-29 11:00:58,2023-03-29 11:05:43\nU00000003,Cedric,Cedric@0003,1900-01-00 00:00:00,1900-01-00 00:00:00\nU00000004,Dora,Dora@0004,1900-01-00 00:00:00,1900-01-00 00:00:00\nU00000005,Eric,Eric@0005,1900-01-00 00:00:00,1900-01-00 00:00:00\nU00000006,Fiona,Fiona@0006,1900-01-00 00:00:00,1900-01-00 00:00:00\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/csvFiles/user.csv b/csvFiles/user.csv
+--- a/csvFiles/user.csv	(revision 67ef1fb83d855ebb89c7826d61d38bd2a0148109)
++++ b/csvFiles/user.csv	(date 1685428927977)
+@@ -1,7 +1,6 @@
+ User ID,Username,Password,Last Login Datetime, LastLogout Datetime
+ U00000001,Alan,Alan@0001,2023-03-18 12:00:58,2023-03-18 12:02:12
+ U00000002,Bella,Bella@0002,2023-03-29 11:00:58,2023-03-29 11:05:43
+-U00000003,Cedric,Cedric@0003,1900-01-00 00:00:00,1900-01-00 00:00:00
+-U00000004,Dora,Dora@0004,1900-01-00 00:00:00,1900-01-00 00:00:00
+-U00000005,Eric,Eric@0005,1900-01-00 00:00:00,1900-01-00 00:00:00
+-U00000006,Fiona,Fiona@0006,1900-01-00 00:00:00,1900-01-00 00:00:00
++U00000003,Cedric,Cedric@0003,2023-03-29 11:00:58,2023-03-29 11:00:58
++U00000004,Dora,Dora@0004,2023-03-29 11:00:58,2023-03-29 11:00:58
++U00000005,Eric,Eric@0005,2023-05-30 02:58:04,2023-05-30 02:58:12

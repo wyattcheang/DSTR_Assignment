@@ -107,7 +107,7 @@ void User::displayUser() {
         cout << endl;
     }
     cout << string(83, '-') << endl;
-    cout << "Number of user shown: " << userSize << endl;
+    cout << "Number of user shown: " << userSize << endl << endl;
 }
 
 void User::addUserHeader(string header[]) {
@@ -119,6 +119,9 @@ void User::addUserHeader(string header[]) {
 void User::userRegister() {
     string name, pass, pass2;
     while (true) {
+        cout << string(100, '*') << endl;
+        DataIO::printStringCentered("User Registration!");
+        cout << string(100, '*') << endl << endl;
         cout << "Enter the username: ";
         cin >> name;
         if (!usernameValidation(name)) {
@@ -261,7 +264,9 @@ void User::deleteInactiveUsers() {
 void User::userLogin() {
     string name, pass;
     while (true) {
-        cout << "User Login" << endl;
+        cout << string(100, '*') << endl;
+        DataIO::printStringCentered("User Login!");
+        cout << string(100, '*') << endl << endl;
         cout << "Enter username: ";
         cin >> name;
         UserNode* theUser = searchUser(name);
@@ -300,8 +305,10 @@ void User::userLogin() {
 
 void User::userLogout() {
     string logoutTime = DataIO::getCurrentTime();
+    cout << string(100, '*') << endl;
+    DataIO::printStringCentered("Logout Successfully!");
+    cout << string(100, '*') << endl << endl;
     loginUser->lastTimeLogout = DataIO::StringToTime(logoutTime);
-    cout << "Successfully Logout!" << endl;
     cout << "Logout Time: " << DataIO::TimeToString(loginUser->lastTimeLogout) << endl;
     loginUser = nullptr;
 }
