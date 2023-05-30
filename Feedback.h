@@ -31,6 +31,8 @@ class Feedback {
         FeedbackNode* feedbackTail = nullptr;
         int feedbackSize = 0;
     public:
+        Feedback();
+        ~Feedback();
         FeedbackNode* createFeedbackNode(string data[], User userClass, Admin adminClass, University uniClass);
         void appendNewFeedbackNode();
         void appendChildFeedbackNode();

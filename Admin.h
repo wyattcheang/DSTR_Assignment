@@ -9,7 +9,7 @@
 
 using namespace std;
 
-struct AdminNode{
+struct AdminNode {
     string adminID;
     string username;
     string password;
@@ -17,18 +17,23 @@ struct AdminNode{
 };
 
 class Admin {
-    private:
-        AdminNode* adminHead = nullptr;
-        AdminNode* adminTail = nullptr;
-        AdminNode* loginAdmin = nullptr;
-        int adminSize = 0;
-    public:
+private:
+    AdminNode* adminHead = nullptr;
+    AdminNode* adminTail = nullptr;
+    AdminNode* loginAdmin = nullptr;
+    int adminSize = 0;
+public:
 
     void adminLogin();
-        AdminNode* createAdminNode(string data[]);
-        void appendAdminNode(string data[]);
-        AdminNode* searchAdminUser(string username);
-        //Required Functions
+    void adminLogout();
+    AdminNode* createAdminNode(string data[]);
+    void appendAdminNode(string data[]);
+    AdminNode* searchAdminUser(string username);
+    void modifyUsername();
+    void modifyUserPassword();
+
+    AdminNode *getLoginAdmin() const;
+    //Required Functions
 };
 
 

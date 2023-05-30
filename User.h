@@ -31,12 +31,18 @@ class User {
         void addUserHeader(string[]);
         void userRegister();
         void userLogin();
+        void userLogout();
         bool usernameValidation(string username);
         bool checkPasswordFormat(string password);
         UserNode* createUserNode(string data[]);
         void appendUserNode(UserNode* newNode);
         void displayUser();
         UserNode* searchUser(string username);
+        UserNode* searchUserPass(string password);
+        void deleteInactiveUsers();
+        UserNode *getLoginUser() const;
+        void setLoginUser(UserNode *loginUser);
+
 };
 
 

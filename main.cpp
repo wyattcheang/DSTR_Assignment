@@ -1,7 +1,7 @@
 #include <iostream>
 #include "University.h"
 #include "DataIO.h"
-#include "Guest.h"
+#include "Page.h"
 #include "User.h"
 
 using namespace std;
@@ -9,37 +9,20 @@ using namespace std;
 
 
 int main() {
-    User user;
-    user.displayUser();
-    University uniClass;
-    Admin admin;
-    Guest guest(uniClass);
-    user.userLogin();
-    uniClass.DisplayData();
+    University* university = new University();
+    User* user = new User();
+    Admin* admin = new Admin();
+    Feedback* feedback = new Feedback();
+    Favourite* favourite = new Favourite();
 
-
-
-
-
-
-
-
-
-
-
-
-
-//    auto start = chrono::high_resolution_clock::now();
-//    University uniClass;
-//    auto end = chrono::high_resolution_clock ::now();
-//    auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-//    cout << "Time used for read file\t\t\t: " << duration.count() << endl;
-//
-//
-//    start = chrono::high_resolution_clock::now();
-//    uniClass.callMergeSort(uniName);
-//    end = chrono::high_resolution_clock ::now();
-//    duration = chrono::duration_cast<chrono::microseconds>(end - start);
-//    cout << "Time used for merge sort file\t: " << duration.count() << endl;
-
+    StartPage* startPage = new StartPage(university, user, admin, feedback, favourite);
+    UserPage* userPage = new UserPage(university, user, admin, feedback, favourite);
+    AdminPage* adminPage = new AdminPage(university, user, admin, feedback, favourite);
+    startPage->DisplayStartPage(userPage, adminPage);
+    delete user;
+    delete admin;
+    delete university;
+    delete feedback;
+    delete favourite;
+    return 0;
 }

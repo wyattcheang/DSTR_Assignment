@@ -8,18 +8,23 @@
 #include "User.h"
 
 struct FavouriteNode {
-    UniversityNode* favUniversity;
-    UserNode* favUser;
+    string favUniversity;
+    string favUser;
     FavouriteNode* nextFav;
 };
 
 class Favourite {
-    private:
-        FavouriteNode *favouriteHead = nullptr;
-        FavouriteNode *favouriteTail = nullptr;
-        int favSize = 0;
-    public:
-        //Required Functions
+private:
+    FavouriteNode* favouriteHead = nullptr;
+    FavouriteNode* favouriteTail = nullptr;
+    int favSize = 0;
+public:
+    //Required Functions
+    Favourite();
+    ~Favourite();
+    FavouriteNode* createFavouriteNode(string data[]);
+    void appendFavouriteNode(FavouriteNode* newNode);
+    void addFavourite(string uniName, string username);
 };
 
 

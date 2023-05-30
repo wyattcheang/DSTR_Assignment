@@ -16,14 +16,30 @@
 using namespace std;
 
 class DataIO {
-    public:
-        static void ReadUniversity(University* head);
-        static void ReadUser(User* head);
-        static void SaveUser(UserNode* head);
-        static void ReadAdmin(Admin* head);
-        static void ReadFeedback(Feedback* head);
-        static void ReadFavourite(Favourite* head);
-        static tm* StringToTime(const string& dateString);
+public:
+    static void ReadUniversity(University* head);
+
+    static void ReadUser(User* head);
+    static void SaveUser(UserNode* head);
+
+    static void ReadAdmin(Admin* head);
+
+    static void ReadFeedback(Feedback* head);
+    static void SaveFeedback(FeedbackNode* head);
+
+    static void ReadFavourite(Favourite* head);
+    static void SaveFavourite(FavouriteNode* head);
+
+    static void SaveAllFile(UserNode* userHead, FavouriteNode* favHead, FeedbackNode* feedbackHead);
+
+    static string getCurrentTime();
+    static tm* StringToTime(const string& dateString);
+    static string TimeToString(tm* time);
+
+    static void printStringCentered(const string& text);
+    static void printSelectUniversityAttributeMenu();
+    static void selectSortMethodMenu();
+    static void selectSearchMethodMenu();
 };
 
 #endif //ASSIGNMENT_DATAIO_H

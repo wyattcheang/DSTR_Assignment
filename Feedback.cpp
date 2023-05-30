@@ -5,6 +5,17 @@
 #include "Feedback.h"
 #include "DataIO.h"
 
+Feedback::Feedback() {
+    feedbackHead = nullptr;
+    feedbackTail = nullptr;
+    feedbackSize = 0;
+    DataIO::ReadFeedback(this);
+}
+
+Feedback::~Feedback() {
+    DataIO::SaveFeedback(this->feedbackHead);
+}
+
 FeedbackNode *Feedback::createFeedbackNode(string data[], User userClass, Admin adminClass, University uniClass) {
     FeedbackNode* newFeedbackNode = new FeedbackNode;
     newFeedbackNode->feedbackDatetime = new tm;
