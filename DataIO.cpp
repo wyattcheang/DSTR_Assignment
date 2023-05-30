@@ -167,8 +167,43 @@ void DataIO::ReadAdmin(Admin* head) {
     file.close();
 }
 
-void DataIO::ReadFeedback(Feedback* head) {
+void DataIO::ReadFeedback(Feedback* feedbackClass, User* userClass, Admin* adminClass, University* uniClass) {
+    string column[8];
+    fstream file;
+    file.open(filePath + "feedback.txt", ios::in);
+    if (file.is_open()) {
+        for (int i = 0; i < 8; i++) {
+            if (i == 7) {
+                getline(file, *(column + i));
+                if (column[7].back() == '\r')  //remove '\r' at the last of the string
+                    (column[7]).erase(column[7].end() - 1);
+            }
+            else
+                getline(file, column[i], '|');
+        }
 
+        while (file.good()) {
+            getline(file, *(column + 0), '|');
+            if ((column + 0)->empty())
+                break;
+
+            for (int i = 1; i < 8; i++) {
+                if (i != 7)
+                    getline(file, column[i], '|');
+                else
+                    getline(file, column[i]);
+
+                if (column[i].back() == '\r')  //remove '\r' at the last of the string
+                    (column[i]).erase(column[i].end() - 1);
+            }
+
+            FeedbackNode* add = feedbackClass->createFeedbackNode(column, userClass, adminClass, uniClass);
+            feedbackClass->appendFeedbackNode(add);
+        }
+    }
+    else {
+        cout << "Could not open the file\n";
+    }
 }
 
 void DataIO::ReadFavourite(Favourite* head) {
@@ -252,21 +287,31 @@ void DataIO::SaveFavourite(FavouriteNode* head) {
 }
 
 void DataIO::SaveFeedback(FeedbackNode* head) {
-    ofstream file(filePath + "feedback.csv", ios::app);
+    ofstream file(filePath + "feedback.txt", ios::trunc);
     if (!file.is_open()) {
         cout << "Could not open file." << endl;
         return;
     }
-    FeedbackNode* temp = head;
-    while (temp != nullptr) {
-        file << temp->feedbackID << ',';
-        file << temp->feedbackUser << ',';
-        file << temp->replyAdmin << ',';
-        file << temp->feedbackUniversity << ',';
-        file << temp->feedback << ',';
-        file << temp->reply << ',';
-        file << temp->feedbackDatetime << ',';
-        file << temp->replyDatetime << '\n';
+    file << "FeedbackID|Username|Admin Name|University Rank|Feedback|Reply|Feedback Datetime|Reply Datetime\n";
+    FeedbackNode* parentNode = head;
+    FeedbackNode* temp = nullptr;
+    while (parentNode != nullptr) {
+        for(temp = parentNode; temp != nullptr; temp = temp->childFeedback) {
+            file << temp->feedbackID << '|';
+            file << temp->feedbackUser->userID << '|';
+            if (temp->replyAdmin != nullptr) {
+                file << temp->replyAdmin->adminID << '|';
+            }
+            else {
+                file << "NULL" << '|';
+            }
+            file << temp->feedbackUniversity->rank << '|';
+            file << temp->feedback << '|';
+            file << temp->reply << '|';
+            file << TimeToString(temp->feedbackDatetime) << '|';
+            file << TimeToString(temp->replyDatetime) << '\n';
+        }
+        parentNode = parentNode->nextFeedback;
     }
     file.close();
 }
@@ -333,6 +378,6 @@ void DataIO::selectSortMethodMenu(){
 void DataIO::selectSearchMethodMenu(){
     cout << "Select search method: " << endl;
     cout << "(1) Linear Search" << endl;
-    cout << "(2) Binary Search" << endl;
+    cout << "(2) Jump Search" << endl;
     cout << endl << "Enter you selection: ";
 }

@@ -24,7 +24,7 @@ public:
 
     static void ReadAdmin(Admin* head);
 
-    static void ReadFeedback(Feedback* head);
+    static void ReadFeedback(Feedback* feedbackClass, User* userClass, Admin* adminClass, University* uniClass);
     static void SaveFeedback(FeedbackNode* head);
 
     static void ReadFavourite(Favourite* head);

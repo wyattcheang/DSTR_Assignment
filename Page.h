@@ -24,23 +24,36 @@ public:
     BasePage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite);
 };
 
+class FavouritePage : public BasePage {
+public:
+    FavouritePage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite);
+    void DisplayAdminPage();
+};
+
+class FeedbackPage : public BasePage {
+public:
+    FeedbackPage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite);
+    void DisplayAdminFeedbackPage();
+    void UserAddFeedbackPage();
+    void UserReviewFeedbackPage();
+};
+
 class UserPage : public BasePage {
     public:
         UserPage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite);
-        void DisplayUserPage();
+        void DisplayUserPage(FeedbackPage* feedbackPage, FavouritePage* favouritePage);
 };
 
 class AdminPage : public BasePage {
     public:
         AdminPage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite);
-        void DisplayAdminPage();
+        void DisplayAdminPage(FeedbackPage* feedbackPage, FavouritePage* favouritePage);
 };
-
 
 class StartPage : public BasePage {
 public:
     StartPage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite);
-    void DisplayStartPage(UserPage* userPage, AdminPage* adminPage);
+    void DisplayStartPage(UserPage* userPage, AdminPage* adminPage, FeedbackPage* feedbackPage, FavouritePage* favouritePage);
 };
 
 #endif //ASSIGNMENT_PAGE_H

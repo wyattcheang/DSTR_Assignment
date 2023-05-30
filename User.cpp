@@ -34,6 +34,20 @@ UserNode* User::searchUser(string username) {
     return nullptr;
 }
 
+UserNode* User::searchUserID(string userID) {
+    UserNode* temp = this->userHead;
+    if (temp == nullptr) return nullptr;
+    while (temp != nullptr) {
+        if (temp->userID == userID) {
+            return temp;
+        }
+        else {
+            temp = temp->nextUser;
+        }
+    }
+    return nullptr;
+}
+
 UserNode* User::searchUserPass(string password) {
     UserNode* temp = this->userHead;
     if (temp == nullptr) return nullptr;

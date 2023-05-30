@@ -38,6 +38,7 @@ class User {
         void appendUserNode(UserNode* newNode);
         void displayUser();
         UserNode* searchUser(string username);
+        UserNode* searchUserID(string userID);
         UserNode* searchUserPass(string password);
         void deleteInactiveUsers();
         UserNode *getLoginUser() const;

@@ -23,12 +23,13 @@ private:
     AdminNode* loginAdmin = nullptr;
     int adminSize = 0;
 public:
-
+    Admin();
     void adminLogin();
     void adminLogout();
     AdminNode* createAdminNode(string data[]);
     void appendAdminNode(string data[]);
     AdminNode* searchAdminUser(string username);
+    AdminNode* searchAdminID(string adminID);
     void modifyUsername();
     void modifyUserPassword();
 

@@ -56,6 +56,7 @@ public:
 
     // for feedback
     UniversityNode* searchUniversity(string rank);
+    static UniversityNode* searchUniversityWithRank(string rank);
 
     // functions of merge sort
     void splitList(UniversityNode* list, UniversityNode** leftList, UniversityNode** rightList);
@@ -75,12 +76,15 @@ public:
     void LinearSearch(string search, sortOption option);
     void JumpSearch(string search, sortOption option);
     void PerformSearch(int searchMethod, int searchAttributeSelection, const string& searchKeyword);
+    bool compareValues(sortOption attributes, const string& keyword, UniversityNode* current);
 
     static int RemovePlusSymbol(string otherRank);
     static bool isSubstring(const std::string& a, const std::string& b);
     void PrintTableHeader();
     void DisplayTheUniversity(UniversityNode* current);
     static void UniversityNameAlignment(UniversityNode *current, int &checkTwoByte, int &checkThreeByte);
+
+    int getUniListSize() const;
 };
 
 #endif //ASSIGNMENT_UNIVERSITY_H

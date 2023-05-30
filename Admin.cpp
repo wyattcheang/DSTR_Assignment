@@ -36,15 +36,27 @@ void Admin::appendAdminNode(string data[]) {
     adminSize++;
 }
 
-//Admin::Admin() {
-//    DataIO::ReadAdmin(this);
-//}
+Admin::Admin() {
+    DataIO::ReadAdmin(this);
+}
 
 AdminNode* Admin::searchAdminUser(string username) {
     AdminNode* temp = this->adminHead;
     if (temp == nullptr) return nullptr;
     while (temp != nullptr) {
         if (temp->username == username) {
+            return temp;
+        }
+        temp = temp->nextAdmin;
+    }
+    return nullptr;
+}
+
+AdminNode* Admin::searchAdminID(string adminID) {
+    AdminNode* temp = this->adminHead;
+    if (temp == nullptr) return nullptr;
+    while (temp != nullptr) {
+        if (temp->adminID == adminID) {
             return temp;
         }
         temp = temp->nextAdmin;

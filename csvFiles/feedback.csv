@@ -1,6 +1,3 @@
-FeedbackID,UserID,AdminID,University Rank,Feedback,Reply,Feedback Datetime,Reply Datetime
-FB000101,U00000001,A00000001,1,Dfhalfhvkfjsv,At;goeianvad,2023-03-18 12:00:58,2023-03-18 12:00:58
-FB000102,U00000001,A00000003,1,Rhaiuetlhgealu edfkjlah,A;ioean v,2023-03-18 12:00:58,2023-03-18 12:00:58
-FB000201,U00000002,A00000001,10,Isa;oigeanig;i dsl;vj,Da;ofag aeo;ifheabvd,2023-03-18 12:00:58,2023-03-18 12:00:58
-FB000202,U00000002,A00000002,10,Fealigbjen dalhgvnd,;oaidsnvav,2023-03-18 12:00:58,2023-03-18 12:00:58
-FB000203,U00000001,A00000002,1,Paeoftienvd afkjahe,Vdsovnbve ,2023-03-18 12:00:58,2023-03-18 12:00:58
+FeedbackID|Username|Admin Name|University Rank|Feedback|Reply|Feedback Datetime|Reply Datetime
+FB000101|U00000002|NULL|4|HelloHello|NULL|2023-05-30 23:08:03|1900-01-00 00:00:00
+FB201|U00000002|NULL|12|Hello|NULL|2023-05-30 23:08:18|1900-01-00 00:00:00

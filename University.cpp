@@ -405,86 +405,24 @@ UniversityNode* University::searchUniversity(string data) {
 //Linear search
 void University::LinearSearch(string search, sortOption option)
 {
-    UniversityNode* current = this->universityHead;
-    int searchCounter = 0;
-
-    PrintTableHeader();
+    cout << "liner testing" << endl;
+    // Sorting is required for fair comparison with jump sort
     callMergeSort(option);
 
     // Start measuring the execution time
     auto start = std::chrono::high_resolution_clock::now();
 
+    UniversityNode* current = this->universityHead;
+    int searchCounter = 0;
+
+    // Print the table header
+    PrintTableHeader();
+
     // Iterate the entire linked list and search for the data
     while (current != nullptr) {
         bool displayUniversity = false;
+        displayUniversity = compareValues(option, search, current);
 
-        switch (option) {
-            case uniRank:
-                displayUniversity = (current->rank == stoi(search));
-                break;
-            case uniName:
-                displayUniversity = isSubstring(search, current->institutionName);
-                break;
-            case uniLocation:
-                displayUniversity = isSubstring(search, current->location);
-                break;
-            case uniLocationCode:
-                displayUniversity = isSubstring(search, current->locationCode);
-                break;
-            case arScore:
-                displayUniversity = (current->arScore == stod(search));
-                break;
-            case erScore:
-                displayUniversity = (current->erScore == stod(search));
-                break;
-            case fsrScore:
-                displayUniversity = (current->fsrScore == stod(search));
-                break;
-            case cpfScore:
-                displayUniversity = (current->cpfScore == stod(search));
-                break;
-            case ifrScore:
-                displayUniversity = (current->ifrScore == stod(search));
-                break;
-            case isrScore:
-                displayUniversity = (current->isrScore == stod(search));
-                break;
-            case irnScore:
-                displayUniversity = (current->irnScore == stod(search));
-                break;
-            case gerScore:
-                displayUniversity = (current->gerScore == stod(search));
-                break;
-            case scoreScaled:
-                displayUniversity = (current->scoreScaled == stod(search));
-                break;
-            case arRank:
-                displayUniversity = (stoi(current->arRank) == stoi(search));
-                break;
-            case erRank:
-                displayUniversity = (stoi(current->erRank) == stoi(search));
-                break;
-            case fsrRank:
-                displayUniversity = (stoi(current->fsrRank) == stoi(search));
-                break;
-            case cpfRank:
-                displayUniversity = (stoi(current->cpfRank) == stoi(search));
-                break;
-            case ifrRank:
-                displayUniversity = (stoi(current->ifrRank) == stoi(search));
-                break;
-            case isrRank:
-                displayUniversity = (stoi(current->isrRank) == stoi(search));
-                break;
-            case irnRank:
-                displayUniversity = (stoi(current->irnRank) == stoi(search));
-                break;
-            case gerRank:
-                displayUniversity = (stoi(current->gerRank) == stoi(search));
-                break;
-            default:
-                break;
-        }
         if (displayUniversity){
             searchCounter++;
             DisplayTheUniversity(current);
@@ -512,94 +450,48 @@ void University::LinearSearch(string search, sortOption option)
 
 //Jump search
 void University::JumpSearch(string search, sortOption option) {
-    // Sort the linked list by institution name
+    // Sorting is required for Jump Search
     callMergeSort(option);
+
     // Start measuring the execution time
     auto startTime = std::chrono::high_resolution_clock::now();
 
-    int lengthOfLinkedList = 0;
+    int jumpSize = sqrt(this->uniListSize);
+    int searchCounter = 0;
+
     UniversityNode* current = universityHead;
+    UniversityNode* prev = universityHead;
 
+    while(current != nullptr && !compareValues(option, search, current)) {
+        prev = current;
+        for (int i = 0; current != nullptr && i < jumpSize; i++) {
+            current = current->nextUni;
+        }
+    }
+
+    current = prev;
+
+    // Print the table header
+    PrintTableHeader();
+
+    // Iterate the entire linked list and search for the data
     while (current != nullptr) {
-        lengthOfLinkedList++;
+        bool displayUniversity = false;
+        displayUniversity = compareValues(option, search, current);
+
+        if (displayUniversity){
+            searchCounter++;
+            DisplayTheUniversity(current);
+        }
         current = current->nextUni;
-    }
-
-    int jump = sqrt(lengthOfLinkedList);
-
-    UniversityNode* start = universityHead;
-    UniversityNode* end = universityHead;
-
-    if (option == uniName) {
-        while (end != nullptr && end->institutionName < search) {
-            start = end;
-            for (int i = 0; i < jump && end->nextUni != nullptr; i++) {
-                end = end->nextUni;
-            }
-        }
-    }
-    else if (option == arScore) {
-        while (end != nullptr && end->arScore < stod(search)) {
-            start = end;
-            for (int i = 0; i < jump && end->nextUni != nullptr; i++) {
-                end = end->nextUni;
-            }
-        }
-    }
-
-    UniversityNode* match = nullptr;
-    if (option == uniName) {
-        while (start != nullptr && start != end->nextUni) {
-            if (start->institutionName == search) {
-                match = start;
-                break;
-            }
-            start = start->nextUni;
-        }
-    }
-    else if (option == arScore) {
-        while (start != nullptr && start != end->nextUni) {
-            if (start->arScore == stod(search)) {
-                match = start;
-                break;
-            }
-            start = start->nextUni;
-        }
-    }
-
-    if (match == nullptr) 
-        cout << "No university found in this QS ranking 2023" << endl << endl;
-    else {
-        // Traverse the linked list and display all the matching nodes
-        UniversityNode* temp = match;
-        if (option == uniName) {
-            while (temp != nullptr && temp != match->nextUni) {
-                if (temp->institutionName == search) {
-//                    DisplaySearchResult(temp, search); // Updated parameter
-                }
-                temp = temp->nextUni;
-            }
-        }
-        else if (option == arScore) {
-            while (temp != nullptr && temp != match->nextUni) {
-                if (temp->arScore == stod(search)) {
-//                    DisplaySearchResult1(temp, search); // Updated parameter
-                }
-                temp = temp->nextUni;
-            }
-        }
     }
 
     // Stop measuring the execution time
     auto stopTime = std::chrono::high_resolution_clock::now();
     this->timeTaken = std::chrono::duration_cast<std::chrono::microseconds>(stopTime - startTime);
 
-//    cout << string(334, '-') << endl;
-//    cout << "Number of university shown: " << searchCounter << endl << endl;
-//
-//    if (searchCounter == 0){
-//        cout << "No university found in this QS ranking 2023" << endl << endl;
-//    }
+    cout << string(334, '-') << endl;
+    cout << "Number of university shown: " << searchCounter << endl << endl;
 
     // Print the execution time
     cout << "Time taken by Linear Search Algorithm: ";
@@ -607,16 +499,16 @@ void University::JumpSearch(string search, sortOption option) {
     cout << endl;
 }
 
-int University::RemovePlusSymbol(string otherRank) {
-    // Remove the "+" sign from the ranks
-//    otherRank.erase(std::remove(otherRank.begin(), otherRank.end(), '-'), otherRank.end());
-
-    // Convert the rank strings to integers
-    int convertedRank = stoi(otherRank);
-
-    // Perform the comparison
-    return convertedRank;
-}
+//int University::RemovePlusSymbol(string otherRank) {
+//    // Remove the "+" sign from the ranks
+////    otherRank.erase(std::remove(otherRank.begin(), otherRank.end(), '-'), otherRank.end());
+//
+//    // Convert the rank strings to integers
+//    int convertedRank = stoi(otherRank);
+//
+//    // Perform the comparison
+//    return convertedRank;
+//}
 
 void University::PrintTableHeader() {
     string width = { 6, 90, 12, 35, 7, 6, 7, 6, 8, 7, 8, 7, 8, 7, 8, 7, 8, 7, 8, 7, 11 };
@@ -862,4 +754,57 @@ void University::PerformSearch(int searchMethod, int searchAttributeSelection, c
                 break;
         }
     }
+}
+
+bool University::compareValues(sortOption attributes, const string &keyword, UniversityNode *current) {
+    switch (attributes) {
+        case uniRank:
+            return current->rank == stoi(keyword);
+        case uniName:
+            return isSubstring(keyword, current->institutionName);
+        case uniLocation:
+            return isSubstring(keyword, current->location);
+        case uniLocationCode:
+            return isSubstring(keyword, current->locationCode);
+        case arScore:
+            return current->arScore == stod(keyword);
+        case erScore:
+            return current->erScore == stod(keyword);
+        case fsrScore:
+            return current->fsrScore == stod(keyword);
+        case cpfScore:
+            return current->cpfScore == stod(keyword);
+        case ifrScore:
+            return current->ifrScore == stod(keyword);
+        case isrScore:
+            return current->isrScore == stod(keyword);
+        case irnScore:
+            return current->irnScore == stod(keyword);
+        case gerScore:
+            return current->gerScore == stod(keyword);
+        case scoreScaled:
+            return current->scoreScaled == stod(keyword);
+        case arRank:
+            return stoi(current->arRank) == stoi(keyword);
+        case erRank:
+            return stoi(current->erRank) == stoi(keyword);
+        case fsrRank:
+            return stoi(current->fsrRank) == stoi(keyword);
+        case cpfRank:
+            return stoi(current->cpfRank) == stoi(keyword);
+        case ifrRank:
+            return stoi(current->ifrRank) == stoi(keyword);
+        case isrRank:
+            return stoi(current->isrRank) == stoi(keyword);
+        case irnRank:
+            return stoi(current->irnRank) == stoi(keyword);
+        case gerRank:
+            return stoi(current->gerRank) == stoi(keyword);
+        default:
+            return false;
+    }
+}
+
+int University::getUniListSize() const {
+    return uniListSize;
 }

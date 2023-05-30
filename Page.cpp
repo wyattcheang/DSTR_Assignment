@@ -20,6 +20,8 @@ BasePage::BasePage(University* university, User* user, Admin* admin, Feedback* f
         : university(university), user(user), admin(admin), feedback(feedback), favourite(favourite) {
 }
 
+
+
 StartPage::StartPage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite)
         : BasePage(university, user, admin, feedback, favourite) {
 }
@@ -32,7 +34,16 @@ AdminPage::AdminPage(University* university, User* user, Admin* admin, Feedback*
         : BasePage(university, user, admin, feedback, favourite) {
 }
 
-void StartPage::DisplayStartPage(UserPage* userPage, AdminPage* adminPage) {
+FeedbackPage::FeedbackPage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite)
+        : BasePage(university, user, admin, feedback, favourite) {
+}
+
+FavouritePage::FavouritePage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite)
+        : BasePage(university, user, admin, feedback, favourite) {
+}
+
+
+void StartPage::DisplayStartPage(UserPage* userPage, AdminPage* adminPage, FeedbackPage* feedbackPage, FavouritePage* favouritePage) {
     int startMenuOption, sortSelection, searchSelection;
     string searchKeyword;
     bool loop = true;
@@ -125,11 +136,11 @@ void StartPage::DisplayStartPage(UserPage* userPage, AdminPage* adminPage) {
                     break;
                 case 5:
                     user->userLogin();
-                    userPage->DisplayUserPage();
+                    userPage->DisplayUserPage(feedbackPage, favouritePage);
                     break;
                 case 6:
                     admin->adminLogin();
-                    adminPage->DisplayAdminPage();
+                    adminPage->DisplayAdminPage(feedbackPage, favouritePage);
                     break;
                 case 7:
                     cout << "Thank you for using our system!" << endl;
@@ -142,7 +153,7 @@ void StartPage::DisplayStartPage(UserPage* userPage, AdminPage* adminPage) {
     }
 }
 
-void UserPage::DisplayUserPage() {
+void UserPage::DisplayUserPage(FeedbackPage* feedbackPage, FavouritePage* favouritePage) {
     bool userPageLoop = true;
     int searchAttributeSelection, searchSelection;
     string searchKeyword;
@@ -355,33 +366,15 @@ void UserPage::DisplayUserPage() {
                         }
                     }
                     university->PerformSearch(searchSelection, searchAttributeSelection, searchKeyword);
-                    int saveSelection;
-                    while (true) {
-                        cout << "Would you like to save this university as your favourite university?" << endl;
-                        cout << "(1) Yes" << endl;
-                        cout << "(2) No" << endl;
-                        cin >> saveSelection;
-                        if (cin.fail() || saveSelection < 1 || saveSelection > 2) {
-                            cout << "Error Input!" << endl << endl;
-                            cin.clear();
-                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                            continue;
-                        } else {
-                            break;
-                        }
-                    }
-                    if (saveSelection == 1) {
-                        // save favour function!
-                    }
                     break;
                 case 3:
                     cout << "Save" << endl;
                     break;
                 case 4:
-                    cout << "Send feedback" << endl;
+                    feedbackPage->UserAddFeedbackPage();
                     break;
                 case 5:
-                    cout << "Read feedback" << endl;
+                    feedbackPage->UserReviewFeedbackPage();
                     break;
                 case 6:
                     user->userLogout();
@@ -394,7 +387,7 @@ void UserPage::DisplayUserPage() {
     }
 }
 
-void AdminPage::DisplayAdminPage() {
+void AdminPage::DisplayAdminPage(FeedbackPage *feedbackPage, FavouritePage *favouritePage) {
     bool adminPageLoop = true;
     while (adminPageLoop) {
         cout << string(100, '=') << endl;
@@ -482,3 +475,66 @@ void AdminPage::DisplayAdminPage() {
         }
     }
 }
+
+void FeedbackPage::UserAddFeedbackPage() {
+    int selectUniversity;
+    cout << string(100, '-') << endl;
+    DataIO::printStringCentered("User Feedback Page");
+    cout << string(100, '-') << endl;
+    while (true) {
+        while (true) {
+            cout << "Enter the university rank: ";
+            cin >> selectUniversity;
+            if (cin.fail() || selectUniversity < 1 || selectUniversity > university->getUniListSize()) {
+                cout << "Error Input!" << endl << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            } else {
+                break;
+            }
+        }
+        string feedback;
+        int confirmSelection;
+        UniversityNode *selectedUniversity = university->searchUniversity(to_string(selectUniversity));
+        cout << setw(50) << setfill('=') << "" << endl;
+        cout << "University Rank: " << selectedUniversity->rank << endl;
+        cout << "University Name: " << selectedUniversity->institutionName << endl;
+        cout << setw(50) << setfill('=') << "" << endl;
+        cout << "Feedbacks: " << endl;
+        cin.ignore();
+        getline(cin, feedback);
+        while (true) {
+            cout << "Do you confirm to add this feedback?" << endl;
+            cout << "(1) Yes" << endl;
+            cout << "(2) No" << endl;
+            cout << "Enter your option:";
+            cin >> confirmSelection;
+            if (cin.fail() || confirmSelection < 1 || confirmSelection > 2) {
+                cout << "Error Input!" << endl << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            } else {
+                break;
+            }
+        }
+        if (confirmSelection == 1) {
+            this->feedback->appendFeedbackNode(feedback, user->getLoginUser(), selectedUniversity);
+            cout << "Successfully added feedback!" << endl;
+            break;
+        } else {
+            cout << "Execution was cancelled!" << endl;
+            break;
+        }
+    }
+}
+
+void FeedbackPage::UserReviewFeedbackPage() {
+    FeedbackNode* currentFeedback =feedback->getUserNextFeedback(user->getLoginUser(), nullptr);
+    if (currentFeedback != nullptr){
+        feedback->printFeedback(currentFeedback);
+    }
+}
+
+
