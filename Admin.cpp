@@ -115,21 +115,13 @@ void Admin::modifyUserPassword() {
                 if (foundUser2 != nullptr && foundUser2->password == password) {
                     cout << "Enter new password: " << endl;
                     cin >> newPass;
-                    if (!user.checkPasswordFormat(newPass)) {
+                    cout << "Re-enter your new password: ";
+                    cin >> newPass2;
+                    if (newPass != newPass2) {
                         cin.clear();
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                        cout << "Check your password format!" << endl;
+                        cout << "Password not matched!" << endl;
                         continue;
-                    }
-                    else {
-                        cout << "Re-enter your new password: ";
-                        cin >> newPass2;
-                        if (newPass != newPass2) {
-                            cin.clear();
-                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                            cout << "Password not matched!" << endl;
-                            continue;
-                        }
                     }
                     foundUser2->password = newPass;
                     DataIO::printAlert("Password modified successfully!");

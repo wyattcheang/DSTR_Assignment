@@ -264,9 +264,10 @@ void Feedback::appendFeedbackNode(FeedbackNode *newFeedbackNode) {
         feedbackSize++;
         return;
     }
-    int newFeedbackIDNum = stoi(newFeedbackNode->feedbackID.substr(2, 6));
-    int tailFeedbackIDNum = stoi(this->feedbackTail->feedbackID.substr(2, 6));
-    if(newFeedbackIDNum - tailFeedbackIDNum == 100) {
+//    int newFeedbackIDNum = stoi(newFeedbackNode->feedbackID.substr(2, 6));
+//    int tailFeedbackIDNum = stoi(this->feedbackTail->feedbackID.substr(2, 6));
+    string feedbackChildIDNum = newFeedbackNode->feedbackID.substr(6, 2);
+    if(feedbackChildIDNum == "01") {
         this->feedbackTail->nextFeedback = newFeedbackNode;
         newFeedbackNode->prevFeedback = this->feedbackTail;
         this->feedbackTail = newFeedbackNode;

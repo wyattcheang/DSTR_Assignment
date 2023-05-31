@@ -106,6 +106,21 @@ void StartPage::DisplayStartPage(UserPage* userPage, AdminPage* adminPage, Feedb
                     cout << endl;
                     break;
                 case 3:
+                    int searchAttributeSelection;
+                    while (true) {
+                        cout << "Search University Based on: " << endl;
+                        cout << "(1) University Name" << endl;
+                        cout << "(2) University Location" << endl;
+                        cout << "Your selection: ";
+                        cin >> searchAttributeSelection;
+                        if (cin.fail() || searchAttributeSelection < 1 || searchAttributeSelection > 2) {
+                            cout << "Error Input!" << endl;
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        } else {
+                            break;
+                        }
+                    }
                     while (true) {
                         cout << "Enter the keyword to search: ";
                         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -129,7 +144,10 @@ void StartPage::DisplayStartPage(UserPage* userPage, AdminPage* adminPage, Feedb
                             break;
                         }
                     }
-                    university->PerformSearch(searchSelection, 2, searchKeyword);
+                    if (searchAttributeSelection == 1)
+                        university->PerformSearch(searchSelection, 2, searchKeyword);
+                    else if (searchAttributeSelection == 2)
+                        university->PerformSearch(searchSelection, 3, searchKeyword);
                     break;
                 case 4:
                     user->userRegister();
@@ -591,40 +609,48 @@ void FeedbackPage::UserReviewFeedbackPage() {
             case 3: {
                 string feedbackContent;
                 int confirmSelection;
-                FeedbackNode* temp_currentFeedback = feedback->getChildFeedback(currentFeedback);
-                if (temp_currentFeedback->replyAdmin == nullptr) {
-                    cout << endl;
-                    DataIO::printAlert("No reply from admin yet!");
+                if (currentFeedback == nullptr) {
+                    DataIO::printAlert("No feedback to continue conversation!");
                 }else {
-                    cout << "Feedbacks: " << endl;
-                    cin.ignore();
-                    getline(cin, feedbackContent);
-                    while (true) {
-                        cout << "Do you confirm to add this feedback?" << endl;
-                        cout << "(1) Yes" << endl;
-                        cout << "(2) No" << endl;
-                        cout << "Enter your option:";
-                        cin >> confirmSelection;
-                        if (cin.fail() || confirmSelection < 1 || confirmSelection > 2) {
-                            cout << "Error Input!" << endl << endl;
-                            cin.clear();
-                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                            continue;
+                    FeedbackNode *temp_currentFeedback = feedback->getChildFeedback(currentFeedback);
+                    if (temp_currentFeedback == nullptr) {
+                        DataIO::printAlert("No feedback to continue conversation!");
+                        break;
+                    } else if (temp_currentFeedback->replyAdmin == nullptr) {
+                        cout << endl;
+                        DataIO::printAlert("No reply from admin yet!");
+                    } else {
+                        cout << "Feedbacks: " << endl;
+                        cin.ignore();
+                        getline(cin, feedbackContent);
+                        while (true) {
+                            cout << "Do you confirm to add this feedback?" << endl;
+                            cout << "(1) Yes" << endl;
+                            cout << "(2) No" << endl;
+                            cout << "Enter your option:";
+                            cin >> confirmSelection;
+                            if (cin.fail() || confirmSelection < 1 || confirmSelection > 2) {
+                                cout << "Error Input!" << endl << endl;
+                                cin.clear();
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                                continue;
+                            } else {
+                                break;
+                            }
+                        }
+                        cout << string(28, '*') << endl;
+                        if (confirmSelection == 1) {
+                            this->feedback->appendFeedbackNode(feedbackContent, user->getLoginUser(),
+                                                               currentFeedback->feedbackUniversity);
+                            DataIO::printAlert("Successfully added feedback!");
+                            break;
                         } else {
+                            DataIO::printAlert("Feedback was not added!");
                             break;
                         }
+                        cout << string(28, '*') << endl;
+                        cout << endl;
                     }
-                    cout << string(28, '*') << endl;
-                    if (confirmSelection == 1) {
-                        this->feedback->appendFeedbackNode(feedbackContent, user->getLoginUser(), currentFeedback->feedbackUniversity);
-                        DataIO::printAlert("Successfully added feedback!");
-                        break;
-                    } else {
-                        DataIO::printAlert("Feedback was not added!");
-                        break;
-                    }
-                    cout << string(28, '*') << endl;
-                    cout << endl;
                 }
                 break;
             }

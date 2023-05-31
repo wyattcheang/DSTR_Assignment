@@ -85,6 +85,7 @@ public:
     static void UniversityNameAlignment(UniversityNode *current, int &checkTwoByte, int &checkThreeByte);
 
     int getUniListSize() const;
+    bool compareFirstCharacter(const std::string& str1, const std::string& str2);
 };
 
 #endif //ASSIGNMENT_UNIVERSITY_H

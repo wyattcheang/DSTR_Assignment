@@ -145,21 +145,13 @@ void User::userRegister() {
         while (true) {
             cout << "Enter your password: ";
             cin >> pass;
-            if (!checkPasswordFormat(pass)) {
+            cout << "Re-enter your password: ";
+            cin >> pass2;
+            if (pass != pass2) {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Check your password format!" << endl;
+                cout << "Passwords not same!" << endl;
                 continue;
-            }
-            else {
-                cout << "Re-enter your password: ";
-                cin >> pass2;
-                if (pass != pass2) {
-                    cin.clear();
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cout << "Passwords not same!" << endl;
-                    continue;
-                }
             }
             break;
         }
@@ -199,7 +191,7 @@ void User::userRegister() {
 bool User::usernameValidation(string username) {
     regex pattern("^[A-Za-z0-9]{6,}$");
     if (!regex_match(username, pattern)) {
-        cout << "Username cannot contain special characters!" << endl;
+        cout << "Username cannot use!" << endl;
         return false;
     }
     else {
@@ -215,15 +207,6 @@ bool User::usernameValidation(string username) {
                 temp = temp->nextUser;
             }
         }
-    }
-    return true;
-}
-
-bool User::checkPasswordFormat(string password) {
-    regex pattern("^[A-Za-z0-9]{6,}$");
-    if (!regex_match(password, pattern)) {
-        cout << "Password must contain at least 1 uppercase, 1 lowercase, 1 digit, 1 special character and at least 8 characters!" << endl;
-        return false;
     }
     return true;
 }

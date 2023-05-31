@@ -403,9 +403,8 @@ UniversityNode* University::searchUniversity(string data) {
 }
 
 //Linear search
-void University::LinearSearch(string search, sortOption option)
-{
-    cout << "liner testing" << endl;
+void University::LinearSearch(string search, sortOption option){
+
     // Sorting is required for fair comparison with jump sort
     callMergeSort(option);
 
@@ -462,28 +461,46 @@ void University::JumpSearch(string search, sortOption option) {
     UniversityNode* current = universityHead;
     UniversityNode* prev = universityHead;
 
-    while(current != nullptr && !compareValues(option, search, current)) {
+    while(current != nullptr) {
+        if (option == uniName || option == uniLocation || option == uniLocationCode){
+            bool check;
+            switch (option){
+                case uniName:
+                    cout << ("search: " + search + " current->institutionName: " + current->institutionName) << endl;
+                    check = compareFirstCharacter(search, current->institutionName);
+                    break;
+                case uniLocation:
+                    check = compareFirstCharacter(search, current->location);
+                    break;
+                case uniLocationCode:
+                    check = compareFirstCharacter(search, current->locationCode);
+                    break;
+            }
+            if (check){
+                break;
+            }
+        }
+        if (compareValues(option, search, current)){
+            break;
+        }
         prev = current;
         for (int i = 0; current != nullptr && i < jumpSize; i++) {
             current = current->nextUni;
         }
     }
 
-    current = prev;
-
     // Print the table header
     PrintTableHeader();
 
     // Iterate the entire linked list and search for the data
-    while (current != nullptr) {
+    while (prev != nullptr) {
         bool displayUniversity = false;
-        displayUniversity = compareValues(option, search, current);
-
+        displayUniversity = compareValues(option, search, prev);
         if (displayUniversity){
             searchCounter++;
-            DisplayTheUniversity(current);
+            DisplayTheUniversity(prev);
         }
-        current = current->nextUni;
+        prev = prev->nextUni;
     }
 
     // Stop measuring the execution time
@@ -757,6 +774,8 @@ void University::PerformSearch(int searchMethod, int searchAttributeSelection, c
 }
 
 bool University::compareValues(sortOption attributes, const string &keyword, UniversityNode *current) {
+    char a = keyword[0];
+    char b;
     switch (attributes) {
         case uniRank:
             return current->rank == stoi(keyword);
@@ -818,4 +837,15 @@ UniversityNode* University::searchUniversityWithName(string uniName) {
         current = current->nextUni;
     }
     return nullptr;
+}
+
+bool University::compareFirstCharacter(const std::string& str1, const std::string& str2) {
+    // Retrieve the first character of str1
+    char firstChar1 = str1[0];
+
+    // Retrieve the first character of str2
+    char firstChar2 = str2[0];
+
+    // Compare the first characters
+    return firstChar2 >= firstChar1;
 }
