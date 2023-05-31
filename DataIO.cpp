@@ -199,6 +199,9 @@ void DataIO::ReadFeedback(Feedback* feedbackClass, User* userClass, Admin* admin
 
             FeedbackNode* add = feedbackClass->createFeedbackNode(column, userClass, adminClass, uniClass);
             feedbackClass->appendFeedbackNode(add);
+
+            if(stoi(column[0].substr(2,4)) > feedbackClass->getLastFeedbackID())
+                feedbackClass->setLastFeedbackID(stoi(column[0].substr(2,4)));
         }
     }
     else {
@@ -206,36 +209,24 @@ void DataIO::ReadFeedback(Feedback* feedbackClass, User* userClass, Admin* admin
     }
 }
 
-void DataIO::ReadFavourite(Favourite* head) {
+void DataIO::ReadFavourite(Favourite* head, University* uniClass, User* userClass) {
     string column[2];
     fstream file;
-    file.open(filePath + "favourite.csv", ios::in);
+    file.open(filePath + "favourite.txt", ios::in);
 
     if (file.is_open()) {
-        for (int i = 0; i < 2; i++) {
-            if (i == 1) {
-                getline(file, *(column + i));
-                if (column[1].back() == '\r')  //remove '\r' at the last of the string
-                    (column[1]).erase(column[1].end() - 1);
-            }
-            else
-                getline(file, column[i], ',');
-        }
-
         while (file.good()) {
 
-            getline(file, *(column + 0), ',');
-            if ((column + 0)->empty()) break;
+            getline(file, *(column + 0), '|');
+            if ((column + 0)->empty())
+                break;
+            getline(file, *(column + 1));
+            if (column[1].back() == '\r')  //remove '\r' at the last of the string
+                column[1].erase(column[1].end() - 1);
 
-            for (int i = 1; i < 2; i++) {
-                if (i != 1) getline(file, column[i], ',');
-                else
-                    getline(file, column[i]);
-                if (column[i].back() == '\r')  //remove '\r' at the last of the string
-                    (column[i]).erase(column[i].end() - 1);
-            }
-
-            FavouriteNode* add = head->createFavouriteNode(column);
+            UniversityNode* theUni = uniClass->searchUniversityWithName(column[0]);
+            UserNode* theUser = userClass->searchUserID(column[1]);
+            FavouriteNode* add = head->createFavouriteNode(theUni, theUser);
             head->appendFavouriteNode(add);
         }
     }
@@ -246,13 +237,13 @@ void DataIO::ReadFavourite(Favourite* head) {
 }
 
 void DataIO::SaveUser(UserNode* head) {
-    ofstream file(filePath + "user.csv");
+    ofstream file(filePath + "user.csv", ios::out);
     if (!file.is_open()) {
         cout << "Could not open file." << endl;
         return;
     }
     UserNode* temp = head;
-    file << "User ID,Username,Password,Last Login Datetime, LastLogout Datetime\n";
+    file << "User ID,Username,Password,Last Login Datetime,LastLogout Datetime\n";
     while (temp != nullptr) {
         char login[20];
         char logout[20];
@@ -272,15 +263,15 @@ void DataIO::SaveUser(UserNode* head) {
 }
 
 void DataIO::SaveFavourite(FavouriteNode* head) {
-    ofstream file(filePath + "favourite.csv", ios::app);
+    ofstream file(filePath + "favourite.txt");
     if (!file.is_open()) {
         cout << "Could not open file." << endl;
         return;
     }
     FavouriteNode* temp = head;
     while (temp != nullptr) {
-        file << temp->favUniversity << ',';
-        file << temp->favUser << '\n';
+        file << temp->favUniversity->institutionName << '|';
+        file << temp->favUser->userID << '\n';
         temp = temp->nextFav;
     }
     file.close();
@@ -340,7 +331,7 @@ void DataIO::printStringCentered(const string& text) {
     int lineLength = 100;
     int textLength = text.length();
     int leftPadding = (lineLength - textLength) / 2;
-    cout << setw(leftPadding) << "" << text  << endl;
+    cout << setfill(' ') << setw(leftPadding) << "" << text  << endl;
 }
 
 void DataIO::printSelectUniversityAttributeMenu(){
@@ -380,4 +371,13 @@ void DataIO::selectSearchMethodMenu(){
     cout << "(1) Linear Search" << endl;
     cout << "(2) Jump Search" << endl;
     cout << endl << "Enter you selection: ";
+}
+
+void DataIO::printAlert(const string& text) {
+    int length = text.length();
+    cout << endl;
+    cout << string(length, '*') << endl;
+    cout << text << endl;
+    cout << string(length, '*') << endl;
+    cout << endl;
 }

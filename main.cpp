@@ -13,7 +13,7 @@ int main() {
     User* user = new User();
     Admin* admin = new Admin();
     Feedback* feedback = new Feedback(user, admin, university);
-    Favourite* favourite = new Favourite();
+    Favourite* favourite = new Favourite(university, user);
 
     StartPage* startPage = new StartPage(university, user, admin, feedback, favourite);
     UserPage* userPage = new UserPage(university, user, admin, feedback, favourite);

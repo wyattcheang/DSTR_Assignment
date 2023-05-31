@@ -162,8 +162,6 @@ void UserPage::DisplayUserPage(FeedbackPage* feedbackPage, FavouritePage* favour
         DataIO::printStringCentered("User Page | Welcome back, " + user->getLoginUser()->username);
         cout << string(100, '=') << endl;
         int option;
-        University uni;
-        Favourite fav;
         cout << "Enter down below option to perform the coordinate execution." << endl;
         cout << "(1) Sort University." << endl;
         cout << "(2) Search University." << endl;
@@ -206,100 +204,100 @@ void UserPage::DisplayUserPage(FeedbackPage* feedbackPage, FavouritePage* favour
                     }
                     switch (sortAttributeSelection) {
                         case 1:
-                            if (sortSelection == 1) uni.callMergeSort(uniRank);
-                            else if (sortSelection == 2) uni.callQuickSort(uniRank);
+                            if (sortSelection == 1) university->callMergeSort(uniRank);
+                            else if (sortSelection == 2) university->callQuickSort(uniRank);
                             break;
                         case 2:
-                            if (sortSelection == 1) uni.callMergeSort(uniName);
-                            else if (sortSelection == 2) uni.callQuickSort(uniName);
+                            if (sortSelection == 1) university->callMergeSort(uniName);
+                            else if (sortSelection == 2) university->callQuickSort(uniName);
                             break;
                         case 3:
-                            if (sortSelection == 1) uni.callMergeSort(uniLocation);
-                            else if (sortSelection == 2) uni.callQuickSort(uniLocation);
+                            if (sortSelection == 1) university->callMergeSort(uniLocation);
+                            else if (sortSelection == 2) university->callQuickSort(uniLocation);
                             break;
                         case 4:
-                            if (sortSelection == 1) uni.callMergeSort(uniLocationCode);
-                            else if (sortSelection == 2) uni.callQuickSort(uniLocationCode);
+                            if (sortSelection == 1) university->callMergeSort(uniLocationCode);
+                            else if (sortSelection == 2) university->callQuickSort(uniLocationCode);
                             break;
                         case 5:
-                            if (sortSelection == 1) uni.callMergeSort(arScore);
-                            else if (sortSelection == 2) uni.callQuickSort(arScore);
+                            if (sortSelection == 1) university->callMergeSort(arScore);
+                            else if (sortSelection == 2) university->callQuickSort(arScore);
                             break;
                         case 6:
-                            if (sortSelection == 1) uni.callMergeSort(arRank);
-                            else if (sortSelection == 2) uni.callQuickSort(arRank);
+                            if (sortSelection == 1) university->callMergeSort(arRank);
+                            else if (sortSelection == 2) university->callQuickSort(arRank);
                             break;
                         case 7:
-                            if (sortSelection == 1) uni.callMergeSort(erScore);
-                            else if (sortSelection == 2) uni.callQuickSort(erScore);
+                            if (sortSelection == 1) university->callMergeSort(erScore);
+                            else if (sortSelection == 2) university->callQuickSort(erScore);
                             break;
                         case 8:
-                            if (sortSelection == 1) uni.callMergeSort(erRank);
-                            else if (sortSelection == 2) uni.callQuickSort(erRank);
+                            if (sortSelection == 1) university->callMergeSort(erRank);
+                            else if (sortSelection == 2) university->callQuickSort(erRank);
                             break;
                         case 9:
-                            if (sortSelection == 1) uni.callMergeSort(fsrScore);
-                            else if (sortSelection == 2) uni.callQuickSort(fsrScore);
+                            if (sortSelection == 1) university->callMergeSort(fsrScore);
+                            else if (sortSelection == 2) university->callQuickSort(fsrScore);
                             break;
                         case 10:
-                            if (sortSelection == 1) uni.callMergeSort(fsrRank);
-                            else if (sortSelection == 2) uni.callQuickSort(fsrRank);
+                            if (sortSelection == 1) university->callMergeSort(fsrRank);
+                            else if (sortSelection == 2) university->callQuickSort(fsrRank);
                             break;
                         case 11:
-                            if (sortSelection == 1) uni.callMergeSort(cpfScore);
-                            else if (sortSelection == 2) uni.callQuickSort(cpfScore);
+                            if (sortSelection == 1) university->callMergeSort(cpfScore);
+                            else if (sortSelection == 2) university->callQuickSort(cpfScore);
                             break;
                         case 12:
-                            if (sortSelection == 1) uni.callMergeSort(cpfRank);
-                            else if (sortSelection == 2) uni.callQuickSort(cpfRank);
+                            if (sortSelection == 1) university->callMergeSort(cpfRank);
+                            else if (sortSelection == 2) university->callQuickSort(cpfRank);
                             break;
                         case 13:
-                            if (sortSelection == 1) uni.callMergeSort(ifrScore);
-                            else if (sortSelection == 2) uni.callQuickSort(ifrScore);
+                            if (sortSelection == 1) university->callMergeSort(ifrScore);
+                            else if (sortSelection == 2) university->callQuickSort(ifrScore);
                             break;
                         case 14:
-                            if (sortSelection == 1) uni.callMergeSort(ifrRank);
-                            else if (sortSelection == 2) uni.callQuickSort(ifrRank);
+                            if (sortSelection == 1) university->callMergeSort(ifrRank);
+                            else if (sortSelection == 2) university->callQuickSort(ifrRank);
                             break;
                         case 15:
-                            if (sortSelection == 1) uni.callMergeSort(isrScore);
-                            else if (sortSelection == 2) uni.callQuickSort(isrScore);
+                            if (sortSelection == 1) university->callMergeSort(isrScore);
+                            else if (sortSelection == 2) university->callQuickSort(isrScore);
                             break;
                         case 16:
-                            if (sortSelection == 1) uni.callMergeSort(isrRank);
-                            else if (sortSelection == 2) uni.callQuickSort(isrRank);
+                            if (sortSelection == 1) university->callMergeSort(isrRank);
+                            else if (sortSelection == 2) university->callQuickSort(isrRank);
                             break;
                         case 17:
-                            if (sortSelection == 1) uni.callMergeSort(irnScore);
-                            else if (sortSelection == 2) uni.callQuickSort(irnScore);
+                            if (sortSelection == 1) university->callMergeSort(irnScore);
+                            else if (sortSelection == 2) university->callQuickSort(irnScore);
                             break;
                         case 18:
-                            if (sortSelection == 1) uni.callMergeSort(irnRank);
-                            else if (sortSelection == 2) uni.callQuickSort(irnRank);
+                            if (sortSelection == 1) university->callMergeSort(irnRank);
+                            else if (sortSelection == 2) university->callQuickSort(irnRank);
                             break;
                         case 19:
-                            if (sortSelection == 1) uni.callMergeSort(gerScore);
-                            else if (sortSelection == 2) uni.callQuickSort(gerScore);
+                            if (sortSelection == 1) university->callMergeSort(gerScore);
+                            else if (sortSelection == 2) university->callQuickSort(gerScore);
                             break;
                         case 20:
-                            if (sortSelection == 1) uni.callMergeSort(gerRank);
-                            else if (sortSelection == 2) uni.callQuickSort(gerRank);
+                            if (sortSelection == 1) university->callMergeSort(gerRank);
+                            else if (sortSelection == 2) university->callQuickSort(gerRank);
                             break;
                         case 21:
-                            if (sortSelection == 1) uni.callMergeSort(scoreScaled);
-                            else if (sortSelection == 2) uni.callQuickSort(scoreScaled);
+                            if (sortSelection == 1) university->callMergeSort(scoreScaled);
+                            else if (sortSelection == 2) university->callQuickSort(scoreScaled);
                             break;
                         default:
                             break;
                     }
-                    uni.DisplayData();
+                    university->DisplayData();
                     // Print the execution time
                     if (sortSelection == 1) {
                         cout << "Time taken by Merge Sort Algorithm: ";
                     } else if (sortSelection == 2) {
                         cout << "Time taken by Quick Sort Algorithm: ";
                     }
-                    cout << uni.timeTaken.count() << " microseconds." << endl;
+                    cout << university->timeTaken.count() << " microseconds." << endl;
                     cout << endl;
                     break;
                 }
@@ -366,9 +364,34 @@ void UserPage::DisplayUserPage(FeedbackPage* feedbackPage, FavouritePage* favour
                         }
                     }
                     university->PerformSearch(searchSelection, searchAttributeSelection, searchKeyword);
+                    int furtherExecution;
+                    while (true){
+                        cout << "Do you want to add this university to your favourite list or leave a feedback?" << endl;
+                        cout << "(1) Add to favourite list." << endl;
+                        cout << "(2) Leave a feedback." << endl;
+                        cout << "(3) No, thanks." << endl;
+                        cout << "Enter your selection: ";
+                        cin >> furtherExecution;
+                        if (cin.fail() || furtherExecution < 1 || furtherExecution > 3) {
+                            cout << "Error Input!" << endl << endl;
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                            continue;
+                        } else {
+                            break;
+                        }
+                    }
+                    if (furtherExecution == 1) {
+                        favouritePage->DisplayUserFavourPage();
+                    } else if (furtherExecution == 2) {
+                        feedbackPage->UserAddFeedbackPage();
+                    } else if (furtherExecution == 3) {
+                        break;
+                    }
+
                     break;
                 case 3:
-                    cout << "Save" << endl;
+                    favourite->printUserFavourite();
                     break;
                 case 4:
                     feedbackPage->UserAddFeedbackPage();
@@ -399,13 +422,12 @@ void AdminPage::DisplayAdminPage(FeedbackPage *feedbackPage, FavouritePage *favo
         cout << "(1) Display all registered users' details." << endl;
         cout << "(2) Modify user's details." << endl;
         cout << "(3) Delete user's account based on inactivity status." << endl;
-        cout << "(4) Display registered users' feedback according to latest date." << endl;
-        cout << "(5) Reply to user's feedback." << endl;
-        cout << "(6) Display top 10 universities most preferred by parents in Malaysia." << endl;
-        cout << "(7) Logout." << endl;
+        cout << "(4) Display and reply registered users' feedback according to latest date." << endl;
+        cout << "(5) Display top 10 universities most preferred by parents in Malaysia." << endl;
+        cout << "(6) Logout." << endl;
         cout << endl << "Your option: ";
         cin >> option;
-        if (cin.fail() || option < 1 || option > 7) {
+        if (cin.fail() || option < 1 || option > 6) {
             cout << "Error Input!" << endl;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -447,26 +469,24 @@ void AdminPage::DisplayAdminPage(FeedbackPage *feedbackPage, FavouritePage *favo
                 }
                 break;
                 case 3: {
-                    cout << "Delete" << endl;
                     user->deleteInactiveUsers();
                     break;
                 }
                 case 4: {
-                    cout << "HI" << endl;
+                    feedbackPage->DisplayAdminFeedbackPage();
                     break;
                 }
                 case 5: {
-                    cout << "HI" << endl;
+                    favourite->calculateSumFavourite();
+                    favourite->sortSumFavouriteList();
+                    favourite->printSumFavourite();
                     break;
                 }
                 case 6: {
-                    cout << "HI" << endl;
-                    break;
-                }
-                case 7: {
                     admin->adminLogout();
                     adminPageLoop = false;
                     cout << "Successfully Logout" << endl;
+                    break;
                 }
                 default: {
                     break;
@@ -494,16 +514,16 @@ void FeedbackPage::UserAddFeedbackPage() {
                 break;
             }
         }
-        string feedback;
+        string feedbackContent;
         int confirmSelection;
         UniversityNode *selectedUniversity = university->searchUniversity(to_string(selectUniversity));
-        cout << setw(50) << setfill('=') << "" << endl;
+        cout << setfill('=') << setw(50) << "" << endl;
         cout << "University Rank: " << selectedUniversity->rank << endl;
         cout << "University Name: " << selectedUniversity->institutionName << endl;
-        cout << setw(50) << setfill('=') << "" << endl;
+        cout << setfill('=') << setw(50)  << "" << endl;
         cout << "Feedbacks: " << endl;
         cin.ignore();
-        getline(cin, feedback);
+        getline(cin, feedbackContent);
         while (true) {
             cout << "Do you confirm to add this feedback?" << endl;
             cout << "(1) Yes" << endl;
@@ -520,21 +540,249 @@ void FeedbackPage::UserAddFeedbackPage() {
             }
         }
         if (confirmSelection == 1) {
-            this->feedback->appendFeedbackNode(feedback, user->getLoginUser(), selectedUniversity);
-            cout << "Successfully added feedback!" << endl;
+            this->feedback->appendFeedbackNode(feedbackContent, user->getLoginUser(), selectedUniversity);
+            DataIO::printAlert("Successfully added feedback!");
             break;
         } else {
-            cout << "Execution was cancelled!" << endl;
+            DataIO::printAlert("Feedback was not added!");
             break;
         }
     }
 }
 
 void FeedbackPage::UserReviewFeedbackPage() {
-    FeedbackNode* currentFeedback =feedback->getUserNextFeedback(user->getLoginUser(), nullptr);
-    if (currentFeedback != nullptr){
-        feedback->printFeedback(currentFeedback);
+    FeedbackNode *currentFeedback = feedback->getUserPrevFeedback(user->getLoginUser(), nullptr);
+    bool looping = true;
+    while (looping) {
+        if (currentFeedback != nullptr) {
+            feedback->printFeedback(currentFeedback);
+        } else {
+            DataIO::printAlert("No more feedbacks!");
+            cout << "[Press 1 to start from the beginning 2 to start from back]" << endl;
+            cout << endl;
+        }
+        int furtherExecution;
+        while (true) {
+            cout << "Further Execution" << endl;
+            cout << "(1) Previous Feedback" << endl;
+            cout << "(2) Next Feedback" << endl;
+            cout << "(3) Continue conversation" << endl;
+            cout << "(4) Back" << endl;
+            cout << "Enter your option: ";
+            cin >> furtherExecution;
+            if (cin.fail() || furtherExecution < 1 || furtherExecution > 4) {
+                cout << "Error Input!" << endl << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            } else {
+                break;
+            }
+        }
+        switch (furtherExecution) {
+            case 1: {
+                currentFeedback = feedback->getUserPrevFeedback(user->getLoginUser(), currentFeedback);
+                break;
+            }
+            case 2: {
+                currentFeedback = feedback->getUserNextFeedback(user->getLoginUser(), currentFeedback);
+                break;
+            }
+            case 3: {
+                string feedbackContent;
+                int confirmSelection;
+                FeedbackNode* temp_currentFeedback = feedback->getChildFeedback(currentFeedback);
+                if (temp_currentFeedback->replyAdmin == nullptr) {
+                    cout << endl;
+                    DataIO::printAlert("No reply from admin yet!");
+                }else {
+                    cout << "Feedbacks: " << endl;
+                    cin.ignore();
+                    getline(cin, feedbackContent);
+                    while (true) {
+                        cout << "Do you confirm to add this feedback?" << endl;
+                        cout << "(1) Yes" << endl;
+                        cout << "(2) No" << endl;
+                        cout << "Enter your option:";
+                        cin >> confirmSelection;
+                        if (cin.fail() || confirmSelection < 1 || confirmSelection > 2) {
+                            cout << "Error Input!" << endl << endl;
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                            continue;
+                        } else {
+                            break;
+                        }
+                    }
+                    cout << string(28, '*') << endl;
+                    if (confirmSelection == 1) {
+                        this->feedback->appendFeedbackNode(feedbackContent, user->getLoginUser(), currentFeedback->feedbackUniversity);
+                        DataIO::printAlert("Successfully added feedback!");
+                        break;
+                    } else {
+                        DataIO::printAlert("Feedback was not added!");
+                        break;
+                    }
+                    cout << string(28, '*') << endl;
+                    cout << endl;
+                }
+                break;
+            }
+            case 4: {
+                looping = false;
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     }
 }
 
+void FavouritePage:: DisplayUserFavourPage(){
+    int selectUniversity;
+    cout << string(100, '-') << endl;
+    DataIO::printStringCentered("User Favourite Page");
+    cout << string(100, '-') << endl;
+    while (true) {
+        while (true) {
+            cout << "Enter the university rank: ";
+            cin >> selectUniversity;
+            if (cin.fail() || selectUniversity < 1 || selectUniversity > university->getUniListSize()) {
+                cout << "Error Input!" << endl << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            } else {
+                break;
+            }
+        }
+        int confirmSelection;
+        UniversityNode *selectedUniversity = university->searchUniversity(to_string(selectUniversity));
+        cout << setfill('=')<< setw(50)  << "" << endl;
+        cout << "University Rank: " << selectedUniversity->rank << endl;
+        cout << "University Name: " << selectedUniversity->institutionName << endl;
+        cout << setfill('=') << setw(50)  << "" << endl;
+        while (true) {
+            cout << "Do you confirm to add this into your favourite University?" << endl;
+            cout << "(1) Yes" << endl;
+            cout << "(2) No" << endl;
+            cout << "Enter your option:";
+            cin >> confirmSelection;
+            if (cin.fail() || confirmSelection < 1 || confirmSelection > 2) {
+                cout << "Error Input!" << endl << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            } else {
+                break;
+            }
+        }
 
+        if (confirmSelection == 1 && !favourite->checkDuplicatedFavourite(selectedUniversity)) {
+            favourite->addFavourite(selectedUniversity);
+            DataIO::printAlert("Successfully added favourite!");
+            break;
+        } else if (confirmSelection == 1 && favourite->checkDuplicatedFavourite(selectedUniversity)) {
+            DataIO::printAlert("This university is already in your favourite list!");
+            break;
+        } else {
+            DataIO::printAlert("Favourite was not added!");
+            break;
+        }
+    }
+}
+
+void FeedbackPage::DisplayAdminFeedbackPage(){
+    FeedbackNode *currentFeedback = feedback->getFeedbackHead();
+    bool looping = true;
+    while (looping) {
+        if (currentFeedback != nullptr) {
+            feedback->printFeedback(currentFeedback);
+        } else {
+            cout << "No more feedback to reply!" << endl << endl;
+        }
+        int furtherExecution;
+        while (true) {
+            cout << "Further Execution" << endl;
+            cout << "(1) Previous User Feedback" << endl;
+            cout << "(2) Next User Feedback" << endl;
+            cout << "(3) Reply Feedback" << endl;
+            cout << "(4) Back" << endl;
+            cout << "Enter your option: ";
+            cin >> furtherExecution;
+            cout << endl;
+            if (cin.fail() || furtherExecution < 1 || furtherExecution > 4) {
+                cout << "Error Input!" << endl << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            } else {
+                break;
+            }
+        }
+        switch (furtherExecution) {
+            case 1: {
+                if (currentFeedback != nullptr) {
+                    currentFeedback = currentFeedback->nextFeedback;
+                }else{
+                    currentFeedback = feedback->getFeedbackHead();
+                }
+                break;
+            }
+            case 2: {
+                if (currentFeedback != nullptr) {
+                    currentFeedback = currentFeedback->prevFeedback;
+                }else {
+                    currentFeedback = feedback->getFeedbackTail();
+                }
+                break;
+            }
+            case 3: {
+                string feedbackContent;
+                int confirmSelection;
+                FeedbackNode* temp_currentFeedback = feedback->getChildFeedback(currentFeedback);
+                if (temp_currentFeedback->replyAdmin == nullptr) {
+                    DataIO::printAlert("You have already reply the feedback!");
+                    cout << "[Press 1 to start from the beginning 2 to start from back]" << endl << endl;
+                }else {
+                    cout << "Reply: " << endl;
+                    cin.ignore();
+                    getline(cin, feedbackContent);
+                    while (true) {
+                        cout << "Do you confirm to add this feedback?" << endl;
+                        cout << "(1) Yes" << endl;
+                        cout << "(2) No" << endl;
+                        cout << "Enter your option:";
+                        cin >> confirmSelection;
+                        cout << endl;
+                        if (cin.fail() || confirmSelection < 1 || confirmSelection > 2) {
+                            cout << "Error Input!" << endl << endl;
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                            continue;
+                        } else {
+                            break;
+                        }
+                    }
+                    if (confirmSelection == 1) {
+                        feedback->replyFeedback(currentFeedback, admin->getLoginAdmin(), feedbackContent);
+                        DataIO::printAlert("Successfully replied feedback!");
+                        break;
+                    } else {
+                        DataIO::printAlert("Feedback was not replied!");
+                        break;
+                    }
+                }
+                break;
+            }
+            case 4: {
+                looping = false;
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+}

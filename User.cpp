@@ -36,7 +36,6 @@ UserNode* User::searchUser(string username) {
 
 UserNode* User::searchUserID(string userID) {
     UserNode* temp = this->userHead;
-    if (temp == nullptr) return nullptr;
     while (temp != nullptr) {
         if (temp->userID == userID) {
             return temp;
@@ -188,10 +187,17 @@ void User::userRegister() {
 
     UserNode* newUserNode = createUserNode(data);
     appendUserNode(newUserNode);
+    cout << "User created!" << endl;
+    cout << "Your UserID is: " << userid << endl;
+    cout << "You username is: " << name << endl;
+    cout << "Press any key to back to main page and proceed login..." << endl;
+    cin.ignore();
+    cin.get();
+    cout << endl;
 }
 
 bool User::usernameValidation(string username) {
-    regex pattern("^[a-zA-Z0-9_]{4,20}$");
+    regex pattern("^[A-Za-z0-9]{6,}$");
     if (!regex_match(username, pattern)) {
         cout << "Username cannot contain special characters!" << endl;
         return false;
@@ -214,8 +220,9 @@ bool User::usernameValidation(string username) {
 }
 
 bool User::checkPasswordFormat(string password) {
-    regex pattern("^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$%^&*-]).{8,20}$");
+    regex pattern("^[A-Za-z0-9]{6,}$");
     if (!regex_match(password, pattern)) {
+        cout << "Password must contain at least 1 uppercase, 1 lowercase, 1 digit, 1 special character and at least 8 characters!" << endl;
         return false;
     }
     return true;
@@ -296,7 +303,7 @@ void User::userLogin() {
                 if (pass != theUser->password) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cout << "Error password!";
+                    cout << "Error password! ";
                     cout << 3 - i << " time attempt left.\n\n" << endl;
                 }
                 else {

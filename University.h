@@ -56,7 +56,7 @@ public:
 
     // for feedback
     UniversityNode* searchUniversity(string rank);
-    static UniversityNode* searchUniversityWithRank(string rank);
+    UniversityNode* searchUniversityWithName(string uniName);
 
     // functions of merge sort
     void splitList(UniversityNode* list, UniversityNode** leftList, UniversityNode** rightList);

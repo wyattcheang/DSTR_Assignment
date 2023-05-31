@@ -30,6 +30,7 @@ struct FeedbackNode{
     FeedbackNode * nextFeedback;
     FeedbackNode * parentFeedback;
     FeedbackNode * childFeedback;
+
 };
 
 class Feedback {
@@ -37,24 +38,35 @@ private:
     FeedbackNode* feedbackHead = nullptr;
     FeedbackNode* feedbackTail = nullptr;
     int feedbackSize = 0;
+    int lastFeedbackID = 0;
 public:
     Feedback(User* userClass, Admin* adminClass, University* uniClass);
     ~Feedback();
-    FeedbackNode* getHead();
-    FeedbackNode* getTail();
-    FeedbackNode* createFeedbackNode(string data[], User *userClass, Admin *adminClass, University *uniClass);
-    FeedbackNode* createNewFeedbackNode(string feedbackID, string feedback, UserNode *user, UniversityNode *uni);
-    void appendFeedbackNode(FeedbackNode *newFeedbackNode);
-    void appendListFeedbackNode(string feedback, UserNode *user, UniversityNode *uni);
-    void appendChildFeedbackNode(FeedbackNode *parentNode, string feedback);
-    void appendFeedbackNode(string feedback, UserNode *user, UniversityNode *uni);
-    void replyFeedback(FeedbackNode *parentNode, AdminNode *admin, string reply);
-    int getFeedbackSize();
-    void setFeedbackHead(FeedbackNode *feedbackHead);
 
-    void printFeedback(FeedbackNode *feedbackNode);
+    int getLastFeedbackID();
+    void setLastFeedbackID(int lastFeedbackID);
+    
+    FeedbackNode* createNewFeedbackNode(string feedbackID, string feedback, UserNode *user, UniversityNode *uni);
+    void appendFeedbackNode(string feedback, UserNode *user, UniversityNode *uni);
+    void appendParentFeedbackNode(string feedback, UserNode *user, UniversityNode *uni);
+    void appendChildFeedbackNode(FeedbackNode *parentNode, string feedback);
+    void replyFeedback(FeedbackNode *parentNode, AdminNode *admin, string reply);
+    void updateParentNodePosition(FeedbackNode *feedbackNode);
+
+    FeedbackNode* getUserPrevFeedback(UserNode *user, FeedbackNode *feedbackNode);
     FeedbackNode* getUserNextFeedback(UserNode *user, FeedbackNode *feedbackNode);
     FeedbackNode* getChildFeedback(FeedbackNode *feedbackNode);
+    
+    void printFeedback(FeedbackNode *feedbackNode);
+    
+    FeedbackNode* createFeedbackNode(string data[], User *userClass, Admin *adminClass, University *uniClass);
+    void appendFeedbackNode(FeedbackNode *newFeedbackNode);
+
+    FeedbackNode *getFeedbackHead() const;
+
+    FeedbackNode *getFeedbackTail() const;
+
+    void setFeedbackTail(FeedbackNode *feedbackTail);
 };
 
 

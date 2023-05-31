@@ -68,8 +68,9 @@ void Admin::modifyUsername() {
     string username, newUsername, password, newPass, newPass2;
     User user;
     //UserNode* theUser;
-    cout << "Enter current username: " << endl;
+    cout << "Enter current username: ";
     cin >> username;
+    cout << endl;
     UserNode* foundUser = user.searchUser(username);
     if (foundUser == nullptr) {
         cin.clear();
@@ -89,7 +90,7 @@ void Admin::modifyUsername() {
             }
         }
         foundUser->username = newUsername;
-        cout << "Username modified successfully!" << endl;
+        DataIO::printAlert("Username modified successfully!");
     }
 }
 
@@ -131,12 +132,13 @@ void Admin::modifyUserPassword() {
                         }
                     }
                     foundUser2->password = newPass;
-                    cout << "Password modified successfully! " << endl;
+                    DataIO::printAlert("Password modified successfully!");
                 }
                 else {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     cout << "Invalid current password!" << endl;
+                    continue;
                 }
                 break;
             }

@@ -808,3 +808,14 @@ bool University::compareValues(sortOption attributes, const string &keyword, Uni
 int University::getUniListSize() const {
     return uniListSize;
 }
+
+UniversityNode* University::searchUniversityWithName(string uniName) {
+    UniversityNode *current = this->universityHead;
+    while (current != nullptr) {
+        if (current->institutionName == uniName) {
+            return current;
+        }
+        current = current->nextUni;
+    }
+    return nullptr;
+}

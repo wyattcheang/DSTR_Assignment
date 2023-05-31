@@ -27,7 +27,7 @@ public:
 class FavouritePage : public BasePage {
 public:
     FavouritePage(University* university, User* user, Admin* admin, Feedback* feedback, Favourite* favourite);
-    void DisplayAdminPage();
+    void DisplayUserFavourPage();
 };
 
 class FeedbackPage : public BasePage {

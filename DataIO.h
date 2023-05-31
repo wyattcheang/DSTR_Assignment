@@ -27,19 +27,19 @@ public:
     static void ReadFeedback(Feedback* feedbackClass, User* userClass, Admin* adminClass, University* uniClass);
     static void SaveFeedback(FeedbackNode* head);
 
-    static void ReadFavourite(Favourite* head);
+    static void ReadFavourite(Favourite* head, University* uniClass, User* userClass);
     static void SaveFavourite(FavouriteNode* head);
-
-    static void SaveAllFile(UserNode* userHead, FavouriteNode* favHead, FeedbackNode* feedbackHead);
 
     static string getCurrentTime();
     static tm* StringToTime(const string& dateString);
     static string TimeToString(tm* time);
 
     static void printStringCentered(const string& text);
+    static void printAlert(const string& text);
     static void printSelectUniversityAttributeMenu();
     static void selectSortMethodMenu();
     static void selectSearchMethodMenu();
+
 };
 
 #endif //ASSIGNMENT_DATAIO_H
