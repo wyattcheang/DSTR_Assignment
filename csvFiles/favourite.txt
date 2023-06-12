@@ -1,2 +1,3 @@
 Massachusetts Institute of Technology (MIT) |U00000001
 University of Cambridge|U00000001
+National University of Singapore (NUS)|U00000007

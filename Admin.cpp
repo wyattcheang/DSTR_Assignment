@@ -64,37 +64,34 @@ AdminNode* Admin::searchAdminID(string adminID) {
     return nullptr;
 }
 
-void Admin::modifyUsername() {
+void Admin::modifyUsername(User* user) {
     string username, newUsername, password, newPass, newPass2;
-    User user;
     //UserNode* theUser;
     cout << "Enter current username: ";
     cin >> username;
     cout << endl;
-    UserNode* foundUser = user.searchUser(username);
+    UserNode* foundUser = user->searchUser(username);
     if (foundUser == nullptr) {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Account doesn't exist!" << endl;
     }
     else {
-        while (foundUser != nullptr) {
-            if (foundUser->username == username) {
-                cout << "Enter new username: " << endl;
-                cin >> newUsername;
-                if (!user.usernameValidation(newUsername)) {
-                    cin.clear();
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                }
-                break;
+        if(foundUser != nullptr && foundUser->username == username) {
+            cout << "Enter new username: ";
+            cin >> newUsername;
+            if (!user->usernameValidation(newUsername)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            } else {
+                foundUser->username = newUsername;
+                DataIO::printAlert("Username modified successfully!");
             }
         }
-        foundUser->username = newUsername;
-        DataIO::printAlert("Username modified successfully!");
     }
 }
 
-void Admin::modifyUserPassword() {
+void Admin::modifyUserPassword(User* users) {
     string username, newUsername, password, newPass, newPass2;
     User user;
     //UserNode* theUser;
@@ -109,7 +106,7 @@ void Admin::modifyUserPassword() {
     else {
         while (foundUser != nullptr) {
             if (foundUser->username == username) {
-                cout << "Enter current password: " << endl;
+                cout << "Enter current password: ";
                 cin >> password;
                 UserNode* foundUser2 = user.searchUserPass(password);
                 if (foundUser2 != nullptr && foundUser2->password == password) {

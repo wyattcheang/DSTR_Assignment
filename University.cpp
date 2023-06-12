@@ -459,14 +459,12 @@ void University::JumpSearch(string search, sortOption option) {
     int searchCounter = 0;
 
     UniversityNode* current = universityHead;
-    UniversityNode* prev = universityHead;
-
+    UniversityNode* prev = current;
     while(current != nullptr) {
         if (option == uniName || option == uniLocation || option == uniLocationCode){
             bool check;
             switch (option){
                 case uniName:
-                    cout << ("search: " + search + " current->institutionName: " + current->institutionName) << endl;
                     check = compareFirstCharacter(search, current->institutionName);
                     break;
                 case uniLocation:
@@ -480,7 +478,7 @@ void University::JumpSearch(string search, sortOption option) {
                 break;
             }
         }
-        if (compareValues(option, search, current)){
+        if (compareValues2(option, search, current)){
             break;
         }
         prev = current;
@@ -511,7 +509,7 @@ void University::JumpSearch(string search, sortOption option) {
     cout << "Number of university shown: " << searchCounter << endl << endl;
 
     // Print the execution time
-    cout << "Time taken by Linear Search Algorithm: ";
+    cout << "Time taken by Jump Search Algorithm: ";
     cout << timeTaken.count() << " seconds." << endl;
     cout << endl;
 }
@@ -848,4 +846,49 @@ bool University::compareFirstCharacter(const std::string& str1, const std::strin
 
     // Compare the first characters
     return firstChar2 >= firstChar1;
+}
+
+bool University::compareValues2(sortOption attributes, const string &keyword, UniversityNode *current) {
+    char a = keyword[0];
+    char b;
+    switch (attributes) {
+        case uniRank:
+            return current->rank >= stoi(keyword);
+        case arScore:
+            return current->arScore <= stod(keyword);
+        case erScore:
+            return current->erScore <= stod(keyword);
+        case fsrScore:
+            return current->fsrScore <= stod(keyword);
+        case cpfScore:
+            return current->cpfScore <= stod(keyword);
+        case ifrScore:
+            return current->ifrScore <= stod(keyword);
+        case isrScore:
+            return current->isrScore <= stod(keyword);
+        case irnScore:
+            return current->irnScore <= stod(keyword);
+        case gerScore:
+            return current->gerScore <= stod(keyword);
+        case scoreScaled:
+            return current->scoreScaled <= stod(keyword);
+        case arRank:
+            return stoi(current->arRank) >= stoi(keyword);
+        case erRank:
+            return stoi(current->erRank) >= stoi(keyword);
+        case fsrRank:
+            return stoi(current->fsrRank) >= stoi(keyword);
+        case cpfRank:
+            return stoi(current->cpfRank) >= stoi(keyword);
+        case ifrRank:
+            return stoi(current->ifrRank) >= stoi(keyword);
+        case isrRank:
+            return stoi(current->isrRank) >= stoi(keyword);
+        case irnRank:
+            return stoi(current->irnRank) >= stoi(keyword);
+        case gerRank:
+            return stoi(current->gerRank) >= stoi(keyword);
+        default:
+            return false;
+    }
 }

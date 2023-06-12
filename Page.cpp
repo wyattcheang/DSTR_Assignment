@@ -473,11 +473,11 @@ void AdminPage::DisplayAdminPage(FeedbackPage *feedbackPage, FavouritePage *favo
                     }
                     switch (modifyOption) {
                         case 1: {
-                            admin->modifyUsername();
+                            admin->modifyUsername(user);
                             break;
                         }
                         case 2: {
-                            admin->modifyUserPassword();
+                            admin->modifyUserPassword(user);
                             break;
                         }
                         default: {
@@ -768,7 +768,7 @@ void FeedbackPage::DisplayAdminFeedbackPage(){
                 string feedbackContent;
                 int confirmSelection;
                 FeedbackNode* temp_currentFeedback = feedback->getChildFeedback(currentFeedback);
-                if (temp_currentFeedback->replyAdmin == nullptr) {
+                if (temp_currentFeedback->replyAdmin != nullptr) {
                     DataIO::printAlert("You have already reply the feedback!");
                     cout << "[Press 1 to start from the beginning 2 to start from back]" << endl << endl;
                 }else {

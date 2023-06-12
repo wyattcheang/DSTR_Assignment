@@ -6,6 +6,7 @@
 #define ASSIGNMENT_ADMIN_H
 
 #include <string>
+#include "User.h"
 
 using namespace std;
 
@@ -30,8 +31,8 @@ public:
     void appendAdminNode(string data[]);
     AdminNode* searchAdminUser(string username);
     AdminNode* searchAdminID(string adminID);
-    void modifyUsername();
-    void modifyUserPassword();
+    void modifyUsername(User* user);
+    void modifyUserPassword(User* user);
 
     AdminNode *getLoginAdmin() const;
     //Required Functions

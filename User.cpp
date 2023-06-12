@@ -189,7 +189,7 @@ void User::userRegister() {
 }
 
 bool User::usernameValidation(string username) {
-    regex pattern("^[A-Za-z0-9]{6,}$");
+    regex pattern("^[A-Za-z0-9]{4,}$");
     if (!regex_match(username, pattern)) {
         cout << "Username cannot use!" << endl;
         return false;

@@ -31,7 +31,6 @@ FavouriteNode* Favourite::createFavouriteNode(UniversityNode* uniNode, UserNode*
 
 void Favourite::appendFavouriteNode(FavouriteNode* newNode) {
     if (this->favouriteHead == nullptr) {
-        cout << ("hi");
         this->favouriteHead = this->favouriteTail = newNode;
         favSize++;
         return;

@@ -1,3 +1,4 @@
 FeedbackID|Username|Admin Name|University Rank|Feedback|Reply|Feedback Datetime|Reply Datetime
+FB000101|U00000001|A00000001|1|Any scholarship provided for this University?|Yes, can you provide me your email to send you the detail?|2023-05-31 10:48:32|2023-05-31 16:21:58
+FB000301|U00000007|NULL|100|May I know where can download the school of computing brochure?|NULL|2023-05-31 15:47:37|1900-01-00 00:00:00
 FB000201|U00000001|NULL|2|What is the overall fees for BSc in Computer Science Course?|NULL|2023-05-31 10:49:25|1900-01-00 00:00:00
-FB000101|U00000001|NULL|1|Any scholarship provided for this University?|NULL|2023-05-31 10:48:32|1900-01-00 00:00:00
